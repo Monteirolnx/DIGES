@@ -1,0 +1,30 @@
+﻿@page "/login"
+
+@inject NavigationManager NavigationManager
+@inject IAutenticacaoServico AutenticacaoServico
+
+<h3>Login</h3>
+
+<EditForm Model="@this" OnValidSubmit="HandleLogin">
+    <InputText id="username" @bind-Value="@userName" />
+    <InputText id="password" @bind-Value="@password" type="password" />
+    <button type="submit">Login</button>
+</EditForm>
+
+@code {
+    private string userName = "a";
+    private string password = "1";
+
+    private void HandleLogin()
+    {
+        AutenticacaoServico.Login(userName, password);
+        if (AutenticacaoServico.UsuarioEstaLogado)
+        {
+            NavigationManager.NavigateTo("/atividade-consulta-todas");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/Login");
+        }
+    }
+}

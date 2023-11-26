@@ -1,0 +1,172 @@
+﻿@page "/atividade-consulta-todas"
+
+@if (carregando)
+{
+    <p><em>Carregando...</em></p>
+}
+else
+{
+    <RadzenRow Gap="2rem" Class="rz-p-0 rz-p-lg-0">
+        <RadzenColumn Size="12">
+            <RadzenStack>
+                <div style="display: flex; align-items: center;">
+                    <RadzenButton Click="@IncluirAtividade"
+                                  Icon="add"
+                                  Style="margin-bottom: 10px; margin-right: 10px;"
+                                  Text="Incluir Atividade" />
+                    <div>
+                        <RadzenButton Click="@GerarAta"
+                                      Icon="cloud_sync"
+                                      Style="margin-bottom: 10px;"
+                                      Text="Gerar Ata"
+                                      ButtonStyle="ButtonStyle.Info" />
+                    </div>
+                </div>
+            </RadzenStack>
+        </RadzenColumn>
+
+
+        <RadzenColumn Size="12">
+            <RadzenStack>
+
+                <RadzenDataGrid AllowAlternatingRows="false"
+                                AllowColumnResize="false"
+                                AllowFiltering="true"
+                                AllowPaging="true"
+                                AllowSorting="true"
+                                Data="@atividadesDto"
+                                EmptyText="Nenhum registro encontrado."
+                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterMode="FilterMode.Simple"
+                                LogicalFilterOperator="LogicalFilterOperator.And"
+                                PagerHorizontalAlign="HorizontalAlign.Left"
+                                PageSize="100"
+                                ShowPagingSummary="true"
+                                Style="width: 100%;"
+                                TItem="AtividadeDto">
+
+                    <Columns>
+
+                        <RadzenDataGridColumn Visible="false"
+                                              Property="Codigo"
+                                              TItem="AtividadeDto"
+                                              Title="Codigo"
+                                              Width="10%">
+                        </RadzenDataGridColumn>
+
+                        <RadzenDataGridColumn Filterable="true"
+                                              Frozen="true"
+                                              Property="NumeroRedmine"
+                                              TextAlign="TextAlign.Center"
+                                              TItem="AtividadeDto"
+                                              Title="Redmine"
+                                              Width="10%">
+                            <Template Context="atividadeDto">
+                                <div style="text-align: center;">
+                                    <div style="font-weight: bold;">@atividadeDto.NumeroRedmine</div>
+                                    @if (@atividadeDto.NumeroRedmine is not null)
+                                    {
+                                        <RadzenButton Icon="link" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Click="@(() => AbrirRedmine(atividadeDto.NumeroRedmine))" />
+                                    }
+                                </div>
+                            </Template>
+                        </RadzenDataGridColumn>
+
+                        <RadzenDataGridColumn Filterable="true"
+                                              Frozen="false"
+                                              TextAlign="TextAlign.Center"
+                                              Property="Descricao"
+                                              TItem="AtividadeDto"
+                                              Title="Descrição"
+                                              Width="20%">
+                            <Template Context="atividadeDto">
+                                <div style="white-space: pre-wrap;">@atividadeDto.Descricao</div>
+                            </Template>
+                        </RadzenDataGridColumn>
+
+                        <RadzenDataGridColumn Filterable="true"
+                                              Frozen="false"
+                                              TextAlign="TextAlign.Center"
+                                              Property="Sistema"
+                                              TItem="AtividadeDto"
+                                              Title="Sistema"
+                                              Width="10%" />
+
+                        <RadzenDataGridColumn Filterable="true"
+                                              Frozen="false"
+                                              TextAlign="TextAlign.Center"
+                                              TItem="AtividadeDto"
+                                              Property="Analista.Nome"
+                                              Title="Analista"
+                                              Width="10%">
+                        </RadzenDataGridColumn>
+
+                        <RadzenDataGridColumn Filterable="false"
+                                              Title="Última observação"
+                                              Sortable="false"
+                                              TItem="AtividadeDto"
+                                              Width="30%">
+                            <Template Context="atividadeDto">
+                                @{
+                                    if (atividadeDto.Historico != null)
+                                    {
+                                        var ultimaObservacao = atividadeDto.Historico.MaxBy(h => h.Data);
+                                        if (ultimaObservacao != null)
+                                        {
+                                            <div style="font-weight: bold;">@ultimaObservacao.Data.ToString("d")</div>
+                                            <div style="white-space: pre-wrap;">@ultimaObservacao.Registro</div>
+                                        }
+                                        else
+                                        {
+                                            @:Nenhuma observação
+                                        }
+                                    }
+                                }
+                            </Template>
+                        </RadzenDataGridColumn>
+
+                        <RadzenDataGridColumn FilterPlaceholder="Selecione"
+                                              FilterValue="TipoAbertaFechada.Aberta"
+                                              Property="Status"
+                                              Sortable="false"
+                                              TextAlign="TextAlign.Center"
+                                              TItem="AtividadeDto"
+                                              Title="Status"
+                                              Width="10%">
+                            <Template Context="atividadeDto">
+                                @if (atividadeDto.Status == TipoAbertaFechada.Aberta)
+                                {
+                                    <div style="white-space: pre-wrap;">Aberta há: @((DateTime.Now - atividadeDto.DtCriacao).Days) dias</div>
+                                }
+                                else
+                                {
+                                    <div style="font-weight: bold;">Fechada</div>
+                                }
+                            </Template>
+                        </RadzenDataGridColumn>
+
+                        <RadzenDataGridColumn 
+                            Sortable="false" 
+                            TextAlign="TextAlign.Center" 
+                            TItem="AtividadeDto" 
+                            Title="Ações" 
+                            Width="10%">
+                            <Template Context="atividadeDto">
+                                <div style="text-align: center;">
+                                    <RadzenButton Icon="history" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Click="@(() => EditarAtividade(atividadeDto))" />
+
+                                    @if (atividadeDto.Status == TipoAbertaFechada.Aberta)
+                                    {
+                                        <RadzenButton Icon="done" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Click="@(() => FecharAtividade(atividadeDto))" />
+                                    }
+
+                                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.Small" Click="@(() => ExcluirAtividade(atividadeDto))" />
+                                </div>
+                            </Template>
+                        </RadzenDataGridColumn>
+                    </Columns>
+                </RadzenDataGrid>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+}
