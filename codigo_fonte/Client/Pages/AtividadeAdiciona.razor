@@ -6,7 +6,7 @@
 }
 else
 {
-    <RadzenTemplateForm Data="@novaAtividade" Submit="@((AtividadeDto args) => { Enviar(args); })">
+    <RadzenTemplateForm Data="@novaAtividade" Submit="@(async (AtividadeDto args) => await Enviar(args))">
         <RadzenRow Gap="2rem" Class="rz-p-0 rz-p-lg-4">
             <RadzenColumn Size="12" SizeMD="12">
                 <RadzenStack>
@@ -103,7 +103,7 @@ else
                                         <RadzenTabsItem Text="Observação">
                                             <RadzenStack>
                                                 <RadzenRow AlignItems="AlignItems.Center">
-                                                    <RadzenTextArea @bind-Value=@observacao Rows="10" class="w-100" />
+                                                    <RadzenTextArea @bind-Value=@observacao Rows="5" class="w-100" />
                                                 </RadzenRow>
                                             </RadzenStack>
                                         </RadzenTabsItem>
