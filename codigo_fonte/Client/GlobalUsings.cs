@@ -1,6 +1,7 @@
 // Global using directives
 
 global using System.Net.Http.Json;
+global using System.Text;
 global using Controle.Atividades.Application.Servicos;
 global using Controle.Atividades.Application.Servicos.Interfaces;
 global using Controle.Atividades.Client.Servicos;

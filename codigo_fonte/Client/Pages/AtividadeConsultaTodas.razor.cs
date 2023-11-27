@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Controle.Atividades.Client.Pages;
+﻿namespace Controle.Atividades.Client.Pages;
 
 [UsedImplicitly]
 public partial class AtividadeConsultaTodas
@@ -8,6 +6,9 @@ public partial class AtividadeConsultaTodas
     #region Injects
     [Inject]
     protected IAutenticacaoServico AutenticacaoServico { get; set; } = default!;
+
+    [Inject]
+    protected IAtaServico AtaServico { get; set; } = default!;
 
     [Inject]
     protected IAtividadeServico AtividadeServico { get; set; } = default!;
@@ -27,7 +28,7 @@ public partial class AtividadeConsultaTodas
 
     private bool carregando = true;
     #endregion
- 
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!AutenticacaoServico.UsuarioEstaLogado)
@@ -42,7 +43,7 @@ public partial class AtividadeConsultaTodas
             StateHasChanged();
         }
     }
-    
+
     private void IncluirAtividade()
     {
         NavigationManager.NavigateTo("/atividade-adiciona");
@@ -50,39 +51,55 @@ public partial class AtividadeConsultaTodas
 
     private async Task GerarAta()
     {
-        var htmlBuilder = new StringBuilder();
+        var ata = await AtaServico.Gerar();
 
-        htmlBuilder.AppendLine("<html>");
-        htmlBuilder.AppendLine("<head>");
-        htmlBuilder.AppendLine("<style>");
-        htmlBuilder.AppendLine("body { font-family: Calibri, sans-serif; font-size: 11pt; color: rgb(0,0,0); }");
-        htmlBuilder.AppendLine("table { width: 100%; border-collapse: collapse; }");
-        htmlBuilder.AppendLine("th, td { border: 1px solid black; padding: 5px; text-align: left; }");
-        htmlBuilder.AppendLine("th { background-color: rgb(231,230,230); }");
-        htmlBuilder.AppendLine("td { white-space: pre-wrap; }");
-        htmlBuilder.AppendLine("</style>");
-        htmlBuilder.AppendLine("</head>");
-        htmlBuilder.AppendLine("<body>");
-        htmlBuilder.AppendLine("<div dir='ltr'>");
-        htmlBuilder.AppendLine($"<p>Segue ata da reunião: {DateTime.Now.ToString("dd/MM/yyyy")}.</p>");
+        if (ata != null)
+        {
+            var htmlBuilder = new StringBuilder();
 
-        htmlBuilder.AppendLine("<p><b><u>Atividades criadas:</u></b> ...</p>");
-        htmlBuilder.AppendLine("<p><b><u>Atividades atualizadas:</u></b> ...</p>");
-        htmlBuilder.AppendLine("<p><b><u>Atividades finalizadas/excluídas:</u></b> ...</p>");
+            htmlBuilder.AppendLine("<html>");
+            htmlBuilder.AppendLine("<head>");
+            htmlBuilder.AppendLine("<style>");
+            htmlBuilder.AppendLine("body { font-family: Calibri, sans-serif; font-size: 11pt; color: rgb(0,0,0); }");
+            htmlBuilder.AppendLine("table { width: 100%; border-collapse: collapse; }");
+            htmlBuilder.AppendLine("th, td { border: 1px solid black; padding: 5px; text-align: left; }");
+            htmlBuilder.AppendLine("th { background-color: rgb(231,230,230); }");
+            htmlBuilder.AppendLine("td { white-space: pre-wrap; }");
+            htmlBuilder.AppendLine("</style>");
+            htmlBuilder.AppendLine("</head>");
+            htmlBuilder.AppendLine("<body>");
+            htmlBuilder.AppendLine("<div dir='ltr'>");
+            htmlBuilder.AppendLine($"<p>Segue ata da reunião: {DateTime.Now.ToString("dd/MM/yyyy")}.</p>");
 
-        htmlBuilder.AppendLine("<table>");
-        htmlBuilder.AppendLine("<tr><th>Atividade</th><th>Descrição</th><th>Sistema</th><th>Analista</th><th>Histórico</th></tr>");
+            htmlBuilder.AppendLine($"<p><b><u>Atividades criadas:</u></b> {ata.AtividadesCriadas}</p>");
+            htmlBuilder.AppendLine($"<p><b><u>Atividades atualizadas:</u></b> {ata.AtividadesAtualizadas}</p>");
+            htmlBuilder.AppendLine($"<p><b><u>Atividades finalizadas:</u></b> {ata.AtividadesFinalizadas}</p>");
 
-        htmlBuilder.AppendLine("<tr><td>3618</td><td>Investigação para implementação do IP Restriction</td><td>Todos</td><td>Monteiro</td><td>20/03/2023 – Nesta semana trabalharam: Glaucon, Félix, Cláudio Magno, Alex...</td></tr>");
+            htmlBuilder.AppendLine("<table>");
+            htmlBuilder.AppendLine("<tr><th>Atividade</th><th>Descrição</th><th>Sistema</th><th>Analista</th><th>Última observação</th></tr>");
 
-        htmlBuilder.AppendLine("</table>");
-        htmlBuilder.AppendLine("</div>");
-        htmlBuilder.AppendLine("</body>");
-        htmlBuilder.AppendLine("</html>");
+            if (ata.AtividadesDto != null && ata.AtividadesDto.Any())
+            {
+                foreach (var atividadeDto in ata.AtividadesDto)
+                {
+                    htmlBuilder.AppendLine($"<tr><td>{atividadeDto.NumeroRedmine}</td>" +
+                                           $"<td>{atividadeDto.Descricao}</td>" +
+                                           $"<td>{atividadeDto.Sistema}</td>" +
+                                           $"<td>{atividadeDto.Analista?.Nome ?? "-"}</td>" +
+                                           $"<td>{atividadeDto.Historico?.OrderByDescending(x => x.Data).Select(x => $"{x.Data:dd/MM/yyyy}\n{x.Registro}").FirstOrDefault() ?? "-"}</td>" +
+                                           $"</tr>");
+                }
+            }
 
-        await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", htmlBuilder.ToString());
+            htmlBuilder.AppendLine("</table>");
+            htmlBuilder.AppendLine("</div>");
+            htmlBuilder.AppendLine("</body>");
+            htmlBuilder.AppendLine("</html>");
+
+            await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", htmlBuilder.ToString());
+        }
     }
-    
+
     private Task EditarAtividade(AtividadeDto atividadedto)
     {
         throw new NotImplementedException();

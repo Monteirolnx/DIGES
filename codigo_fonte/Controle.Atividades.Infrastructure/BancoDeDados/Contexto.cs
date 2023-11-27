@@ -6,6 +6,8 @@ public class Contexto(IConfiguration configuration) : DbContext
 
     public virtual DbSet<Atividade> Atividades => Set<Atividade>();
 
+    public virtual DbSet<Observacao> Historico => Set<Observacao>();
+
     public virtual DbSet<Lider> Lideres => Set<Lider>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
