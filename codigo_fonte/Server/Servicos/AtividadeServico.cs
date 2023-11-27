@@ -39,6 +39,7 @@ public class AtividadeServico (Contexto contexto, IMapper mapper) : IAtividadeSe
             .Include(a=> a.Lider)
             .Include(a=> a.Historico)
             .OrderBy(a=> a.Analista!.Nome)
+            .ThenBy(a=> a.NumeroRedmine)
             .ToListAsync();
 
         var resultado = mapper.Map<IEnumerable<AtividadeDto>>(atividades);

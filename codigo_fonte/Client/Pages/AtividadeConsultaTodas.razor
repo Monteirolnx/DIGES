@@ -24,8 +24,7 @@ else
                 </div>
             </RadzenStack>
         </RadzenColumn>
-
-
+        
         <RadzenColumn Size="12">
             <RadzenStack>
 
@@ -44,7 +43,6 @@ else
                                 ShowPagingSummary="true"
                                 Style="width: 100%;"
                                 TItem="AtividadeDto">
-
                     <Columns>
 
                         <RadzenDataGridColumn Visible="false"
@@ -136,7 +134,7 @@ else
                             <Template Context="atividadeDto">
                                 @if (atividadeDto.Status == TipoAbertaFechada.Aberta)
                                 {
-                                    <div style="white-space: pre-wrap;">Aberta há: @((DateTime.Now - atividadeDto.DtCriacao).Days) dias</div>
+                                    <div style="white-space: pre-wrap;">Aberta há: @((DateTime.Now.Date - atividadeDto.DtCriacao.Date).Days) dias</div>
                                 }
                                 else
                                 {
@@ -145,12 +143,11 @@ else
                             </Template>
                         </RadzenDataGridColumn>
 
-                        <RadzenDataGridColumn 
-                            Sortable="false" 
-                            TextAlign="TextAlign.Center" 
-                            TItem="AtividadeDto" 
-                            Title="Ações" 
-                            Width="10%">
+                        <RadzenDataGridColumn Sortable="false"
+                                              TextAlign="TextAlign.Center"
+                                              TItem="AtividadeDto"
+                                              Title="Ações"
+                                              Width="10%">
                             <Template Context="atividadeDto">
                                 <div style="text-align: center;">
                                     <RadzenButton Icon="history" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Click="@(() => EditarAtividade(atividadeDto))" />

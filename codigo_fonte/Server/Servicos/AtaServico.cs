@@ -9,6 +9,7 @@ public class AtaServico(Contexto contexto, IMapper mapper) : IAtaServico
             .Include(a => a.Analista)
             .Include(a => a.Lider)
             .OrderBy(a => a.Analista!.Nome)
+            .ThenBy(a => a.NumeroRedmine)
             .ToListAsync();
 
         foreach (var atividade in atividades)

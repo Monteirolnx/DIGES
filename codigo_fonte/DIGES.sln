@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle.Atividades.Client"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle.Atividades.Server", "Server\Controle.Atividades.Server.csproj", "{EC5E88F8-ABEF-40BD-8F97-B86233857CF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controle.Atividades.Domain", "Controle.Atividades.Domain\Controle.Atividades.Domain.csproj", "{5A141F18-435F-491E-B780-779E5941BA54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle.Atividades.Domain", "Controle.Atividades.Domain\Controle.Atividades.Domain.csproj", "{5A141F18-435F-491E-B780-779E5941BA54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controle.Atividades.Infrastructure", "Controle.Atividades.Infrastructure\Controle.Atividades.Infrastructure.csproj", "{8FAA3843-D12D-4CEE-AFF6-720509B2E7E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle.Atividades.Infrastructure", "Controle.Atividades.Infrastructure\Controle.Atividades.Infrastructure.csproj", "{8FAA3843-D12D-4CEE-AFF6-720509B2E7E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controle.Atividades.Application", "Controle.Atividades.Application\Controle.Atividades.Application.csproj", "{95E852CD-FE45-4838-B750-979722373ED4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controle.Atividades.Application", "Controle.Atividades.Application\Controle.Atividades.Application.csproj", "{95E852CD-FE45-4838-B750-979722373ED4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
