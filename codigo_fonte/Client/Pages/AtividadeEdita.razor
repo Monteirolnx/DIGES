@@ -1,4 +1,4 @@
-﻿@page "/atividade-edita"
+﻿@page "/atividade-edita/{CodigoAtividade}"
 
 @if (carregando)
 {
@@ -72,7 +72,8 @@ else
                                                     Placeholder="Selecione"
                                                     Style="width: 100%;"
                                                     TextProperty="Nome"
-                                                    TValue="AnalistaDto"
+                                                    TValue="AnalistaDto?"
+                                                    Value="@analistaSelecionado"
                                                     ValueChanged="OnAnalistaChanged">
                                     </RadzenDropDown>
                                 </RadzenColumn>
@@ -83,7 +84,8 @@ else
                                                     Placeholder="Selecione"
                                                     Style="width: 100%;"
                                                     TextProperty="Nome"
-                                                    TValue="LiderDto"
+                                                    TValue="LiderDto?"
+                                                    Value="@liderSelecionado"
                                                     ValueChanged="OnLiderChanged">
                                     </RadzenDropDown>
                                 </RadzenColumn>

@@ -38,7 +38,7 @@ public partial class AtividadeConsultaTodas
 
         if (firstRender)
         {
-            atividadesDto = await AtividadeServico.ConsultaAtividades();
+            atividadesDto = await AtividadeServico.ConsultaTodas();
             carregando = false;
             StateHasChanged();
         }
@@ -100,10 +100,11 @@ public partial class AtividadeConsultaTodas
         }
     }
 
-    private Task EditarAtividade(AtividadeDto atividadedto)
+    private void EditarAtividade(AtividadeDto atividadedto)
     {
-        throw new NotImplementedException();
+        NavigationManager.NavigateTo($"/atividade-edita/{atividadedto.Codigo}");
     }
+
 
     private Task ExcluirAtividade(AtividadeDto atividadedto)
     {

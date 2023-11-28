@@ -29,8 +29,8 @@ public partial class AtividadeAdiciona
     private IEnumerable<AnalistaDto>? analistasDto;
     private IEnumerable<LiderDto>? lideresDto;
 
-    private AnalistaDto analistasSelecionado = new();
-    private LiderDto liderSelecionado = new();
+    private AnalistaDto? analistaSelecionado;
+    private LiderDto? liderSelecionado;
 
     private bool carregando = true;
     private string observacao = string.Empty;
@@ -60,14 +60,14 @@ public partial class AtividadeAdiciona
         await JsRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 
-    private void OnAnalistaChanged(AnalistaDto analistaDto)
+    private void OnAnalistaChanged(AnalistaDto? analistaDto)
     {
-        analistasSelecionado = analistaDto;
+        analistaSelecionado = analistaDto;
 
         StateHasChanged();
     }
 
-    private void OnLiderChanged(LiderDto liderDto)
+    private void OnLiderChanged(LiderDto? liderDto)
     {
         liderSelecionado = liderDto;
 
@@ -78,10 +78,10 @@ public partial class AtividadeAdiciona
     {
         try
         {
-            if (analistasSelecionado.Codigo != Guid.Empty)
+            if (analistaSelecionado.Codigo != Guid.Empty)
             {
-                atividadeDto.CodigoAnalista = analistasSelecionado.Codigo;
-                atividadeDto.Analista = analistasSelecionado;
+                atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
+                atividadeDto.Analista = analistaSelecionado;
             }
             else
             {

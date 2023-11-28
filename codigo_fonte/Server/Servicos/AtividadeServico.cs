@@ -31,7 +31,7 @@ public class AtividadeServico (Contexto contexto, IMapper mapper) : IAtividadeSe
        return resultado > 0;
     }
 
-    public async Task<IEnumerable<AtividadeDto>?> ConsultaAtividades()
+    public async Task<IEnumerable<AtividadeDto>?> ConsultaTodas()
     {
         var atividades = await contexto.Atividades
             .AsNoTracking()
@@ -43,6 +43,21 @@ public class AtividadeServico (Contexto contexto, IMapper mapper) : IAtividadeSe
             .ToListAsync();
 
         var resultado = mapper.Map<IEnumerable<AtividadeDto>>(atividades);
+
+        return resultado;
+    }
+
+    public async Task<AtividadeDto?> ConsultarPorCodigo(Guid codigoAtividade)
+    {
+        var atividades = await contexto.Atividades
+            .AsNoTracking()
+            .Where(a => a.Codigo == codigoAtividade)
+            .Include(a => a.Analista)
+            .Include(a => a.Lider)
+            .Include(a => a.Historico)
+            .FirstOrDefaultAsync();
+
+        var resultado = mapper.Map<AtividadeDto>(atividades);
 
         return resultado;
     }

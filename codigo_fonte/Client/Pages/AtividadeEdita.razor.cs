@@ -3,6 +3,9 @@
 [UsedImplicitly]
 public partial class AtividadeEdita
 {
+    [Parameter]
+    public string? CodigoAtividade { get; set; }
+    
     #region Injects
     [Inject]
     protected IAutenticacaoServico AutenticacaoServico { get; set; } = default!;
@@ -24,19 +27,18 @@ public partial class AtividadeEdita
     #endregion
 
     #region Fields
-    private readonly AtividadeDto novaAtividade = new();
+    private AtividadeDto novaAtividade = new();
 
     private IEnumerable<AnalistaDto>? analistasDto;
     private IEnumerable<LiderDto>? lideresDto;
 
-    private AnalistaDto analistasSelecionado = new();
-    private LiderDto liderSelecionado = new();
+    private AnalistaDto analistaSelecionado = default!;
+    private LiderDto liderSelecionado = default!;
 
     private bool carregando = true;
-    private string observacao = string.Empty;
-
+    private string? observacao = string.Empty;
     #endregion
-
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!AutenticacaoServico.UsuarioEstaLogado)
@@ -46,10 +48,31 @@ public partial class AtividadeEdita
 
         if (firstRender)
         {
+            if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
+            {
+                novaAtividade = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ?? throw new InvalidOperationException();
+
+                if (novaAtividade.Analista != null)
+                {
+                    analistaSelecionado = novaAtividade.Analista;
+                }
+
+                if (novaAtividade.Lider != null)
+                {
+                    liderSelecionado = novaAtividade.Lider;
+                }
+
+                if (novaAtividade.Historico != null)
+                {
+                     observacao = novaAtividade.Historico.Select(r=> r.Registro).FirstOrDefault();
+                }
+            }
+            
             analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
             lideresDto = await ProfissionalServico.ConsultaTodosLideres();
 
             carregando = false;
+
             StateHasChanged();
         }
     }
@@ -60,16 +83,22 @@ public partial class AtividadeEdita
         await JsRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 
-    private void OnAnalistaChanged(AnalistaDto analistaDto)
+    private void OnAnalistaChanged(AnalistaDto? analistaDto)
     {
-        analistasSelecionado = analistaDto;
+        if (analistaDto != null)
+        {
+            analistaSelecionado = analistaDto;
+        }
 
         StateHasChanged();
     }
 
-    private void OnLiderChanged(LiderDto liderDto)
+    private void OnLiderChanged(LiderDto? liderDto)
     {
-        liderSelecionado = liderDto;
+        if (liderDto != null)
+        {
+            liderSelecionado = liderDto;
+        }
 
         StateHasChanged();
     }
@@ -78,10 +107,10 @@ public partial class AtividadeEdita
     {
         try
         {
-            if (analistasSelecionado.Codigo != Guid.Empty)
+            if (analistaSelecionado.Codigo != Guid.Empty)
             {
-                atividadeDto.CodigoAnalista = analistasSelecionado.Codigo;
-                atividadeDto.Analista = analistasSelecionado;
+                atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
+                atividadeDto.Analista = analistaSelecionado;
             }
             else
             {

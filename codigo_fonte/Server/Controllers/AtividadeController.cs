@@ -15,7 +15,15 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
     [HttpGet("v1/consulta-atividades")]
     public async Task<IActionResult> ConsultaAtividades()
     {
-        var resultado = await atividadeServico.ConsultaAtividades();
+        var resultado = await atividadeServico.ConsultaTodas();
+
+        return Ok(resultado);
+    }
+
+    [HttpGet("v1/consulta-codigo/{codigoAtividade}")]
+    public async Task<IActionResult> ConsultarPorCodigo(Guid codigoAtividade)
+    {
+        var resultado = await atividadeServico.ConsultarPorCodigo(codigoAtividade);
 
         return Ok(resultado);
     }

@@ -6,5 +6,5 @@ public class ObservacaoDto
 
     public DateTime Data { get; set; }
 
-    public string Registro { get; set; } = string.Empty;
+    public string? Registro { get; set; } = string.Empty;
 }
