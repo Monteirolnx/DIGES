@@ -23,7 +23,7 @@ else
                                                        ShowUpDown="false"
                                                        Style="width: 8rem;"
                                                        TValue="int?" />
-                                        <RadzenButton ButtonStyle="ButtonStyle.Info"
+                                        <RadzenButton ButtonStyle="ButtonStyle.Secondary"
                                                       Click="@(() => AbrirRedmine(novaAtividade.NumeroRedmine))"
                                                       Icon="language"
                                                       Text="Abrir tarefa">
@@ -112,7 +112,7 @@ else
         </RadzenRow>
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="1rem" Class="rz-mt-8 rz-mb-4">
             <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Salvar" />
-            <RadzenButton ButtonStyle="ButtonStyle.Light" Click="@Cancelar" Icon="cancel" Text="Cancelar" Variant="Variant.Flat" />
+            <RadzenButton ButtonStyle="ButtonStyle.Secondary" Click="@Cancelar" Icon="cancel" Text="Cancelar" Variant="Variant.Flat" />
         </RadzenStack>
     </RadzenTemplateForm>
 }
