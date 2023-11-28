@@ -5,6 +5,7 @@ global using System.Text;
 global using Controle.Atividades.Application.Servicos;
 global using Controle.Atividades.Application.Servicos.Interfaces;
 global using Controle.Atividades.Client.Servicos;
+global using Controle.Atividades.Client.Utils;
 global using Controle.Atividades.Domain.Dtos;
 global using Controle.Atividades.Domain.Entidades;
 global using Controle.Atividades.Domain.Enums;

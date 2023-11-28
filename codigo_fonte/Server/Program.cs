@@ -10,7 +10,6 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddScoped<IAutenticacaoServico, AutenticacaoServico>();
 
 builder.Services.AddTransient<IAtaServico, AtaServico>();
-builder.Services.AddTransient<IAtividadeServicoTemp, AtividadeServicoTemp>();
 builder.Services.AddTransient<IAtividadeServico, AtividadeServico>();
 builder.Services.AddTransient<IProfissionalServico, ProfissionalServico>();
 

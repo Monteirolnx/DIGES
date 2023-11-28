@@ -8,7 +8,6 @@ builder.Services.AddTransient(sp => new HttpClient
     { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddTransient<IAtaServico, AtaServicoClient>();
-builder.Services.AddTransient<IAtividadeServicoTemp, AtividadeServicoTemp>();
 builder.Services.AddTransient<IAtividadeServico, AtividadeServicoClient>();
 builder.Services.AddTransient<IProfissionalServico, ProfissionalServicoClient>();
 

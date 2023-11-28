@@ -18,7 +18,7 @@ public partial class AtividadeConsultaTodas
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; } = default!;
-
+  
     [Inject]
     protected NavigationManager NavigationManager { get; set; } = default!;
 
@@ -61,48 +61,7 @@ public partial class AtividadeConsultaTodas
 
         if (ata != null)
         {
-            var htmlBuilder = new StringBuilder();
-
-            htmlBuilder.AppendLine("<html>");
-            htmlBuilder.AppendLine("<head>");
-            htmlBuilder.AppendLine("<style>");
-            htmlBuilder.AppendLine("body { font-family: Calibri, sans-serif; font-size: 11pt; color: rgb(0,0,0); }");
-            htmlBuilder.AppendLine("table { width: 100%; border-collapse: collapse; }");
-            htmlBuilder.AppendLine("th, td { border: 1px solid black; padding: 5px; text-align: left; }");
-            htmlBuilder.AppendLine("th { background-color: rgb(231,230,230); }");
-            htmlBuilder.AppendLine("td { white-space: pre-wrap; }");
-            htmlBuilder.AppendLine("</style>");
-            htmlBuilder.AppendLine("</head>");
-            htmlBuilder.AppendLine("<body>");
-            htmlBuilder.AppendLine("<div dir='ltr'>");
-            htmlBuilder.AppendLine($"<p>Segue ata da reunião: {DateTime.Now.ToString("dd/MM/yyyy")}.</p>");
-
-            htmlBuilder.AppendLine($"<p><b><u>Atividades criadas:</u></b> {ata.AtividadesCriadas}</p>");
-            htmlBuilder.AppendLine($"<p><b><u>Atividades atualizadas:</u></b> {ata.AtividadesAtualizadas}</p>");
-            htmlBuilder.AppendLine($"<p><b><u>Atividades finalizadas:</u></b> {ata.AtividadesFinalizadas}</p>");
-
-            htmlBuilder.AppendLine("<table>");
-            htmlBuilder.AppendLine("<tr><th>Atividade</th><th>Descrição</th><th>Sistema</th><th>Analista</th><th>Última observação</th></tr>");
-
-            if (ata.AtividadesDto != null && ata.AtividadesDto.Any())
-            {
-                foreach (var atividadeDto in ata.AtividadesDto)
-                {
-                    htmlBuilder.AppendLine($"<tr><td>{atividadeDto.NumeroRedmine}</td>" +
-                                           $"<td>{atividadeDto.Descricao}</td>" +
-                                           $"<td>{atividadeDto.Sistema}</td>" +
-                                           $"<td>{atividadeDto.Analista?.Nome ?? "-"}</td>" +
-                                           $"<td>{atividadeDto.Historico?.OrderByDescending(x => x.Data).Select(x => $"{x.Data:dd/MM/yyyy}\n{x.Registro}").FirstOrDefault() ?? "-"}</td>" +
-                                           $"</tr>");
-                }
-            }
-
-            htmlBuilder.AppendLine("</table>");
-            htmlBuilder.AppendLine("</div>");
-            htmlBuilder.AppendLine("</body>");
-            htmlBuilder.AppendLine("</html>");
-
-            await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", htmlBuilder.ToString());
+            await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", ImpressaoServicoClient.CriarHtmlAta(ata));
         }
     }
 
@@ -113,7 +72,8 @@ public partial class AtividadeConsultaTodas
 
     private async Task ExcluirAtividade(AtividadeDto atividadedto)
     {
-        var questao = await DialogService.Confirm("Tem certeza que deseja excluir esta atividade?", "Confirmar Exclusão", new ConfirmOptions { OkButtonText = "Excluir", CancelButtonText = "Cancelar" });
+        var questao = await DialogService.Confirm("Tem certeza que deseja excluir esta atividade?",
+            "Confirmar Exclusão", new ConfirmOptions { OkButtonText = "Excluir", CancelButtonText = "Cancelar" });
 
         if (questao == true)
         {
@@ -124,7 +84,8 @@ public partial class AtividadeConsultaTodas
 
     private async Task FinalizarAtividade(AtividadeDto atividadedto)
     {
-        var questao = await DialogService.Confirm("Tem certeza que deseja finalizar esta atividade?", "Confirmar fechamento", new ConfirmOptions { OkButtonText = "Finalizar", CancelButtonText = "Cancelar" });
+        var questao = await DialogService.Confirm("Tem certeza que deseja finalizar esta atividade?",
+            "Confirmar fechamento", new ConfirmOptions { OkButtonText = "Finalizar", CancelButtonText = "Cancelar" });
 
         if (questao == true)
         {
@@ -135,7 +96,8 @@ public partial class AtividadeConsultaTodas
 
     private async Task ReabrirAtividade(AtividadeDto atividadedto)
     {
-        var questao = await DialogService.Confirm("Tem certeza que deseja reabrir esta atividade?", "Confirmar re-abertura", new ConfirmOptions { OkButtonText = "Reabrir", CancelButtonText = "Cancelar" });
+        var questao = await DialogService.Confirm("Tem certeza que deseja reabrir esta atividade?",
+            "Confirmar re-abertura", new ConfirmOptions { OkButtonText = "Reabrir", CancelButtonText = "Cancelar" });
 
         if (questao == true)
         {
@@ -153,8 +115,9 @@ public partial class AtividadeConsultaTodas
     #region Auxiliares
     private void MostrarAjuda(ElementReference elementReference, string tooltipText, TooltipOptions? options = null)
     {
-        TooltipService.Open(elementReference, tooltipText, options);
+        // Configura opções com uma duração curta se nenhuma opção for fornecida
+        var tooltipOptions = options ?? new TooltipOptions { Delay = 100, Duration = 1000 };
+        TooltipService.Open(elementReference, tooltipText, tooltipOptions);
     }
-
     #endregion
 }
