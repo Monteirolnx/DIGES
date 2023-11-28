@@ -6,7 +6,7 @@
 }
 else
 {
-    <RadzenTemplateForm Data="@novaAtividade" Submit="@(async (AtividadeDto args) => await Enviar(args))">
+    <RadzenTemplateForm Data="@atividadeAtual" Submit="@(async (AtividadeDto args) => await Enviar(args))">
         <RadzenRow Gap="2rem" Class="rz-p-0 rz-p-lg-0">
             <RadzenColumn Size="12" SizeMD="12">
                 <RadzenStack>
@@ -19,12 +19,12 @@ else
                                 </RadzenColumn>
                                 <RadzenColumn Size="12" SizeMD="9">
                                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
-                                        <RadzenNumeric @bind-Value=@novaAtividade.NumeroRedmine
+                                        <RadzenNumeric @bind-Value=@atividadeAtual.NumeroRedmine
                                                        ShowUpDown="false"
                                                        Style="width: 8rem;"
                                                        TValue="int?" />
                                         <RadzenButton ButtonStyle="ButtonStyle.Secondary"
-                                                      Click="@(() => AbrirRedmine(novaAtividade.NumeroRedmine))"
+                                                      Click="@(() => AbrirRedmine(atividadeAtual.NumeroRedmine))"
                                                       Icon="language"
                                                       Text="Abrir tarefa">
                                         </RadzenButton>
@@ -41,7 +41,7 @@ else
                                 </RadzenColumn>
                                 <RadzenColumn Size="12" SizeMD="3">
                                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
-                                        <RadzenTextBox @bind-Value=@novaAtividade.Sistema
+                                        <RadzenTextBox @bind-Value=@atividadeAtual.Sistema
                                                        Name="Sistema"
                                                        Style="width: 100%;" />
                                     </RadzenStack>
@@ -57,7 +57,7 @@ else
                                 </RadzenColumn>
                                 <RadzenColumn Size="12" SizeMD="9">
                                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
-                                        <RadzenTextBox @bind-Value=@novaAtividade.Descricao
+                                        <RadzenTextBox @bind-Value=@atividadeAtual.Descricao
                                                        Name="Descricao"
                                                        Style="width: 100%;" />
                                     </RadzenStack>
@@ -68,33 +68,83 @@ else
                                 <RadzenColumn Size="6" SizeMD="6">
                                     <RadzenLabel Text="Analista:" />
                                     <RadzenDropDown AllowClear="true"
-                                                    Data="@analistasDto"
-                                                    Placeholder="Selecione"
-                                                    Style="width: 100%;"
-                                                    TextProperty="Nome"
-                                                    TValue="AnalistaDto?"
-                                                    Value="@analistaSelecionado"
-                                                    ValueChanged="OnAnalistaChanged">
-                                    </RadzenDropDown>
-                                </RadzenColumn>
-                                <RadzenColumn Size="6" SizeMD="6">
-                                    <RadzenLabel Text="Líder:" />
-                                    <RadzenDropDown AllowClear="true"
-                                                    Data="@lideresDto"
-                                                    Placeholder="Selecione"
-                                                    Style="width: 100%;"
-                                                    TextProperty="Nome"
-                                                    TValue="LiderDto?"
-                                                    Value="@liderSelecionado"
-                                                    ValueChanged="OnLiderChanged">
-                                    </RadzenDropDown>
-                                </RadzenColumn>
-                            </RadzenRow>
+                                                        AllowFiltering
+                                                     Data="@analistasDto"
+                                                     Placeholder="Selecione"
+                                                     Style="width: 100%;"
+                                                     TextProperty="Nome"
+                                                     TValue="AnalistaDto?"
+                                                     Value="@analistaSelecionado"
+                                                     ValueChanged="OnAnalistaChanged">
+                                     </RadzenDropDown>
+                                 </RadzenColumn>
+                                 <RadzenColumn Size="6" SizeMD="6">
+                                     <RadzenLabel Text="Líder:" />
+                                     <RadzenDropDown AllowClear="true"
+                                                        AllowFiltering
+                                                     Data="@lideresDto"
+                                                     Placeholder="Selecione"
+                                                     Style="width: 100%;"
+                                                     TextProperty="Nome"
+                                                     TValue="LiderDto?"
+                                                     Value="@liderSelecionado"
+                                                     ValueChanged="OnLiderChanged">
+                                     </RadzenDropDown>
+                                 </RadzenColumn>
+                             </RadzenRow>
+
+                             <RadzenColumn Size="12">
+                                 <RadzenStack>
+
+                                     <RadzenDataGrid AllowAlternatingRows="false"
+                                                     AllowColumnResize="false"
+                                                     AllowFiltering="false"
+                                                     AllowPaging="true"
+                                                     AllowSorting="false"
+                                                     Data="@atividadeAtual.Historico"
+                                                     EmptyText="Nenhum registro encontrado."
+                                                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                     FilterMode="FilterMode.Simple"
+                                                     LogicalFilterOperator="LogicalFilterOperator.And"
+                                                     PagerHorizontalAlign="HorizontalAlign.Left"
+                                                     PageSize="5"
+                                                     ShowPagingSummary="true"
+                                                     Style="width: 100%;"
+                                                     TItem="ObservacaoDto">
+                                         <Columns>
+
+                                             <RadzenDataGridColumn Filterable="false"
+                                                                   Title="Última observação"
+                                                                   Sortable="false"
+                                                                   TItem="ObservacaoDto"
+                                                                   Width="30%">
+                                                 <Template Context="observacaoDto">
+                                                     @{
+                                                        {
+                                                            if (!string.IsNullOrEmpty(observacaoDto.Registro))
+                                                            {
+                                                                <div style="white-space: pre-wrap;">
+                                                                    <strong>@observacaoDto.Data.ToString("d")</strong> - @observacaoDto.Registro
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                @:Nenhuma observação
+                                                            }
+                                                        }
+                                                    }
+                                                </Template>
+                                            </RadzenDataGridColumn>
+
+                                        </Columns>
+                                    </RadzenDataGrid>
+                                </RadzenStack>
+                            </RadzenColumn>
 
                             <RadzenStack Gap="1rem">
                                 <RadzenTabs SelectedIndex="0">
                                     <Tabs>
-                                        <RadzenTabsItem Text="Observação">
+                                        <RadzenTabsItem Text="Nova observação">
                                             <RadzenStack>
                                                 <RadzenRow AlignItems="AlignItems.Center">
                                                     <RadzenTextArea @bind-Value=@observacao Rows="5" class="w-100" />

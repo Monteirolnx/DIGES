@@ -27,7 +27,7 @@ public partial class AtividadeEdita
     #endregion
 
     #region Fields
-    private AtividadeDto novaAtividade = new();
+    private AtividadeDto atividadeAtual = new();
 
     private IEnumerable<AnalistaDto>? analistasDto;
     private IEnumerable<LiderDto>? lideresDto;
@@ -50,21 +50,21 @@ public partial class AtividadeEdita
         {
             if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
             {
-                novaAtividade = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ?? throw new InvalidOperationException();
+                atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ?? throw new InvalidOperationException();
 
-                if (novaAtividade.Analista != null)
+                if (atividadeAtual.Analista != null)
                 {
-                    analistaSelecionado = novaAtividade.Analista;
+                    analistaSelecionado = atividadeAtual.Analista;
                 }
 
-                if (novaAtividade.Lider != null)
+                if (atividadeAtual.Lider != null)
                 {
-                    liderSelecionado = novaAtividade.Lider;
+                    liderSelecionado = atividadeAtual.Lider;
                 }
 
-                if (novaAtividade.Historico != null)
+                if (atividadeAtual.Historico != null)
                 {
-                     observacao = novaAtividade.Historico.Select(r=> r.Registro).FirstOrDefault();
+                     observacao = atividadeAtual.Historico.Select(r=> r.Registro).FirstOrDefault();
                 }
             }
             

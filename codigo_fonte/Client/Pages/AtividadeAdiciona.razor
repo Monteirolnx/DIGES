@@ -6,7 +6,7 @@
 }
 else
 {
-    <RadzenTemplateForm Data="@novaAtividade" Submit="@(async (AtividadeDto args) => await Enviar(args))">
+    <RadzenTemplateForm Data="@atividadeNova" Submit="@(async (AtividadeDto args) => await Enviar(args))">
         <RadzenRow Gap="2rem" Class="rz-p-0 rz-p-lg-0">
             <RadzenColumn Size="12" SizeMD="12">
                 <RadzenStack>
@@ -20,12 +20,12 @@ else
                                 <RadzenColumn Size="12" SizeMD="9">
                                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
                                         <RadzenNumeric 
-                                            @bind-Value=@novaAtividade.NumeroRedmine 
+                                            @bind-Value=@atividadeNova.NumeroRedmine 
                                             ShowUpDown="false" 
                                             Style="width: 8rem;" 
                                             TValue="int?" />
                                         <RadzenButton ButtonStyle="ButtonStyle.Secondary"
-                                            Click="@(() => AbrirRedmine(novaAtividade.NumeroRedmine))"
+                                            Click="@(() => AbrirRedmine(atividadeNova.NumeroRedmine))"
                                             Icon="language"
                                             Text="Abrir tarefa">
                                         </RadzenButton>
@@ -44,7 +44,7 @@ else
                                 <RadzenColumn Size="12" SizeMD="3">
                                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
                                         <RadzenTextBox 
-                                            @bind-Value=@novaAtividade.Sistema
+                                            @bind-Value=@atividadeNova.Sistema
                                             Name="Sistema"
                                             Style="width: 100%;" />
                                     </RadzenStack>
@@ -62,7 +62,7 @@ else
                                 <RadzenColumn Size="12" SizeMD="9">
                                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
                                         <RadzenTextBox 
-                                            @bind-Value=@novaAtividade.Descricao
+                                            @bind-Value=@atividadeNova.Descricao
                                                        Name="Descricao"
                                             Style="width: 100%;" />
                                     </RadzenStack>
@@ -74,6 +74,7 @@ else
                                     <RadzenLabel Text="Analista:"/>
                                     <RadzenDropDown
                                         AllowClear="true"
+                                        AllowFiltering
                                         Data="@analistasDto"
                                         Placeholder="Selecione"
                                         Style="width: 100%;"
@@ -86,6 +87,7 @@ else
                                     <RadzenLabel Text="Líder:"/>
                                     <RadzenDropDown
                                         AllowClear="true"
+                                        AllowFiltering
                                         Data="@lideresDto"
                                         Placeholder="Selecione"
                                         Style="width: 100%;"

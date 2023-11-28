@@ -24,7 +24,7 @@ public partial class AtividadeAdiciona
     #endregion
 
     #region Fields
-    private readonly AtividadeDto novaAtividade = new();
+    private readonly AtividadeDto atividadeNova = new();
 
     private IEnumerable<AnalistaDto>? analistasDto;
     private IEnumerable<LiderDto>? lideresDto;
