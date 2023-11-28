@@ -96,18 +96,18 @@ namespace Controle.Atividades.Infrastructure.Migrations
                 columns: new[] { "codigo", "email", "nome", "ativo" },
                 values: new object[,]
                 {
-                    { new Guid("13f14f86-ee2b-4aa4-aedf-3c34daf87705"), "lfmleitao@sf.prefeitura.sp.gov.br", "Luis Monteiro", 1 },
-                    { new Guid("1b5dfad3-6624-453b-a5b5-46e060e41c90"), "avieira@sf.prefeitura.sp.gov.br", "Arthur Vieira", 1 },
-                    { new Guid("2d5c150d-6446-4195-a898-5b2b8e48c707"), "caandrade@sf.prefeitura.sp.gov.br", "Cláudio Almeida", 1 },
-                    { new Guid("4ae9913f-ab7c-4f68-8bb1-0c4e3a478f49"), "fmsilva@sf.prefeitura.sp.gov.br", "Félix Silva", 1 },
-                    { new Guid("59c92c95-45c3-4508-b131-b29e5105ceca"), "rgsouza@sf.prefeitura.sp.gov.br", "Renan Guedes", 1 },
-                    { new Guid("74d372b7-a724-4154-87fa-ad7300e2450e"), "gmarrafon@sf.prefeitura.sp.gov.br", "Glaucon Marrafon", 1 },
-                    { new Guid("86672458-bc3f-472d-82cb-c5fb7b5a563c"), "lcebarreto@sf.prefeitura.sp.gov.br", "Luis Barreto", 1 },
-                    { new Guid("8ae0f6ba-aadf-4a3a-8229-a98db5f17b4e"), "gcsantanna@sf.prefeitura.sp.gov.br", "Gabriel Capetini", 1 },
-                    { new Guid("9a49d24b-b082-407e-b099-adc4130b941c"), "csmagno@sf.prefeitura.sp.gov.br", "Cláudio Magno", 1 },
-                    { new Guid("dbaee3b0-7e5d-4340-add9-26bb67235d14"), "askaam@sf.prefeitura.sp.gov.br", "Alex Kaam", 1 },
-                    { new Guid("e41df73d-5dc8-429a-b630-686272b1a9ee"), "tsmachado@sf.prefeitura.sp.gov.br", "Thiago Maximiliano", 1 },
-                    { new Guid("f983a40c-5e7f-40c4-b5c9-b1f898f71713"), "rsmiranda@sf.prefeitura.sp.gov.br", "Rafael Miranda", 1 }
+                    { new Guid("0acb23ec-fd56-4136-8d9b-476a5c28c373"), "lfmleitao@sf.prefeitura.sp.gov.br", "Luis Monteiro", 1 },
+                    { new Guid("0d602ec9-e54a-4e5c-a7ec-376762f82228"), "fmsilva@sf.prefeitura.sp.gov.br", "Félix Silva", 1 },
+                    { new Guid("458a7f19-062a-4643-9f62-4318c1518d5c"), "rgsouza@sf.prefeitura.sp.gov.br", "Renan Guedes", 1 },
+                    { new Guid("6c364e7d-e18e-438a-9ad3-c6d1b1fb8e6a"), "avieira@sf.prefeitura.sp.gov.br", "Arthur Vieira", 1 },
+                    { new Guid("7aca6e61-3020-4685-827a-4d5e6639645b"), "tsmachado@sf.prefeitura.sp.gov.br", "Thiago Maximiliano", 1 },
+                    { new Guid("a520c331-959d-42ad-82f9-dbb2b2c79491"), "gcsantanna@sf.prefeitura.sp.gov.br", "Gabriel Capetini", 1 },
+                    { new Guid("ab9a0ac4-38bf-4e40-8e87-9e3b11037b5a"), "rsmiranda@sf.prefeitura.sp.gov.br", "Rafael Miranda", 1 },
+                    { new Guid("abe5dc57-8391-4806-a4bf-486a981de0aa"), "lcebarreto@sf.prefeitura.sp.gov.br", "Luis Barreto", 1 },
+                    { new Guid("d0b0fe52-b524-4cbd-987f-cf2df6ab0903"), "gmarrafon@sf.prefeitura.sp.gov.br", "Glaucon Marrafon", 1 },
+                    { new Guid("d5317f45-15a5-43e4-ba99-9bf8c35ab643"), "askaam@sf.prefeitura.sp.gov.br", "Alex Kaam", 1 },
+                    { new Guid("d9240918-ab52-40de-ae14-2849832f4ee2"), "caandrade@sf.prefeitura.sp.gov.br", "Cláudio Almeida", 1 },
+                    { new Guid("ebe38f75-f091-49e3-9555-038a74ad9c5b"), "csmagno@sf.prefeitura.sp.gov.br", "Cláudio Magno", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -115,10 +115,10 @@ namespace Controle.Atividades.Infrastructure.Migrations
                 columns: new[] { "codigo", "email", "nome", "ativo" },
                 values: new object[,]
                 {
-                    { new Guid("2bbd0e0e-5739-45cd-81f0-7978c0ed85d3"), "rpioli@sf.prefeitura.sp.gov.br", "Rafael Pioli", 1 },
-                    { new Guid("3add5538-6065-465a-8bfd-9abf7f98f7a8"), "fbrambilla@sf.prefeitura.sp.gov.br", "Fernando Brambilla", 1 },
-                    { new Guid("452c9ada-1116-43e0-adc5-ce93671f81e2"), "rodrigomallmann@sf.prefeitura.sp.gov.br", "Rodrigo Guerra", 1 },
-                    { new Guid("bf899e46-a1de-419e-9ea2-37eabfc9f8c0"), "camendes@sf.prefeitura.sp.gov.br", "Calemino Mendes", 1 }
+                    { new Guid("43862231-caff-4f25-955e-3bc5da729974"), "fbrambilla@sf.prefeitura.sp.gov.br", "Fernando Brambilla", 1 },
+                    { new Guid("59af77c0-980e-44ba-a54e-3104f21d5efe"), "camendes@sf.prefeitura.sp.gov.br", "Calemino Mendes", 1 },
+                    { new Guid("b4010015-dc2b-473d-a486-751ceecab6d4"), "rpioli@sf.prefeitura.sp.gov.br", "Rafael Pioli", 1 },
+                    { new Guid("bcb63412-cdd5-4455-a465-3e6f0867dce6"), "rodrigomallmann@sf.prefeitura.sp.gov.br", "Rodrigo Guerra", 1 }
                 });
 
             migrationBuilder.CreateIndex(

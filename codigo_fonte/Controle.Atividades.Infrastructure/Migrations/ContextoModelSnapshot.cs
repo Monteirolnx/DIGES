@@ -50,84 +50,84 @@ namespace Controle.Atividades.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Codigo = new Guid("dbaee3b0-7e5d-4340-add9-26bb67235d14"),
+                            Codigo = new Guid("d5317f45-15a5-43e4-ba99-9bf8c35ab643"),
                             Email = "askaam@sf.prefeitura.sp.gov.br",
                             Nome = "Alex Kaam",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("1b5dfad3-6624-453b-a5b5-46e060e41c90"),
+                            Codigo = new Guid("6c364e7d-e18e-438a-9ad3-c6d1b1fb8e6a"),
                             Email = "avieira@sf.prefeitura.sp.gov.br",
                             Nome = "Arthur Vieira",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("2d5c150d-6446-4195-a898-5b2b8e48c707"),
+                            Codigo = new Guid("d9240918-ab52-40de-ae14-2849832f4ee2"),
                             Email = "caandrade@sf.prefeitura.sp.gov.br",
                             Nome = "Cláudio Almeida",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("9a49d24b-b082-407e-b099-adc4130b941c"),
+                            Codigo = new Guid("ebe38f75-f091-49e3-9555-038a74ad9c5b"),
                             Email = "csmagno@sf.prefeitura.sp.gov.br",
                             Nome = "Cláudio Magno",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("4ae9913f-ab7c-4f68-8bb1-0c4e3a478f49"),
+                            Codigo = new Guid("0d602ec9-e54a-4e5c-a7ec-376762f82228"),
                             Email = "fmsilva@sf.prefeitura.sp.gov.br",
                             Nome = "Félix Silva",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("8ae0f6ba-aadf-4a3a-8229-a98db5f17b4e"),
+                            Codigo = new Guid("a520c331-959d-42ad-82f9-dbb2b2c79491"),
                             Email = "gcsantanna@sf.prefeitura.sp.gov.br",
                             Nome = "Gabriel Capetini",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("74d372b7-a724-4154-87fa-ad7300e2450e"),
+                            Codigo = new Guid("d0b0fe52-b524-4cbd-987f-cf2df6ab0903"),
                             Email = "gmarrafon@sf.prefeitura.sp.gov.br",
                             Nome = "Glaucon Marrafon",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("86672458-bc3f-472d-82cb-c5fb7b5a563c"),
+                            Codigo = new Guid("abe5dc57-8391-4806-a4bf-486a981de0aa"),
                             Email = "lcebarreto@sf.prefeitura.sp.gov.br",
                             Nome = "Luis Barreto",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("13f14f86-ee2b-4aa4-aedf-3c34daf87705"),
+                            Codigo = new Guid("0acb23ec-fd56-4136-8d9b-476a5c28c373"),
                             Email = "lfmleitao@sf.prefeitura.sp.gov.br",
                             Nome = "Luis Monteiro",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("f983a40c-5e7f-40c4-b5c9-b1f898f71713"),
+                            Codigo = new Guid("ab9a0ac4-38bf-4e40-8e87-9e3b11037b5a"),
                             Email = "rsmiranda@sf.prefeitura.sp.gov.br",
                             Nome = "Rafael Miranda",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("59c92c95-45c3-4508-b131-b29e5105ceca"),
+                            Codigo = new Guid("458a7f19-062a-4643-9f62-4318c1518d5c"),
                             Email = "rgsouza@sf.prefeitura.sp.gov.br",
                             Nome = "Renan Guedes",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("e41df73d-5dc8-429a-b630-686272b1a9ee"),
+                            Codigo = new Guid("7aca6e61-3020-4685-827a-4d5e6639645b"),
                             Email = "tsmachado@sf.prefeitura.sp.gov.br",
                             Nome = "Thiago Maximiliano",
                             Status = 1
@@ -216,28 +216,28 @@ namespace Controle.Atividades.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Codigo = new Guid("bf899e46-a1de-419e-9ea2-37eabfc9f8c0"),
+                            Codigo = new Guid("59af77c0-980e-44ba-a54e-3104f21d5efe"),
                             Email = "camendes@sf.prefeitura.sp.gov.br",
                             Nome = "Calemino Mendes",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("3add5538-6065-465a-8bfd-9abf7f98f7a8"),
+                            Codigo = new Guid("43862231-caff-4f25-955e-3bc5da729974"),
                             Email = "fbrambilla@sf.prefeitura.sp.gov.br",
                             Nome = "Fernando Brambilla",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("2bbd0e0e-5739-45cd-81f0-7978c0ed85d3"),
+                            Codigo = new Guid("b4010015-dc2b-473d-a486-751ceecab6d4"),
                             Email = "rpioli@sf.prefeitura.sp.gov.br",
                             Nome = "Rafael Pioli",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("452c9ada-1116-43e0-adc5-ce93671f81e2"),
+                            Codigo = new Guid("bcb63412-cdd5-4455-a465-3e6f0867dce6"),
                             Email = "rodrigomallmann@sf.prefeitura.sp.gov.br",
                             Nome = "Rodrigo Guerra",
                             Status = 1
