@@ -5,7 +5,7 @@ public partial class AtividadeEdita
 {
     [Parameter]
     public string? CodigoAtividade { get; set; }
-    
+
     #region Injects
     [Inject]
     protected IAutenticacaoServico AutenticacaoServico { get; set; } = default!;
@@ -24,10 +24,14 @@ public partial class AtividadeEdita
 
     [Inject]
     protected NotificationService NotificationService { get; set; } = default!;
+
+    [Inject]
+    protected TooltipService TooltipService { get; set; } = default!;
     #endregion
 
     #region Fields
     private AtividadeDto atividadeAtual = new();
+    private IEnumerable<ObservacaoDto> ultimaObservacaoDto;
 
     private IEnumerable<AnalistaDto>? analistasDto;
     private IEnumerable<LiderDto>? lideresDto;
@@ -36,9 +40,11 @@ public partial class AtividadeEdita
     private LiderDto liderSelecionado = default!;
 
     private bool carregando = true;
-    private string? observacao = string.Empty;
-    #endregion
     
+    private string? observacao = string.Empty;
+
+    #endregion
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!AutenticacaoServico.UsuarioEstaLogado)
@@ -64,10 +70,10 @@ public partial class AtividadeEdita
 
                 if (atividadeAtual.Historico != null)
                 {
-                     observacao = atividadeAtual.Historico.Select(r=> r.Registro).FirstOrDefault();
+                    ultimaObservacaoDto = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
                 }
             }
-            
+
             analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
             lideresDto = await ProfissionalServico.ConsultaTodosLideres();
 
@@ -164,4 +170,18 @@ public partial class AtividadeEdita
     {
         NavigationManager.NavigateTo("/atividade-consulta-todas");
     }
+
+    private Task MostrarHistorico()
+    {
+
+        throw new NotImplementedException();
+    }
+
+    #region Auxiliares
+    private void MostrarAjuda(ElementReference elementReference, string tooltipText, TooltipOptions? options = null)
+    {
+        var tooltipOptions = options ?? new TooltipOptions { Delay = 100, Duration = 1000 };
+        TooltipService.Open(elementReference, tooltipText, tooltipOptions);
+    }
+    #endregion
 }

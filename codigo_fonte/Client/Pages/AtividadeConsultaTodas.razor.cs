@@ -115,7 +115,6 @@ public partial class AtividadeConsultaTodas
     #region Auxiliares
     private void MostrarAjuda(ElementReference elementReference, string tooltipText, TooltipOptions? options = null)
     {
-        // Configura opções com uma duração curta se nenhuma opção for fornecida
         var tooltipOptions = options ?? new TooltipOptions { Delay = 100, Duration = 1000 };
         TooltipService.Open(elementReference, tooltipText, tooltipOptions);
     }

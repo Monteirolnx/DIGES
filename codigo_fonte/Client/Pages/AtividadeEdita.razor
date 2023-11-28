@@ -101,7 +101,7 @@ else
                                                      AllowFiltering="false"
                                                      AllowPaging="true"
                                                      AllowSorting="false"
-                                                     Data="@atividadeAtual.Historico"
+                                                     Data="@ultimaObservacaoDto"
                                                      EmptyText="Nenhum registro encontrado."
                                                      FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                                      FilterMode="FilterMode.Simple"
@@ -117,26 +117,42 @@ else
                                                                    Title="Última observação"
                                                                    Sortable="false"
                                                                    TItem="ObservacaoDto"
-                                                                   Width="30%">
+                                                                   Width="90%">
                                                  <Template Context="observacaoDto">
                                                      @{
-                                                        {
-                                                            if (!string.IsNullOrEmpty(observacaoDto.Registro))
-                                                            {
-                                                                <div style="white-space: pre-wrap;">
-                                                                    <strong>@observacaoDto.Data.ToString("d")</strong> - @observacaoDto.Registro
-                                                                </div>
-                                                            }
-                                                            else
-                                                            {
-                                                                @:Nenhuma observação
-                                                            }
-                                                        }
-                                                    }
+                                                 {
+                                                     if (!string.IsNullOrEmpty(observacaoDto.Registro))
+                                                     {
+                                                         <div style="white-space: pre-wrap;">
+                                                             <strong>@observacaoDto.Data.ToString("d")</strong> - @observacaoDto.Registro
+                                                         </div>
+                                                     }
+                                                     else
+                                                     {
+                                                         @:Nenhuma observação
+                                                     }
+                                                 }
+                                                     }
+                                                 </Template>
+                                             </RadzenDataGridColumn>
+
+                                            <RadzenDataGridColumn Sortable="false"
+                                                                  TextAlign="TextAlign.Center"
+                                                                  TItem="ObservacaoDto"
+                                                                  Title="Ações"
+                                                                  Width="10%">
+                                                <Template Context="atividadeDto">
+                                                    <div style="text-align: center;">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Primary"
+                                                                      Click="@(() => MostrarHistorico())"
+                                                                      Icon="history"
+                                                                      MouseEnter="@(args => MostrarAjuda(args, "Histórico"))"
+                                                                      Size="ButtonSize.Small" />
+                                                    </div>
                                                 </Template>
                                             </RadzenDataGridColumn>
 
-                                        </Columns>
+                                         </Columns>
                                     </RadzenDataGrid>
                                 </RadzenStack>
                             </RadzenColumn>
