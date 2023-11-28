@@ -10,6 +10,7 @@ global using Controle.Atividades.Domain.Entidades;
 global using Controle.Atividades.Domain.Enums;
 global using JetBrains.Annotations;
 global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Components.Rendering;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Microsoft.JSInterop;
 global using Radzen;
