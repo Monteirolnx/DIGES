@@ -1,4 +1,5 @@
 ﻿@page "/atividade-consulta-todas"
+@using Radzen.Blazor.Rendering
 
 @if (carregando)
 {
@@ -157,14 +158,39 @@ else
                                               Width="10%">
                             <Template Context="atividadeDto">
                                 <div style="text-align: center;">
-                                    <RadzenButton Icon="history" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Click="@(() => EditarAtividade(atividadeDto))" />
+
+                                    <RadzenButton 
+                                        ButtonStyle="ButtonStyle.Primary" 
+                                        Click="@(() => EditarAtividade(atividadeDto))" 
+                                        Icon="history"
+                                                  MouseEnter="@(args => MostrarAjuda(args, "Editar"))"
+                                        Size="ButtonSize.Small"/>
 
                                     @if (atividadeDto.Status == TipoAbertaFechada.Aberta)
                                     {
-                                        <RadzenButton Icon="done" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Click="@(() => FecharAtividade(atividadeDto))" />
+                                        <RadzenButton
+                                            ButtonStyle="ButtonStyle.Secondary"
+                                            Click="@(() => FinalizarAtividade(atividadeDto))"
+                                            Icon="done"
+                                            MouseEnter="@(args => MostrarAjuda(args, "Finalizar"))"
+                                            Size="ButtonSize.Small"/>
+                                    }
+                                    else
+                                    {
+                                        <RadzenButton 
+                                            ButtonStyle="ButtonStyle.Secondary" 
+                                            Click="@(() => ReabrirAtividade(atividadeDto))" 
+                                            Icon="open_in_new"
+                                            MouseEnter="@(args => MostrarAjuda(args, "Reabrir"))"
+                                            Size="ButtonSize.Small" />
                                     }
 
-                                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.Small" Click="@(() => ExcluirAtividade(atividadeDto))" />
+                                    <RadzenButton 
+                                        ButtonStyle="ButtonStyle.Danger" 
+                                        Click="@(() => ExcluirAtividade(atividadeDto))" 
+                                        Icon="delete"
+                                        MouseEnter="@(args => MostrarAjuda(args, "Excluir"))"
+                                        Size="ButtonSize.Small" />
                                 </div>
                             </Template>
                         </RadzenDataGridColumn>

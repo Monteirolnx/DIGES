@@ -14,6 +14,9 @@ public partial class AtividadeConsultaTodas
     protected IAtividadeServico AtividadeServico { get; set; } = default!;
 
     [Inject]
+    protected DialogService DialogService { get; set; } = default!;
+
+    [Inject]
     protected IJSRuntime JsRuntime { get; set; } = default!;
 
     [Inject]
@@ -21,6 +24,9 @@ public partial class AtividadeConsultaTodas
 
     [Inject]
     protected IProfissionalServico ProfissionalServico { get; set; } = default!;
+
+    [Inject]
+    protected TooltipService TooltipService { get; set; } = default!;
     #endregion
 
     #region Fields
@@ -105,15 +111,37 @@ public partial class AtividadeConsultaTodas
         NavigationManager.NavigateTo($"/atividade-edita/{atividadedto.Codigo}");
     }
 
-
-    private Task ExcluirAtividade(AtividadeDto atividadedto)
+    private async Task ExcluirAtividade(AtividadeDto atividadedto)
     {
-        throw new NotImplementedException();
+        var questao = await DialogService.Confirm("Tem certeza que deseja excluir esta atividade?", "Confirmar Exclusão", new ConfirmOptions { OkButtonText = "Excluir", CancelButtonText = "Cancelar" });
+
+        if (questao == true)
+        {
+            // Código para excluir a atividade
+            // Por exemplo: await AtividadeServico.Excluir(atividadedto.Codigo);
+        }
     }
 
-    private Task FecharAtividade(AtividadeDto atividadedto)
+    private async Task FinalizarAtividade(AtividadeDto atividadedto)
     {
-        throw new NotImplementedException();
+        var questao = await DialogService.Confirm("Tem certeza que deseja finalizar esta atividade?", "Confirmar fechamento", new ConfirmOptions { OkButtonText = "Finalizar", CancelButtonText = "Cancelar" });
+
+        if (questao == true)
+        {
+            // Código para excluir a atividade
+            // Por exemplo: await AtividadeServico.Excluir(atividadedto.Codigo);
+        }
+    }
+
+    private async Task ReabrirAtividade(AtividadeDto atividadedto)
+    {
+        var questao = await DialogService.Confirm("Tem certeza que deseja reabrir esta atividade?", "Confirmar re-abertura", new ConfirmOptions { OkButtonText = "Reabrir", CancelButtonText = "Cancelar" });
+
+        if (questao == true)
+        {
+            // Código para excluir a atividade
+            // Por exemplo: await AtividadeServico.Excluir(atividadedto.Codigo);
+        }
     }
 
     private async Task AbrirRedmine(int? pNumeroRedmine)
@@ -121,4 +149,12 @@ public partial class AtividadeConsultaTodas
         var url = $"https://redmine.sf.prefeitura.sp.gov.br/issues/{pNumeroRedmine}";
         await JsRuntime.InvokeVoidAsync("open", url, "_blank");
     }
+
+    #region Auxiliares
+    private void MostrarAjuda(ElementReference elementReference, string tooltipText, TooltipOptions? options = null)
+    {
+        TooltipService.Open(elementReference, tooltipText, options);
+    }
+
+    #endregion
 }

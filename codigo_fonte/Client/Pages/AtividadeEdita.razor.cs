@@ -129,7 +129,7 @@ public partial class AtividadeEdita
 
             if (!string.IsNullOrEmpty(observacao))
             {
-                atividadeDto.Historico = new List<ObservacaoDto>()
+                atividadeDto.Historico = new List<ObservacaoDto>
                 {
                     new()
                     {

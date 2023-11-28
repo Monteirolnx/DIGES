@@ -100,7 +100,7 @@ public partial class AtividadeAdiciona
 
             if (!string.IsNullOrEmpty(observacao))
             {
-                atividadeDto.Historico = new List<ObservacaoDto>()
+                atividadeDto.Historico = new List<ObservacaoDto>
                 {
                     new()
                     {
