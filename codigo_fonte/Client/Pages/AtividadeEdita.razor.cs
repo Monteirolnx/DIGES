@@ -14,6 +14,9 @@ public partial class AtividadeEdita
     protected IAtividadeServico AtividadeServico { get; set; } = default!;
 
     [Inject]
+    protected DialogService DialogService { get; set; } = default!;
+
+    [Inject]
     protected IJSRuntime JsRuntime { get; set; } = default!;
 
     [Inject]
@@ -31,16 +34,15 @@ public partial class AtividadeEdita
 
     #region Fields
     private AtividadeDto atividadeAtual = new();
-    private IEnumerable<ObservacaoDto> ultimaObservacaoDto;
-
-    private IEnumerable<AnalistaDto>? analistasDto;
-    private IEnumerable<LiderDto>? lideresDto;
-
     private AnalistaDto analistaSelecionado = default!;
     private LiderDto liderSelecionado = default!;
 
+    private IEnumerable<AnalistaDto>? analistasDto;
+    private IEnumerable<LiderDto>? lideresDto;
+    private IEnumerable<ObservacaoDto>? ultimaObservacao;
+
     private bool carregando = true;
-    
+
     private string? observacao = string.Empty;
 
     #endregion
@@ -70,7 +72,7 @@ public partial class AtividadeEdita
 
                 if (atividadeAtual.Historico != null)
                 {
-                    ultimaObservacaoDto = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
+                    ultimaObservacao = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
                 }
             }
 
@@ -171,10 +173,11 @@ public partial class AtividadeEdita
         NavigationManager.NavigateTo("/atividade-consulta-todas");
     }
 
-    private Task MostrarHistorico()
+    private async Task MostrarHistorico()
     {
-
-        throw new NotImplementedException();
+        await DialogService.OpenAsync<AtividadeHistorico>($"Atividade: {atividadeAtual.NumeroRedmine}",
+            new Dictionary<string, object> { { "codigoAtividade", atividadeAtual.Codigo.ToString() } },
+            new DialogOptions { Width = "1200px", Height = "700px", Resizable = true, Draggable = true });
     }
 
     #region Auxiliares

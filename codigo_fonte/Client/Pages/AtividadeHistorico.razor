@@ -1,0 +1,90 @@
+﻿@page "/atividade-historico/{codigoAtividade}"
+
+@if (carregando)
+{
+    <p><em>Carregando...</em></p>
+}
+else
+{
+    <RadzenRow Gap="2rem" Class="rz-p-0 rz-p-lg-0">
+        <RadzenColumn Size="12" SizeMD="12">
+            <RadzenStack>
+                <RadzenStack Gap="1rem">
+                    <RadzenColumn Size="12">
+                        <RadzenStack>
+                            
+                            <RadzenDataGrid AllowAlternatingRows="false"
+                                            AllowColumnResize="false"
+                                            AllowFiltering="false"
+                                            AllowPaging="true"
+                                            AllowSorting="false"
+                                            Data="@atividadeAtual?.Historico"
+                                            EditMode="DataGridEditMode.Single"
+                                            EmptyText="Nenhum registro encontrado."
+                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                            FilterMode="FilterMode.Simple"
+                                            LogicalFilterOperator="LogicalFilterOperator.And"
+                                            PagerHorizontalAlign="HorizontalAlign.Left"
+                                            Page="@Reset"
+                                            PageSize="5"
+                                            @ref="observacaoGrid"
+                                            RowUpdate="@OnUpdateRow"
+                                            Sort="@Reset"
+                                            ShowPagingSummary="true"
+                                            Style="max-width: 1150px; width: 100%;"
+                                            TItem="ObservacaoDto">
+                                <Columns>
+
+                                    <RadzenDataGridColumn Filterable="false"
+                                                          Title="Observaçoes"
+                                                          Sortable="false"
+                                                          TItem="ObservacaoDto"
+                                                          Width="15%">
+                                        <Template Context="observacao">
+                                            @($"{observacao.Data:d}")
+                                        </Template>
+                                        <EditTemplate Context="observacao">
+                                            <RadzenDatePicker ShowTime="true" @bind-Value="observacao.Data" Style="width:100%" />
+                                        </EditTemplate>
+                                    </RadzenDataGridColumn>
+
+                                    <RadzenDataGridColumn Filterable="false"
+                                                          Title="Observaçoes"
+                                                          Sortable="false"
+                                                          Property="Registro"
+                                                          TItem="ObservacaoDto"
+                                                          Width="75%">
+                                        <EditTemplate Context="observacao">
+                                            <RadzenTextArea @bind-Value="observacao.Registro" Rows="5" Style="width:845px; display: block" Name="Registro" />
+                                            <RadzenRequiredValidator Text="Observação é obrigatória" Component="Registro" Popup="false" />
+                                        </EditTemplate>
+                                        
+                                    </RadzenDataGridColumn>
+
+                                    <RadzenDataGridColumn Context="observacao" Filterable="false" Frozen="true" FrozenPosition="FrozenColumnPosition.Right" Sortable="false" TextAlign="TextAlign.Right" TItem="ObservacaoDto">
+                                        <Template Context="observacao">
+                                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Size="ButtonSize.Small" Click="@(args => EditarLinha(observacao))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeleteRow(observacao))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                        </Template>
+                                        <EditTemplate Context="observacao">
+                                            <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Small" Click="@((args) => SalvarLinha(observacao))">
+                                            </RadzenButton>
+                                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Size="ButtonSize.Small" class="my-1 ms-1" Click="@((args) => CancelEdit(observacao))">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeleteRow(observacao))">
+                                            </RadzenButton>
+                                        </EditTemplate>
+                                    </RadzenDataGridColumn>
+
+
+                                </Columns>
+                            </RadzenDataGrid>
+                        </RadzenStack>
+                    </RadzenColumn>
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+}

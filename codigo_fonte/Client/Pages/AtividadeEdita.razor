@@ -10,7 +10,7 @@ else
         <RadzenRow Gap="2rem" Class="rz-p-0 rz-p-lg-0">
             <RadzenColumn Size="12" SizeMD="12">
                 <RadzenStack>
-                    <RadzenFieldset Text="Incluir atividade">
+                    <RadzenFieldset Text="Editar atividade">
                         <RadzenStack Gap="1rem">
 
                             <RadzenRow AlignItems="AlignItems.Center">
@@ -68,32 +68,32 @@ else
                                 <RadzenColumn Size="6" SizeMD="6">
                                     <RadzenLabel Text="Analista:" />
                                     <RadzenDropDown AllowClear="true"
-                                                        AllowFiltering
-                                                     Data="@analistasDto"
-                                                     Placeholder="Selecione"
-                                                     Style="width: 100%;"
-                                                     TextProperty="Nome"
-                                                     TValue="AnalistaDto?"
-                                                     Value="@analistaSelecionado"
-                                                     ValueChanged="OnAnalistaChanged">
-                                     </RadzenDropDown>
-                                 </RadzenColumn>
-                                 <RadzenColumn Size="6" SizeMD="6">
-                                     <RadzenLabel Text="Líder:" />
-                                     <RadzenDropDown AllowClear="true"
-                                                        AllowFiltering
-                                                     Data="@lideresDto"
-                                                     Placeholder="Selecione"
-                                                     Style="width: 100%;"
-                                                     TextProperty="Nome"
-                                                     TValue="LiderDto?"
-                                                     Value="@liderSelecionado"
-                                                     ValueChanged="OnLiderChanged">
-                                     </RadzenDropDown>
-                                 </RadzenColumn>
-                             </RadzenRow>
-
-                             <RadzenColumn Size="12">
+                                                    AllowFiltering
+                                                    Data="@analistasDto"
+                                                    Placeholder="Selecione"
+                                                    Style="width: 100%;"
+                                                    TextProperty="Nome"
+                                                    TValue="AnalistaDto?"
+                                                    Value="@analistaSelecionado"
+                                                    ValueChanged="OnAnalistaChanged">
+                                    </RadzenDropDown>
+                                </RadzenColumn>
+                                <RadzenColumn Size="6" SizeMD="6">
+                                    <RadzenLabel Text="Líder:" />
+                                    <RadzenDropDown AllowClear="true"
+                                                    AllowFiltering
+                                                    Data="@lideresDto"
+                                                    Placeholder="Selecione"
+                                                    Style="width: 100%;"
+                                                    TextProperty="Nome"
+                                                    TValue="LiderDto?"
+                                                    Value="@liderSelecionado"
+                                                    ValueChanged="OnLiderChanged">
+                                    </RadzenDropDown>
+                                </RadzenColumn>
+                            </RadzenRow>
+                            
+                            <RadzenColumn Size="12">
                                  <RadzenStack>
 
                                      <RadzenDataGrid AllowAlternatingRows="false"
@@ -101,7 +101,7 @@ else
                                                      AllowFiltering="false"
                                                      AllowPaging="true"
                                                      AllowSorting="false"
-                                                     Data="@ultimaObservacaoDto"
+                                                     Data="@ultimaObservacao"
                                                      EmptyText="Nenhum registro encontrado."
                                                      FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                                      FilterMode="FilterMode.Simple"
@@ -144,7 +144,7 @@ else
                                                 <Template Context="atividadeDto">
                                                     <div style="text-align: center;">
                                                         <RadzenButton ButtonStyle="ButtonStyle.Primary"
-                                                                      Click="@(() => MostrarHistorico())"
+                                                                      Click="@(MostrarHistorico)"
                                                                       Icon="history"
                                                                       MouseEnter="@(args => MostrarAjuda(args, "Histórico"))"
                                                                       Size="ButtonSize.Small" />
