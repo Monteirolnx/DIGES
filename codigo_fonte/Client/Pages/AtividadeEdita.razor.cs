@@ -143,33 +143,33 @@ public partial class AtividadeEdita
 
             if (!string.IsNullOrEmpty(observacao))
             {
-                atividadeDto.Historico = new List<ObservacaoDto>
+                atividadeDto.Historico?.Add(new ObservacaoDto
                 {
-                    new()
-                    {
-                        Data = DateTime.Now,
-                        Registro = observacao
-                    }
-                };
+                    Data = DateTime.Now,
+                    Registro = observacao
+                });
             }
-            else
-            {
-                atividadeDto.Historico = null;
-            }
+            
+            atividadeDto.DtModificacao = DateTime.Now;
 
-            atividadeDto.DtCriacao = DateTime.Now;
-            atividadeDto.Status = TipoAbertaFechada.Aberta;
-
-            if (await AtividadeServico.Adicionar(atividadeDto))
+            if (await AtividadeServico.Editar(atividadeDto))
             {
-                NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Atividade adicionada", Duration = 2000 });
+                NotificationService.Notify(new NotificationMessage
+                    { Severity = NotificationSeverity.Success, Summary = "Atividade editada.", Duration = 2000 });
+
                 NavigationManager.NavigateTo("/atividade-consulta-todas");
             }
         }
         catch (Exception ex)
         {
-            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ocorreu um erro técnico. Entre em contato com o suporte.", Duration = 2000 });
+            NotificationService.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Ocorreu um erro técnico. Entre em contato com o suporte.", Duration = 2000
+            });
+
             await JsRuntime.InvokeVoidAsync("console.log", ex.ToString());
+
             throw;
         }
     }

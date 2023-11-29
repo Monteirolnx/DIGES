@@ -4,14 +4,21 @@ public class AtividadeClientServico(HttpClient httpClient) : IAtividadeServico
 {
     public async Task<bool> Adicionar(AtividadeDto atividadeDto)
     {
-        var resultado = await httpClient.PostAsJsonAsync("/api/atividade/v1/adicionar-atividade", atividadeDto);
+        var resultado = await httpClient.PostAsJsonAsync($"{Constantes.BaseUrlAtividade}{Constantes.AdicionaAtividade}", atividadeDto);
 
         return resultado.IsSuccessStatusCode;
     }
 
-    public async Task<IEnumerable<AtividadeDto>?> ConsultaTodas()
+    public async Task<bool> Editar(AtividadeDto atividadeDto)
     {
-        var httpResponseMessage = await httpClient.GetAsync("/api/atividade/v1/consulta-atividades");
+        var resultado = await httpClient.PostAsJsonAsync($"{Constantes.BaseUrlAtividade}{Constantes.EditaAtividade}", atividadeDto);
+
+        return resultado.IsSuccessStatusCode;
+    }
+
+    public async Task<IEnumerable<AtividadeDto>?> ConsultarTodas()
+    {
+        var httpResponseMessage = await httpClient.GetAsync($"{Constantes.BaseUrlAtividade}{Constantes.ConsultaTodasAtividades}");
 
         var resultado = await httpResponseMessage.Content.ReadFromJsonAsync<IEnumerable<AtividadeDto>?>();
 
@@ -20,7 +27,7 @@ public class AtividadeClientServico(HttpClient httpClient) : IAtividadeServico
 
     public async Task<AtividadeDto?> ConsultarPorCodigo(Guid codigoAtividade)
     {
-        var httpResponseMessage = await httpClient.GetAsync($"/api/atividade/v1/consulta-codigo/{codigoAtividade}");
+        var httpResponseMessage = await httpClient.GetAsync($"{Constantes.BaseUrlAtividade}{Constantes.ConsultaPorCodigoAtividade}{codigoAtividade}");
 
         if (!httpResponseMessage.IsSuccessStatusCode)
         {

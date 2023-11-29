@@ -31,7 +31,12 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
         return resultado > 0;
     }
 
-    public async Task<IEnumerable<AtividadeDto>?> ConsultaTodas()
+    public Task<bool> Editar(AtividadeDto atividadeDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<AtividadeDto>?> ConsultarTodas()
     {
         var atividades = await contexto.Atividades
             .AsNoTracking()

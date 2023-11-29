@@ -4,7 +4,7 @@ public class AtaClientServico(HttpClient httpClient) : IAtaServico
 {
     public async Task<AtaDto?> Gerar()
     {
-        var httpResponseMessage = await httpClient.GetAsync("/api/ata/v1/gerar");
+        var httpResponseMessage = await httpClient.GetAsync($"{Constantes.BaseUrlAta}{Constantes.GeraAta}");
 
         var resultado = await httpResponseMessage.Content.ReadFromJsonAsync<AtaDto?>();
 

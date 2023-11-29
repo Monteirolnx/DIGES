@@ -1,26 +1,34 @@
 ﻿namespace Controle.Atividades.Server.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route(Constantes.BaseUrlAtividade)]
 public class AtividadeController(IAtividadeServico atividadeServico) : ControllerBase
 {
-    [HttpPost("v1/adicionar-atividade")]
-    public async Task<IActionResult> AdicionarAtividade(AtividadeDto atividadeDto)
+    [HttpPost(Constantes.AdicionaAtividade)]
+    public async Task<IActionResult> Adicionar(AtividadeDto atividadeDto)
     {
         var resultado = await atividadeServico.Adicionar(atividadeDto);
 
         return Ok(resultado);
     }
 
-    [HttpGet("v1/consulta-atividades")]
-    public async Task<IActionResult> ConsultaAtividades()
+    [HttpPost(Constantes.EditaAtividade)]
+    public async Task<IActionResult> Editar(AtividadeDto atividadeDto)
     {
-        var resultado = await atividadeServico.ConsultaTodas();
+        var resultado = await atividadeServico.Editar(atividadeDto);
 
         return Ok(resultado);
     }
 
-    [HttpGet("v1/consulta-codigo/{codigoAtividade}")]
+    [HttpGet(Constantes.ConsultaTodasAtividades)]
+    public async Task<IActionResult> ConsultarTodas()
+    {
+        var resultado = await atividadeServico.ConsultarTodas();
+
+        return Ok(resultado);
+    }
+
+    [HttpGet(Constantes.ConsultaPorCodigoAtividade + "{codigoAtividade}")]
     public async Task<IActionResult> ConsultarPorCodigo(Guid codigoAtividade)
     {
         var resultado = await atividadeServico.ConsultarPorCodigo(codigoAtividade);

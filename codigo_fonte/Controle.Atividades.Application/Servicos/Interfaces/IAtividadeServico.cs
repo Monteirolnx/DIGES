@@ -4,7 +4,9 @@ public interface IAtividadeServico
 {
     Task<bool> Adicionar(AtividadeDto atividadeDto);
 
-    Task<IEnumerable<AtividadeDto>?> ConsultaTodas();
+    Task<bool> Editar(AtividadeDto atividadeDto);
+
+    Task<IEnumerable<AtividadeDto>?> ConsultarTodas();
 
     Task<AtividadeDto?> ConsultarPorCodigo(Guid codigoAtividade);
 }

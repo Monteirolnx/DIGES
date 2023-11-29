@@ -1,10 +1,10 @@
 ﻿namespace Controle.Atividades.Server.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route(Constantes.BaseUrlAta)]
 public class AtaController(IAtaServico ataServico) : ControllerBase
 {
-    [HttpGet("v1/gerar")]
+    [HttpGet(Constantes.GeraAta)]
     public async Task<IActionResult> Gerar()
     {
         var resultado = await ataServico.Gerar();

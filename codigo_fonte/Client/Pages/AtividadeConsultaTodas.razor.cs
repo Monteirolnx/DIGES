@@ -44,7 +44,7 @@ public partial class AtividadeConsultaTodas
 
         if (firstRender)
         {
-            atividadesDto = await AtividadeServico.ConsultaTodas();
+            atividadesDto = await AtividadeServico.ConsultarTodas();
             carregando = false;
             StateHasChanged();
         }
