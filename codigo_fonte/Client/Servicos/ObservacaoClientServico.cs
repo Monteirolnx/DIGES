@@ -8,4 +8,11 @@ public class ObservacaoClientServico(HttpClient httpClient) : IObservacaoServico
 
         return resultado.IsSuccessStatusCode;
     }
+
+    public async Task<bool> Excluir(ObservacaoDto observacaoDto)
+    {
+        var resultado = await httpClient.PostAsJsonAsync("/api/observacao/v1/excluir-observacao", observacaoDto);
+
+        return resultado.IsSuccessStatusCode;
+    }
 }

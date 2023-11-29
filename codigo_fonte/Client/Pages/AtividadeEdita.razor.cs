@@ -56,25 +56,7 @@ public partial class AtividadeEdita
 
         if (firstRender)
         {
-            if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
-            {
-                atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ?? throw new InvalidOperationException();
-
-                if (atividadeAtual.Analista != null)
-                {
-                    analistaSelecionado = atividadeAtual.Analista;
-                }
-
-                if (atividadeAtual.Lider != null)
-                {
-                    liderSelecionado = atividadeAtual.Lider;
-                }
-
-                if (atividadeAtual.Historico != null)
-                {
-                    ultimaObservacao = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
-                }
-            }
+            await ConsultarAtividade();
 
             analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
             lideresDto = await ProfissionalServico.ConsultaTodosLideres();
@@ -82,6 +64,30 @@ public partial class AtividadeEdita
             carregando = false;
 
             StateHasChanged();
+        }
+    }
+
+    private async Task ConsultarAtividade()
+    {
+        if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
+        {
+            atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ??
+                             throw new InvalidOperationException();
+
+            if (atividadeAtual.Analista != null)
+            {
+                analistaSelecionado = atividadeAtual.Analista;
+            }
+
+            if (atividadeAtual.Lider != null)
+            {
+                liderSelecionado = atividadeAtual.Lider;
+            }
+
+            if (atividadeAtual.Historico != null)
+            {
+                ultimaObservacao = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
+            }
         }
     }
 
@@ -178,6 +184,10 @@ public partial class AtividadeEdita
         await DialogService.OpenAsync<AtividadeHistorico>($"Atividade: {atividadeAtual.NumeroRedmine}",
             new Dictionary<string, object> { { "codigoAtividade", atividadeAtual.Codigo.ToString() } },
             new DialogOptions { Width = "1200px", Height = "700px", Resizable = true, Draggable = true });
+
+        await ConsultarAtividade();
+
+        StateHasChanged();
     }
 
     #region Auxiliares

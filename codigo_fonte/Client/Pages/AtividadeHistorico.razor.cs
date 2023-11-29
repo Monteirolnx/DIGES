@@ -1,6 +1,6 @@
 ﻿namespace Controle.Atividades.Client.Pages;
 
-public partial class  AtividadeHistorico
+public partial class AtividadeHistorico
 {
     [Parameter]
     public string? CodigoAtividade { get; set; }
@@ -18,7 +18,7 @@ public partial class  AtividadeHistorico
     [Inject]
     protected NotificationService NotificationService { get; set; } = default!;
     #endregion
-    
+
     #region Fields
     private AtividadeDto? atividadeAtual;
 
@@ -38,14 +38,31 @@ public partial class  AtividadeHistorico
     {
         if (firstRender)
         {
-            if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
-            {
-                atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade);
-            }
-            carregando = false;
+            await ConsultaAtividade();
 
+            carregando = false;
             StateHasChanged();
+            await observacaoGrid.LastPage();
         }
+    }
+
+    private async Task ConsultaAtividade()
+    {
+        if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
+        {
+            atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade);
+            if (atividadeAtual?.Historico != null)
+            {
+                atividadeAtual.Historico = atividadeAtual.Historico
+                    .OrderBy(h => h.Data)
+                    .ToList();
+            }
+        }
+    }
+
+    private void Resetar()
+    {
+        observacaoAtualizar = null;
     }
 
     private async Task EditarLinha(ObservacaoDto observacaoDto)
@@ -58,7 +75,7 @@ public partial class  AtividadeHistorico
     {
         try
         {
-            Reset();
+            Resetar();
             if (await ObservacaoServico.Editar(observacaoDto))
             {
                 NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Observação editada.", Duration = 2000 });
@@ -76,39 +93,41 @@ public partial class  AtividadeHistorico
     {
         await observacaoGrid.UpdateRow(observacaoDto);
     }
-    
 
-    private void Reset()
+    private async Task DeletarLinha(ObservacaoDto observacaoDto)
     {
-        observacaoAtualizar = null;
+        try
+        {
+            Resetar();
+            if (await ObservacaoServico.Excluir(observacaoDto))
+            {
+                NotificationService.Notify(new NotificationMessage
+                { Severity = NotificationSeverity.Success, Summary = "Observação excluída.", Duration = 2000 });
+
+                await ConsultaAtividade();
+                
+                StateHasChanged();
+                await observacaoGrid.Reload();
+                await observacaoGrid.LastPage();
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Ocorreu um erro técnico. Entre em contato com o suporte.",
+                Duration = 2000
+            });
+
+            await JsRuntime.InvokeVoidAsync("console.log", ex.ToString());
+            throw;
+        }
     }
 
-
-
-
-
-    private void CancelEdit(ObservacaoDto observacaoDto)
+    private void CancelarEdicao(ObservacaoDto observacaoDto)
     {
-        Reset();
+        Resetar();
         observacaoGrid.CancelEditRow(observacaoDto);
-    }
-
-    private async Task DeleteRow(ObservacaoDto observacaoDto)
-    {
-        Reset();
-
-        // if (orders.Contains(observacaoDto))
-        // {
-        //     dbContext.Remove<Order>(observacaoDto);
-
-        //     dbContext.SaveChanges();
-
-        //     await observacaoGrid.Reload();
-        // }
-        // else
-        // {
-        //     observacaoGrid.CancelEditRow(observacaoDto);
-        //     await observacaoGrid.Reload();
-        // }
     }
 }

@@ -25,11 +25,11 @@ else
                                             FilterMode="FilterMode.Simple"
                                             LogicalFilterOperator="LogicalFilterOperator.And"
                                             PagerHorizontalAlign="HorizontalAlign.Left"
-                                            Page="@Reset"
+                                            Page="@Resetar"
                                             PageSize="5"
                                             @ref="observacaoGrid"
                                             RowUpdate="@OnEditarLinha"
-                                            Sort="@Reset"
+                                            Sort="@Resetar"
                                             ShowPagingSummary="true"
                                             Style="max-width: 1150px; width: 100%;"
                                             TItem="ObservacaoDto">
@@ -65,19 +65,18 @@ else
                                         <Template Context="observacao">
                                             <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Size="ButtonSize.Small" Click="@(args => EditarLinha(observacao))" @onclick:stopPropagation="true">
                                             </RadzenButton>
-                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeleteRow(observacao))" @onclick:stopPropagation="true">
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeletarLinha(observacao))" @onclick:stopPropagation="true">
                                             </RadzenButton>
                                         </Template>
                                         <EditTemplate Context="observacao">
                                             <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Small" Click="@((args) => SalvarLinha(observacao))">
                                             </RadzenButton>
-                                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Size="ButtonSize.Small" class="my-1 ms-1" Click="@((args) => CancelEdit(observacao))">
+                                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Size="ButtonSize.Small" class="my-1 ms-1" Click="@((args) => CancelarEdicao(observacao))">
                                             </RadzenButton>
-                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeleteRow(observacao))">
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeletarLinha(observacao))">
                                             </RadzenButton>
                                         </EditTemplate>
                                     </RadzenDataGridColumn>
-
 
                                 </Columns>
                             </RadzenDataGrid>

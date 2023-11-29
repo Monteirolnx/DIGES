@@ -12,4 +12,12 @@ public class ObservacaoController(IObservacaoServico observacaoServico) : Contro
 
         return Ok(resultado);
     }
+
+    [HttpPost("v1/excluir-observacao")]
+    public async Task<IActionResult> ExcluirObservacao(ObservacaoDto observacaoDto)
+    {
+        var resultado = await observacaoServico.Excluir(observacaoDto);
+
+        return Ok(resultado);
+    }
 }
