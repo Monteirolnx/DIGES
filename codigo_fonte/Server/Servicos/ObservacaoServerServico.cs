@@ -35,4 +35,5 @@ public class ObservacaoServerServico(Contexto contexto, IMapper mapper) : IObser
 
         return resultado > 0;
     }
+
 }
