@@ -1,12 +1,12 @@
 ﻿namespace Controle.Atividades.Client.Servicos;
 
-public class AtividadeServicoClient(HttpClient httpClient) : IAtividadeServico
+public class AtividadeClientServico(HttpClient httpClient) : IAtividadeServico
 {
     public async Task<bool> Adicionar(AtividadeDto atividadeDto)
     {
-        var response = await httpClient.PostAsJsonAsync("/api/atividade/v1/adicionar-atividade", atividadeDto);
+        var resultado = await httpClient.PostAsJsonAsync("/api/atividade/v1/adicionar-atividade", atividadeDto);
 
-        return response.IsSuccessStatusCode;
+        return resultado.IsSuccessStatusCode;
     }
 
     public async Task<IEnumerable<AtividadeDto>?> ConsultaTodas()

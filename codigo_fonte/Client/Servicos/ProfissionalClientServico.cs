@@ -1,6 +1,6 @@
 ﻿namespace Controle.Atividades.Client.Servicos;
 
-public class ProfissionalServicoClient(HttpClient httpClient) : IProfissionalServico
+public class ProfissionalClientServico(HttpClient httpClient) : IProfissionalServico
 {
     public async Task<List<AnalistaDto>?> ConsultaTodosAnalistas()
     {

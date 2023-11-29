@@ -23,7 +23,7 @@ else
                     </div>
                     <div>
                         <RadzenButton Click="@GerarAta"
-                                      Icon="cloud_sync"
+                                      Icon="add_to_drive"
                                       Style="margin-bottom: 10px;"
                                       Text="Gerar Backup"
                                       ButtonStyle="ButtonStyle.Info" />
@@ -71,7 +71,11 @@ else
                                     <div style="font-weight: bold;">@atividadeDto.NumeroRedmine</div>
                                     @if (@atividadeDto.NumeroRedmine is not null)
                                     {
-                                        <RadzenButton Icon="link" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Click="@(() => AbrirRedmine(atividadeDto.NumeroRedmine))" />
+                                        <RadzenButton 
+                                            ButtonStyle="ButtonStyle.Secondary" 
+                                            Click="@(() => AbrirRedmine(atividadeDto.NumeroRedmine))" 
+                                            Icon="link" 
+                                            Size="ButtonSize.Small" />
                                     }
                                 </div>
                             </Template>

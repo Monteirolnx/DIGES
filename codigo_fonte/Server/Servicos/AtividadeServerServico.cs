@@ -1,6 +1,6 @@
 ﻿namespace Controle.Atividades.Server.Servicos;
 
-public class AtividadeServico (Contexto contexto, IMapper mapper) : IAtividadeServico
+public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtividadeServico
 {
     public async Task<bool> Adicionar(AtividadeDto atividadeDto)
     {
@@ -26,20 +26,20 @@ public class AtividadeServico (Contexto contexto, IMapper mapper) : IAtividadeSe
 
         await contexto.Atividades.AddAsync(atividade);
 
-       var resultado = await contexto.SaveChangesAsync();
+        var resultado = await contexto.SaveChangesAsync();
 
-       return resultado > 0;
+        return resultado > 0;
     }
 
     public async Task<IEnumerable<AtividadeDto>?> ConsultaTodas()
     {
         var atividades = await contexto.Atividades
             .AsNoTracking()
-            .Include(a=> a.Analista)
-            .Include(a=> a.Lider)
-            .Include(a=> a.Historico)
-            .OrderBy(a=> a.Analista!.Nome)
-            .ThenBy(a=> a.NumeroRedmine)
+            .Include(a => a.Analista)
+            .Include(a => a.Lider)
+            .Include(a => a.Historico)
+            .OrderBy(a => a.Analista!.Nome)
+            .ThenBy(a => a.NumeroRedmine)
             .ToListAsync();
 
         var resultado = mapper.Map<IEnumerable<AtividadeDto>>(atividades);

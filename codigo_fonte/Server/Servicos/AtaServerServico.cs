@@ -1,6 +1,6 @@
 ﻿namespace Controle.Atividades.Server.Servicos;
 
-public class AtaServico(Contexto contexto, IMapper mapper) : IAtaServico
+public class AtaServerServico(Contexto contexto, IMapper mapper) : IAtaServico
 {
     public async Task<AtaDto?> Gerar()
     {

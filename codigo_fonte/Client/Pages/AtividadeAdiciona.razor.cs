@@ -78,7 +78,7 @@ public partial class AtividadeAdiciona
     {
         try
         {
-            if (analistaSelecionado.Codigo != Guid.Empty)
+            if (analistaSelecionado != null && analistaSelecionado.Codigo != Guid.Empty)
             {
                 atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
                 atividadeDto.Analista = analistaSelecionado;
@@ -88,7 +88,7 @@ public partial class AtividadeAdiciona
                 atividadeDto.Analista = null;
             }
 
-            if (liderSelecionado.Codigo != Guid.Empty)
+            if (liderSelecionado != null && liderSelecionado.Codigo != Guid.Empty)
             {
                 atividadeDto.CodigoLider = liderSelecionado.Codigo;
                 atividadeDto.Lider = liderSelecionado;
@@ -119,7 +119,7 @@ public partial class AtividadeAdiciona
 
             if (await AtividadeServico.Adicionar(atividadeDto))
             {
-                NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Atividade adicionada",Duration = 2000 });
+                NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Atividade adicionada.",Duration = 2000 });
                 NavigationManager.NavigateTo("/atividade-consulta-todas");
             }
         }

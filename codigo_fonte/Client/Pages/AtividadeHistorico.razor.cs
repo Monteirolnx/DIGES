@@ -5,9 +5,20 @@ public partial class  AtividadeHistorico
     [Parameter]
     public string? CodigoAtividade { get; set; }
 
+    #region Injects
     [Inject]
     protected IAtividadeServico AtividadeServico { get; set; } = default!;
 
+    [Inject]
+    protected IJSRuntime JsRuntime { get; set; } = default!;
+
+    [Inject]
+    protected IObservacaoServico ObservacaoServico { get; set; } = default!;
+
+    [Inject]
+    protected NotificationService NotificationService { get; set; } = default!;
+    #endregion
+    
     #region Fields
     private AtividadeDto? atividadeAtual;
 
@@ -43,6 +54,24 @@ public partial class  AtividadeHistorico
         await observacaoGrid.EditRow(observacaoDto);
     }
 
+    private async Task OnEditarLinha(ObservacaoDto observacaoDto)
+    {
+        try
+        {
+            Reset();
+            if (await ObservacaoServico.Editar(observacaoDto))
+            {
+                NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Observação editada.", Duration = 2000 });
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ocorreu um erro técnico. Entre em contato com o suporte.", Duration = 2000 });
+            await JsRuntime.InvokeVoidAsync("console.log", ex.ToString());
+            throw;
+        }
+    }
+
     private async Task SalvarLinha(ObservacaoDto observacaoDto)
     {
         await observacaoGrid.UpdateRow(observacaoDto);
@@ -55,14 +84,7 @@ public partial class  AtividadeHistorico
     }
 
 
-    private void OnUpdateRow(ObservacaoDto observacaoDto)
-    {
-        Reset();
 
-
-
-
-    }
 
 
     private void CancelEdit(ObservacaoDto observacaoDto)

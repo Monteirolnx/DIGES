@@ -1,6 +1,6 @@
 ﻿namespace Controle.Atividades.Server.Servicos;
 
-public class ProfissionalServico(Contexto contexto, IMapper mapper) : IProfissionalServico
+public class ProfissionalServerServico(Contexto contexto, IMapper mapper) : IProfissionalServico
 {
     public async Task<List<AnalistaDto>?> ConsultaTodosAnalistas()
     {

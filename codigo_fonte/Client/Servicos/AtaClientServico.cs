@@ -1,6 +1,6 @@
 ﻿namespace Controle.Atividades.Client.Servicos;
 
-public class AtaServicoClient(HttpClient httpClient) : IAtaServico
+public class AtaClientServico(HttpClient httpClient) : IAtaServico
 {
     public async Task<AtaDto?> Gerar()
     {
