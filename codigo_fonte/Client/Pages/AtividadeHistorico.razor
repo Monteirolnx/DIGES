@@ -25,18 +25,16 @@ else
                                             FilterMode="FilterMode.Simple"
                                             LogicalFilterOperator="LogicalFilterOperator.And"
                                             PagerHorizontalAlign="HorizontalAlign.Left"
-                                            Page="@Resetar"
                                             PageSize="5"
                                             @ref="observacaoGrid"
                                             RowUpdate="@OnEditarLinha"
-                                            Sort="@Resetar"
                                             ShowPagingSummary="true"
                                             Style="max-width: 1150px; width: 100%;"
                                             TItem="ObservacaoDto">
                                 <Columns>
 
                                     <RadzenDataGridColumn Filterable="false"
-                                                          Title="Observaçoes"
+                                                          Title="Data"
                                                           Sortable="false"
                                                           TItem="ObservacaoDto"
                                                           Width="15%">
@@ -49,7 +47,7 @@ else
                                     </RadzenDataGridColumn>
 
                                     <RadzenDataGridColumn Filterable="false"
-                                                          Title="Observaçoes"
+                                                          Title="Observação"
                                                           Sortable="false"
                                                           Property="Registro"
                                                           TItem="ObservacaoDto"

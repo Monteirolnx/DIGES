@@ -27,8 +27,6 @@ public partial class AtividadeHistorico
 
     private RadzenDataGrid<ObservacaoDto> observacaoGrid = default!;
 
-    private ObservacaoDto? observacaoAtualizar;
-
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -59,15 +57,9 @@ public partial class AtividadeHistorico
             }
         }
     }
-
-    private void Resetar()
-    {
-        observacaoAtualizar = null;
-    }
-
+    
     private async Task EditarLinha(ObservacaoDto observacaoDto)
     {
-        observacaoAtualizar = observacaoDto;
         await observacaoGrid.EditRow(observacaoDto);
     }
 
@@ -75,7 +67,6 @@ public partial class AtividadeHistorico
     {
         try
         {
-            Resetar();
             if (await ObservacaoServico.Editar(observacaoDto))
             {
                 NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Observação editada.", Duration = 2000 });
@@ -98,7 +89,6 @@ public partial class AtividadeHistorico
     {
         try
         {
-            Resetar();
             if (await ObservacaoServico.Excluir(observacaoDto))
             {
                 NotificationService.Notify(new NotificationMessage
@@ -127,7 +117,6 @@ public partial class AtividadeHistorico
 
     private void CancelarEdicao(ObservacaoDto observacaoDto)
     {
-        Resetar();
         observacaoGrid.CancelEditRow(observacaoDto);
     }
 }

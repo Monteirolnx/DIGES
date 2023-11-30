@@ -6,7 +6,6 @@ public class AutenticacaoServico : IAutenticacaoServico
 
     public void Login(string user, string password)
     {
-        // Implementar lógica de login
         if (user == "a" && password == "1")
         {
             UsuarioEstaLogado = true;
