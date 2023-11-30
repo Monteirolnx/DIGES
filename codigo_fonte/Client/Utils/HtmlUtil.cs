@@ -1,8 +1,8 @@
 ﻿namespace Controle.Atividades.Client.Utils;
 
-public static class  ImpressaoServicoClient
+public static class  HtmlUtil
 {
-    public static string CriarHtmlAta(AtaDto ata)
+    public static string CriarAta(AtaDto ata)
     {
         var resultado = new StringBuilder();
 

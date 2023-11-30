@@ -41,4 +41,11 @@ public class Atividade
 
     [Column("status")]
     public TipoAbertaFechada Status { get; set; }
+
+    public void Criar()
+    {
+        Codigo = Guid.NewGuid();
+        DtCriacao = DateTime.Now;
+        Status = TipoAbertaFechada.Aberta;
+    }
 }

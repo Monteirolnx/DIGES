@@ -6,6 +6,8 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
     {
         var atividade = mapper.Map<Atividade>(atividadeDto);
 
+        atividade.Criar();
+
         if (atividadeDto.CodigoAnalista != Guid.Empty)
         {
             var analista = contexto.Analistas.FirstOrDefault(a => a.Codigo == atividadeDto.CodigoAnalista);

@@ -61,7 +61,7 @@ public partial class AtividadeConsultaTodas
 
         if (ata != null)
         {
-            await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", ImpressaoServicoClient.CriarHtmlAta(ata));
+            await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", HtmlUtil.CriarAta(ata));
         }
     }
 

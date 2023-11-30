@@ -12,7 +12,7 @@ public partial class AtividadeAdiciona
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; } = default!;
-    
+
     [Inject]
     protected IProfissionalServico ProfissionalServico { get; set; } = default!;
 
@@ -34,30 +34,115 @@ public partial class AtividadeAdiciona
 
     private bool carregando = true;
     private string observacao = string.Empty;
-
     #endregion
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        try
+        {
+            VerificarAutenticacao();
+
+            await MontarMemoria(firstRender);
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Erro(ex);
+            await JsRuntime.LogarErroConsole(ex);
+        }
+    }
+
+    private void VerificarAutenticacao()
+    {
         if (!AutenticacaoServico.UsuarioEstaLogado)
         {
-            NavigationManager.NavigateTo("/login");
+            NavigationManager.NavigateTo(Constantes.PaginaLogin);
         }
+    }
 
+    private async Task MontarMemoria(bool firstRender)
+    {
         if (firstRender)
         {
             analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
             lideresDto = await ProfissionalServico.ConsultaTodosLideres();
 
             carregando = false;
+
             StateHasChanged();
         }
     }
 
-    private async Task AbrirRedmine(int? pNumeroRedmine)
+    private async Task Enviar(AtividadeDto atividadeDto)
     {
-        var url = $"https://redmine.sf.prefeitura.sp.gov.br/issues/{pNumeroRedmine}";
-        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+        try
+        {
+            DefinirAnalista(atividadeDto);
+
+            DefinirLider(atividadeDto);
+
+            DefinirObservacao(atividadeDto);
+
+            await AdicionarAtividade(atividadeDto);
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Erro(ex);
+            await JsRuntime.LogarErroConsole(ex);
+        }
+    }
+
+    private void DefinirAnalista(AtividadeDto atividadeDto)
+    {
+        if (analistaSelecionado != null && analistaSelecionado.Codigo != Guid.Empty)
+        {
+            atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
+            atividadeDto.Analista = analistaSelecionado;
+        }
+        else
+        {
+            atividadeDto.Analista = null;
+        }
+    }
+
+    private void DefinirLider(AtividadeDto atividadeDto)
+    {
+        if (liderSelecionado != null && liderSelecionado.Codigo != Guid.Empty)
+        {
+            atividadeDto.CodigoLider = liderSelecionado.Codigo;
+            atividadeDto.Lider = liderSelecionado;
+        }
+        else
+        {
+            atividadeDto.Lider = null;
+        }
+    }
+
+    private void DefinirObservacao(AtividadeDto atividadeDto)
+    {
+        if (!string.IsNullOrEmpty(observacao))
+        {
+            atividadeDto.Historico = new List<ObservacaoDto>
+            {
+                new()
+                {
+                    Data = DateTime.Now,
+                    Registro = observacao
+                }
+            };
+        }
+        else
+        {
+            atividadeDto.Historico = null;
+        }
+    }
+
+    private async Task AdicionarAtividade(AtividadeDto atividadeDto)
+    {
+        if (await AtividadeServico.Adicionar(atividadeDto))
+        {
+            NotificationService.Sucesso("Atividade adicionada.");
+            NavigationManager.NavigateTo(Constantes.PaginaAtividadeConsultaTodas);
+        }
     }
 
     private void OnAnalistaChanged(AnalistaDto? analistaDto)
@@ -74,65 +159,8 @@ public partial class AtividadeAdiciona
         StateHasChanged();
     }
 
-    private async Task Enviar(AtividadeDto atividadeDto)
-    {
-        try
-        {
-            if (analistaSelecionado != null && analistaSelecionado.Codigo != Guid.Empty)
-            {
-                atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
-                atividadeDto.Analista = analistaSelecionado;
-            }
-            else
-            {
-                atividadeDto.Analista = null;
-            }
-
-            if (liderSelecionado != null && liderSelecionado.Codigo != Guid.Empty)
-            {
-                atividadeDto.CodigoLider = liderSelecionado.Codigo;
-                atividadeDto.Lider = liderSelecionado;
-            }
-            else
-            {
-                atividadeDto.Lider = null;
-            }
-
-            if (!string.IsNullOrEmpty(observacao))
-            {
-                atividadeDto.Historico = new List<ObservacaoDto>
-                {
-                    new()
-                    {
-                        Data = DateTime.Now,
-                        Registro = observacao
-                    }
-                };
-            }
-            else
-            {
-                atividadeDto.Historico = null;
-            }
-
-            atividadeDto.DtCriacao = DateTime.Now;
-            atividadeDto.Status = TipoAbertaFechada.Aberta;
-
-            if (await AtividadeServico.Adicionar(atividadeDto))
-            {
-                NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Atividade adicionada.",Duration = 2000 });
-                NavigationManager.NavigateTo("/atividade-consulta-todas");
-            }
-        }
-        catch (Exception ex)
-        {
-            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ocorreu um erro técnico. Entre em contato com o suporte.", Duration = 2000 });
-            await JsRuntime.InvokeVoidAsync("console.log", ex.ToString());
-            throw;
-        }
-    }
-
     private void Cancelar()
     {
-        NavigationManager.NavigateTo("/atividade-consulta-todas");
+        NavigationManager.NavigateTo(Constantes.PaginaAtividadeConsultaTodas);
     }
 }

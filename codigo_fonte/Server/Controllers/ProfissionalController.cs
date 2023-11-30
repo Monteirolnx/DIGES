@@ -1,10 +1,10 @@
 ﻿namespace Controle.Atividades.Server.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route(Constantes.BaseUrlProfissional)]
 public class ProfissionalController(IProfissionalServico profissionalServico) : ControllerBase
 {
-    [HttpGet ("v1/consulta-todos-analistas")]
+    [HttpGet (Constantes.ConsultaTodosAnalistas)]
     public async Task<IActionResult> ConsultaTodosAnalistas()
     {
         var resultado = await profissionalServico.ConsultaTodosAnalistas();
@@ -12,7 +12,7 @@ public class ProfissionalController(IProfissionalServico profissionalServico) : 
         return Ok(resultado);
     }
 
-    [HttpGet("v1/consulta-todos-lideres")]
+    [HttpGet(Constantes.ConsultaTodosLideres)]
     public async Task<IActionResult> ConsultaTodosLideres()
     {
         var resultado = await profissionalServico.ConsultaTodosLideres();

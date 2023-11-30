@@ -1,20 +1,20 @@
 ﻿namespace Controle.Atividades.Server.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route(Constantes.BaseUrlObservacao)]
 public class ObservacaoController(IObservacaoServico observacaoServico) : ControllerBase
 {
 
-    [HttpPost("v1/editar-observacao")]
-    public async Task<IActionResult> EditarObservacao(ObservacaoDto observacaoDto)
+    [HttpPost(Constantes.EditaObservacao)]
+    public async Task<IActionResult> Editar(ObservacaoDto observacaoDto)
     {
         var resultado = await observacaoServico.Editar(observacaoDto);
 
         return Ok(resultado);
     }
 
-    [HttpPost("v1/excluir-observacao")]
-    public async Task<IActionResult> ExcluirObservacao(ObservacaoDto observacaoDto)
+    [HttpPost(Constantes.ExcluiObservacao)]
+    public async Task<IActionResult> Excluir(ObservacaoDto observacaoDto)
     {
         var resultado = await observacaoServico.Excluir(observacaoDto);
 

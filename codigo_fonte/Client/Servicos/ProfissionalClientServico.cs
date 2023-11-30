@@ -4,7 +4,7 @@ public class ProfissionalClientServico(HttpClient httpClient) : IProfissionalSer
 {
     public async Task<List<AnalistaDto>?> ConsultaTodosAnalistas()
     {
-        var httpResponseMessage = await httpClient.GetAsync("/api/profissional/v1/consulta-todos-analistas");
+        var httpResponseMessage = await httpClient.GetAsync($"{Constantes.BaseUrlProfissional}{Constantes.ConsultaTodosAnalistas}");
 
         var resultado = await httpResponseMessage.Content.ReadFromJsonAsync<List<AnalistaDto>?>();
 
@@ -13,7 +13,7 @@ public class ProfissionalClientServico(HttpClient httpClient) : IProfissionalSer
 
     public async Task<List<LiderDto>?> ConsultaTodosLideres()
     {
-        var httpResponseMessage = await httpClient.GetAsync("/api/profissional/v1/consulta-todos-lideres");
+        var httpResponseMessage = await httpClient.GetAsync($"{Constantes.BaseUrlProfissional}{Constantes.ConsultaTodosLideres}");
 
         var resultado = await httpResponseMessage.Content.ReadFromJsonAsync<List<LiderDto>?>();
 
