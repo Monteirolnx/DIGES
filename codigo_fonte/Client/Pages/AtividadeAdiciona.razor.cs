@@ -46,7 +46,7 @@ public partial class AtividadeAdiciona
         }
         catch (Exception ex)
         {
-            NotificationService.Erro(ex);
+            NotificationService.Exception(ex);
             await JsRuntime.LogarErroConsole(ex);
         }
     }
@@ -61,14 +61,22 @@ public partial class AtividadeAdiciona
 
     private async Task MontarMemoria(bool firstRender)
     {
-        if (firstRender)
+        try
         {
-            analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
-            lideresDto = await ProfissionalServico.ConsultaTodosLideres();
+            if (firstRender)
+            {
+                analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
+                lideresDto = await ProfissionalServico.ConsultaTodosLideres();
 
-            carregando = false;
+                carregando = false;
 
-            StateHasChanged();
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Exception(ex);
+            await JsRuntime.LogarErroConsole(ex);
         }
     }
 
@@ -86,7 +94,7 @@ public partial class AtividadeAdiciona
         }
         catch (Exception ex)
         {
-            NotificationService.Erro(ex);
+            NotificationService.Exception(ex);
             await JsRuntime.LogarErroConsole(ex);
         }
     }

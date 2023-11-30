@@ -6,6 +6,8 @@ public interface IAtividadeServico
 
     Task<bool> Editar(AtividadeDto atividadeDto);
 
+    Task<bool> Excluir(AtividadeDto atividadeDto);
+
     Task<IEnumerable<AtividadeDto>?> ConsultarTodas();
 
     Task<AtividadeDto?> ConsultarPorCodigo(Guid codigoAtividade);

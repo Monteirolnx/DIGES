@@ -20,6 +20,14 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
         return Ok(resultado);
     }
 
+    [HttpPost(Constantes.ExcluiAtividade)]
+    public async Task<IActionResult> Excluir(AtividadeDto atividadeDto)
+    {
+        var resultado = await atividadeServico.Excluir(atividadeDto);
+
+        return Ok(resultado);
+    }
+
     [HttpGet(Constantes.ConsultaTodasAtividades)]
     public async Task<IActionResult> ConsultarTodas()
     {

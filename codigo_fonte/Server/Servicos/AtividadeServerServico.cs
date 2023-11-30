@@ -38,6 +38,31 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
         throw new NotImplementedException();
     }
 
+    public async Task<bool> Excluir(AtividadeDto atividadeDto)
+    {
+        var atividadeExistente = await contexto.Atividades.Include(a => a.Historico)
+            .FirstOrDefaultAsync(a => a.Codigo == atividadeDto.Codigo);
+
+        if (atividadeExistente == null)
+        {
+            return false;
+        }
+
+        if (atividadeExistente.Historico != null)
+        {
+            foreach (var historico in atividadeExistente.Historico)
+            {
+                contexto.Historico.Remove(historico);
+            }
+        }
+        
+        contexto.Atividades.Remove(atividadeExistente);
+
+        var resultado = await contexto.SaveChangesAsync();
+
+        return resultado > 0;
+    }
+
     public async Task<IEnumerable<AtividadeDto>?> ConsultarTodas()
     {
         var atividades = await contexto.Atividades

@@ -9,6 +9,7 @@ public static class Constantes
     public const string BaseUrlAtividade = "api/atividade/";
     public const string AdicionaAtividade = "v1/adiciona";
     public const string EditaAtividade = "v1/edita";
+    public const string ExcluiAtividade = "v1/exclui";
     public const string ConsultaTodasAtividades = "v1/consulta-todas";
     public const string ConsultaPorCodigoAtividade = "v1/consulta-codigo/";
 
@@ -19,9 +20,11 @@ public static class Constantes
     public const string BaseUrlProfissional = "api/profissional/";
     public const string ConsultaTodosAnalistas = "v1/consulta-todos-analistas";
     public const string ConsultaTodosLideres = "v1/consulta-todos-lideres";
-
-    public const string PaginaLogin = "/login";
+    
+    public const string PaginaAtividadeAdiciona = "/atividade-adiciona";
     public const string PaginaAtividadeConsultaTodas = "/atividade-consulta-todas";
+    public const string PaginaAtividadeEdita = "/atividade-edita/";
+    public const string PaginaLogin = "/login";
 
     #endregion
 }

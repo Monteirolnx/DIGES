@@ -16,6 +16,13 @@ public class AtividadeClientServico(HttpClient httpClient) : IAtividadeServico
         return resultado.IsSuccessStatusCode;
     }
 
+    public async Task<bool> Excluir(AtividadeDto atividadeDto)
+    {
+        var resultado = await httpClient.PostAsJsonAsync($"{Constantes.BaseUrlAtividade}{Constantes.ExcluiAtividade}", atividadeDto);
+
+        return resultado.IsSuccessStatusCode;
+    }
+
     public async Task<IEnumerable<AtividadeDto>?> ConsultarTodas()
     {
         var httpResponseMessage = await httpClient.GetAsync($"{Constantes.BaseUrlAtividade}{Constantes.ConsultaTodasAtividades}");
