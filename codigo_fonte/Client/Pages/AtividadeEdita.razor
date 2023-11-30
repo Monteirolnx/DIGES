@@ -68,7 +68,8 @@ else
                                 <RadzenColumn Size="6" SizeMD="6">
                                     <RadzenLabel Text="Analista:" />
                                     <RadzenDropDown AllowClear="true"
-                                                        AllowFiltering
+                                                     AllowFiltering
+                                                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                                      Data="@analistasDto"
                                                      Placeholder="Selecione"
                                                      Style="width: 100%;"
@@ -81,7 +82,8 @@ else
                                  <RadzenColumn Size="6" SizeMD="6">
                                      <RadzenLabel Text="Líder:" />
                                      <RadzenDropDown AllowClear="true"
-                                                        AllowFiltering
+                                                     AllowFiltering
+                                                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                                      Data="@lideresDto"
                                                      Placeholder="Selecione"
                                                      Style="width: 100%;"

@@ -49,6 +49,11 @@ public class Atividade
         Status = TipoAbertaFechada.Aberta;
     }
 
+    public void Editar()
+    {
+        DtModificacao = DateTime.Now;
+    }
+
     public void Finalizar()
     {
         DtModificacao = DateTime.Now;

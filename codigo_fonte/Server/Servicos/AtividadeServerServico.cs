@@ -4,16 +4,16 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
 {
     public async Task<bool> Adicionar(AtividadeDto atividadeDto)
     {
-        var atividade = mapper.Map<Atividade>(atividadeDto);
+        var atividadeExistente = mapper.Map<Atividade>(atividadeDto);
 
-        atividade.Criar();
+        atividadeExistente.Criar();
 
         if (atividadeDto.CodigoAnalista != Guid.Empty)
         {
             var analista = contexto.Analistas.FirstOrDefault(a => a.Codigo == atividadeDto.CodigoAnalista);
             if (analista != null)
             {
-                atividade.Analista = analista;
+                atividadeExistente.Analista = analista;
             }
         }
 
@@ -22,20 +22,35 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
             var lider = contexto.Lideres.FirstOrDefault(a => a.Codigo == atividadeDto.CodigoLider);
             if (lider != null)
             {
-                atividade.Lider = lider;
+                atividadeExistente.Lider = lider;
             }
         }
 
-        await contexto.Atividades.AddAsync(atividade);
+        await contexto.Atividades.AddAsync(atividadeExistente);
 
         var resultado = await contexto.SaveChangesAsync();
 
         return resultado > 0;
     }
 
-    public Task<bool> Editar(AtividadeDto atividadeDto)
+    public async Task<bool> Editar(AtividadeDto atividadeDto)
     {
-        throw new NotImplementedException();
+        var atividadeExistente = await contexto.Atividades.FirstOrDefaultAsync(o => o.Codigo == atividadeDto.Codigo);
+
+        if (atividadeExistente == null)
+        {
+            return false;
+        }
+        
+        mapper.Map(atividadeDto, atividadeExistente);
+
+        atividadeExistente.Editar();
+
+        contexto.Atividades.Update(atividadeExistente);
+
+        var resultado = await contexto.SaveChangesAsync();
+
+        return resultado > 0;
     }
 
     public async Task<bool> Excluir(AtividadeDto atividadeDto)
@@ -70,7 +85,9 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
             .Include(a => a.Analista)
             .Include(a => a.Lider)
             .Include(a => a.Historico)
-            .OrderBy(a => a.Analista!.Nome)
+            .OrderBy(a => a.Sistema.ToUpper() == "TODOS")
+            .ThenBy(a => a.Sistema)
+            .ThenBy(a => a.Analista!.Nome)
             .ThenBy(a => a.NumeroRedmine)
             .ToListAsync();
 

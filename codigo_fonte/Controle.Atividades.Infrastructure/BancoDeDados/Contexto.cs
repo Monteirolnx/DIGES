@@ -45,14 +45,16 @@ public class Contexto(IConfiguration configuration) : DbContext
             new Analista { Codigo = Guid.NewGuid(), Nome = "Luis Monteiro", Email = "lfmleitao@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
             new Analista { Codigo = Guid.NewGuid(), Nome = "Rafael Miranda", Email = "rsmiranda@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
             new Analista { Codigo = Guid.NewGuid(), Nome = "Renan Guedes", Email = "rgsouza@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
-            new Analista { Codigo = Guid.NewGuid(), Nome = "Thiago Maximiliano", Email = "tsmachado@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo }
+            new Analista { Codigo = Guid.NewGuid(), Nome = "Thiago Maximiliano", Email = "tsmachado@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
+            new Analista { Codigo = Guid.NewGuid(), Nome = "Todos", Email = "", Status = TipoAtivoInativo.Ativo }
         );
 
         modelBuilder.Entity<Lider>().HasData(
             new Lider { Codigo = Guid.NewGuid(), Nome = "Calemino Mendes", Email = "camendes@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
             new Lider { Codigo = Guid.NewGuid(), Nome = "Fernando Brambilla", Email = "fbrambilla@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
             new Lider { Codigo = Guid.NewGuid(), Nome = "Rafael Pioli", Email = "rpioli@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
-            new Lider { Codigo = Guid.NewGuid(), Nome = "Rodrigo Guerra", Email = "rodrigomallmann@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo }
+            new Lider { Codigo = Guid.NewGuid(), Nome = "Rodrigo Guerra", Email = "rodrigomallmann@sf.prefeitura.sp.gov.br", Status = TipoAtivoInativo.Ativo },
+            new Lider { Codigo = Guid.NewGuid(), Nome = "Todos", Email = "", Status = TipoAtivoInativo.Ativo }
         );
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Contexto).Assembly);

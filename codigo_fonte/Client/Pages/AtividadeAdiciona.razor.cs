@@ -65,8 +65,9 @@ public partial class AtividadeAdiciona
         {
             if (firstRender)
             {
-                analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
-                lideresDto = await ProfissionalServico.ConsultaTodosLideres();
+                await ConsultaTodosAnalistas();
+                
+                await ConsultaTodosLideres();
 
                 carregando = false;
 
@@ -77,6 +78,26 @@ public partial class AtividadeAdiciona
         {
             NotificationService.Exception(ex);
             await JsRuntime.LogarErroConsole(ex);
+        }
+    }
+
+    private async Task ConsultaTodosLideres()
+    {
+        var consultaTodosLideres = await ProfissionalServico.ConsultaTodosLideres();
+        if (consultaTodosLideres != null)
+        {
+            lideresDto =
+                consultaTodosLideres.Where(x => x.Status == TipoAtivoInativo.Ativo);
+        }
+    }
+
+    private async Task ConsultaTodosAnalistas()
+    {
+        var consultaTodosAnalistas = await ProfissionalServico.ConsultaTodosAnalistas();
+        if (consultaTodosAnalistas != null)
+        {
+            analistasDto =
+                consultaTodosAnalistas.Where(x => x.Status == TipoAtivoInativo.Ativo);
         }
     }
 

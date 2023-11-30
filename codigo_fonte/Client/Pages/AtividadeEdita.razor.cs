@@ -44,7 +44,6 @@ public partial class AtividadeEdita
     private bool carregando = true;
 
     private string? observacao = string.Empty;
-
     #endregion
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -68,12 +67,33 @@ public partial class AtividadeEdita
         {
             await ConsultarAtividade();
 
-            analistasDto = await ProfissionalServico.ConsultaTodosAnalistas();
-            lideresDto = await ProfissionalServico.ConsultaTodosLideres();
+            await ConsultaTodosAnalistas();
+
+            await ConsultaTodosLideres();
 
             carregando = false;
 
             StateHasChanged();
+        }
+    }
+
+    private async Task ConsultaTodosLideres()
+    {
+        var consultaTodosLideres = await ProfissionalServico.ConsultaTodosLideres();
+        if (consultaTodosLideres != null)
+        {
+            lideresDto =
+                consultaTodosLideres.Where(x => x.Status == TipoAtivoInativo.Ativo);
+        }
+    }
+
+    private async Task ConsultaTodosAnalistas()
+    {
+        var consultaTodosAnalistas = await ProfissionalServico.ConsultaTodosAnalistas();
+        if (consultaTodosAnalistas != null)
+        {
+            analistasDto =
+                consultaTodosAnalistas.Where(x => x.Status == TipoAtivoInativo.Ativo);
         }
     }
 
@@ -162,13 +182,11 @@ public partial class AtividadeEdita
                 });
             }
 
-            atividadeDto.DtModificacao = DateTime.Now;
-
             if (await AtividadeServico.Editar(atividadeDto))
             {
                 NotificationService.Sucesso("Atividade editada.");
-                NavigationManager.NavigateTo(Constantes.PaginaAtividadeConsultaTodas);
             }
+            NavigationManager.NavigateTo(Constantes.PaginaAtividadeConsultaTodas);
         }
         catch (Exception ex)
         {
