@@ -32,10 +32,10 @@ public class AtaServerServico(Contexto contexto, IMapper mapper) : IAtaServico
             .Where(a => a.DtCriacao.Date == DateTime.Today && a.NumeroRedmine.HasValue);
 
         var atividadesAtualizadas = atividades
-            .Where(a => a.DtModificacao.Date == DateTime.Today && a.DtCriacao.Date != DateTime.Today && a.NumeroRedmine.HasValue);
+            .Where(a => a.DtModificacao != null && a.DtModificacao.Value.Date == DateTime.Today && a.DtCriacao.Date != DateTime.Today && a.NumeroRedmine.HasValue);
 
         var atividadesFinalizadas = atividades
-            .Where(a => a.DtModificacao.Date == DateTime.Today && a is { Status: TipoAbertaFechada.Fechada, NumeroRedmine: not null });
+            .Where(a => a.DtModificacao != null && a.DtModificacao.Value.Date == DateTime.Today && a is { Status: TipoAbertaFechada.Fechada, NumeroRedmine: not null });
 
         var atividadesCriadasList = atividadesCriadas.ToList();
         var atividadesAtualizadasList = atividadesAtualizadas.ToList();

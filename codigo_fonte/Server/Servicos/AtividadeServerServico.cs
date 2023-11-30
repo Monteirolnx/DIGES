@@ -93,4 +93,40 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
 
         return resultado;
     }
+
+    public async Task<bool> Finalizar(Guid atividadedtoCodigo)
+    {
+        var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadedtoCodigo);
+
+        if (atividade == null)
+        {
+            return false;
+        }
+
+        atividade.Finalizar();
+
+        contexto.Atividades.Update(atividade);
+
+        var resultado = await contexto.SaveChangesAsync();
+
+        return resultado > 0;
+    }
+
+    public async Task<bool> Reabrir(Guid atividadedtoCodigo)
+    {
+        var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadedtoCodigo);
+
+        if (atividade == null)
+        {
+            return false;
+        }
+
+        atividade.Reabrir();
+
+        contexto.Atividades.Update(atividade);
+
+        var resultado = await contexto.SaveChangesAsync();
+
+        return resultado > 0;
+    }
 }

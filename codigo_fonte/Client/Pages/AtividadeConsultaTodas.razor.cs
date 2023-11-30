@@ -146,11 +146,18 @@ public partial class AtividadeConsultaTodas
 
             if (questao == true)
             {
-                // Código para excluir a atividade
-                // Por exemplo: await AtividadeServico.Excluir(atividadedto.Codigo);
+                if (await AtividadeServico.Finalizar(atividadedto.Codigo))
+                {
+                    NotificationService.Sucesso("Atividade finalizada com sucesso!");
+                }
+                else
+                {
+                    NotificationService.Erro("Não foi possível finalizar a atividade!");
+                }
+
+                atividadesDto = await AtividadeServico.ConsultarTodas();
+                StateHasChanged();
             }
-            atividadesDto = await AtividadeServico.ConsultarTodas();
-            StateHasChanged();
         }
         catch (Exception ex)
         {
@@ -168,11 +175,18 @@ public partial class AtividadeConsultaTodas
 
             if (questao == true)
             {
-                // Código para excluir a atividade
-                // Por exemplo: await AtividadeServico.Excluir(atividadedto.Codigo);
+                if (await AtividadeServico.Reabrir(atividadedto.Codigo))
+                {
+                    NotificationService.Sucesso("Atividade finalizada com sucesso!");
+                }
+                else
+                {
+                    NotificationService.Erro("Não foi possível finalizar a atividade!");
+                }
+
+                atividadesDto = await AtividadeServico.ConsultarTodas();
+                StateHasChanged();
             }
-            atividadesDto = await AtividadeServico.ConsultarTodas();
-            StateHasChanged();
         }
         catch (Exception ex)
         {

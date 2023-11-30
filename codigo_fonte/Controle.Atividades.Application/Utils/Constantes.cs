@@ -8,10 +8,13 @@ public static class Constantes
 
     public const string BaseUrlAtividade = "api/atividade/";
     public const string AdicionaAtividade = "v1/adiciona";
-    public const string EditaAtividade = "v1/edita";
-    public const string ExcluiAtividade = "v1/exclui";
     public const string ConsultaTodasAtividades = "v1/consulta-todas";
     public const string ConsultaPorCodigoAtividade = "v1/consulta-codigo/";
+    public const string EditaAtividade = "v1/edita";
+    public const string ExcluiAtividade = "v1/exclui";
+    public const string FinalizaAtividade = "v1/finaliza";
+    public const string ReabreAtividade = "v1/reabre";
+   
 
     public const string BaseUrlObservacao = "api/observacao/";
     public const string EditaObservacao = "v1/edita";

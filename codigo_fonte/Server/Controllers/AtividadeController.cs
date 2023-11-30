@@ -43,4 +43,20 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
 
         return Ok(resultado);
     }
+
+    [HttpPost(Constantes.FinalizaAtividade)]
+    public async Task<IActionResult> Finalizar(Guid codigoAtividade)
+    {
+        var resultado = await atividadeServico.Finalizar(codigoAtividade);
+
+        return Ok(resultado);
+    }
+
+    [HttpPost(Constantes.ReabreAtividade)]
+    public async Task<IActionResult> Reabrir(Guid codigoAtividade)
+    {
+        var resultado = await atividadeServico.Reabrir(codigoAtividade);
+
+        return Ok(resultado);
+    }
 }

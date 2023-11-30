@@ -34,10 +34,10 @@ public class Atividade
     public DateTime DtCriacao { get; set; }
 
     [Column("dt_modificacao")]
-    public DateTime DtModificacao { get; set; }
+    public DateTime? DtModificacao { get; set; }
 
     [Column("dt_fechamento")]
-    public DateTime DtFechamento { get; set; }
+    public DateTime? DtFechamento { get; set; }
 
     [Column("status")]
     public TipoAbertaFechada Status { get; set; }
@@ -46,6 +46,20 @@ public class Atividade
     {
         Codigo = Guid.NewGuid();
         DtCriacao = DateTime.Now;
+        Status = TipoAbertaFechada.Aberta;
+    }
+
+    public void Finalizar()
+    {
+        DtModificacao = DateTime.Now;
+        DtFechamento = DateTime.Now;
+        Status = TipoAbertaFechada.Fechada;
+    }
+
+    public void Reabrir()
+    {
+        DtModificacao = DateTime.Now;
+        DtFechamento = null;
         Status = TipoAbertaFechada.Aberta;
     }
 }

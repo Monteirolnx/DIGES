@@ -11,4 +11,8 @@ public interface IAtividadeServico
     Task<IEnumerable<AtividadeDto>?> ConsultarTodas();
 
     Task<AtividadeDto?> ConsultarPorCodigo(Guid codigoAtividade);
+    
+    Task<bool> Finalizar(Guid atividadedtoCodigo);
+
+    Task<bool> Reabrir(Guid atividadedtoCodigo);
 }
