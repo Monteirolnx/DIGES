@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Controle.Atividades.Infrastructure.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20231128143301_Mig01")]
+    [Migration("20231130160159_Mig01")]
     partial class Mig01
     {
         /// <inheritdoc />
@@ -53,84 +53,84 @@ namespace Controle.Atividades.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Codigo = new Guid("d5317f45-15a5-43e4-ba99-9bf8c35ab643"),
+                            Codigo = new Guid("c8c43f6f-8787-4227-a081-edf69c5b4e49"),
                             Email = "askaam@sf.prefeitura.sp.gov.br",
                             Nome = "Alex Kaam",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("6c364e7d-e18e-438a-9ad3-c6d1b1fb8e6a"),
+                            Codigo = new Guid("28ffbf80-a65f-4f14-b472-f2d4703b5cec"),
                             Email = "avieira@sf.prefeitura.sp.gov.br",
                             Nome = "Arthur Vieira",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("d9240918-ab52-40de-ae14-2849832f4ee2"),
+                            Codigo = new Guid("80051f70-c8df-4af4-b469-010558b6c484"),
                             Email = "caandrade@sf.prefeitura.sp.gov.br",
                             Nome = "Cláudio Almeida",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("ebe38f75-f091-49e3-9555-038a74ad9c5b"),
+                            Codigo = new Guid("a5950909-66dd-4b29-958d-f89bf61e5a07"),
                             Email = "csmagno@sf.prefeitura.sp.gov.br",
                             Nome = "Cláudio Magno",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("0d602ec9-e54a-4e5c-a7ec-376762f82228"),
+                            Codigo = new Guid("e491e8fa-08ab-43f3-8e5c-b634bea42427"),
                             Email = "fmsilva@sf.prefeitura.sp.gov.br",
                             Nome = "Félix Silva",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("a520c331-959d-42ad-82f9-dbb2b2c79491"),
+                            Codigo = new Guid("fa06cdd0-4e49-4d40-bcc5-fccc45bff2b3"),
                             Email = "gcsantanna@sf.prefeitura.sp.gov.br",
                             Nome = "Gabriel Capetini",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("d0b0fe52-b524-4cbd-987f-cf2df6ab0903"),
+                            Codigo = new Guid("01150ec6-79e6-4255-87a1-a927dd30dcfa"),
                             Email = "gmarrafon@sf.prefeitura.sp.gov.br",
                             Nome = "Glaucon Marrafon",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("abe5dc57-8391-4806-a4bf-486a981de0aa"),
+                            Codigo = new Guid("22e63578-fb4d-4166-83c9-c230f7c5f04c"),
                             Email = "lcebarreto@sf.prefeitura.sp.gov.br",
                             Nome = "Luis Barreto",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("0acb23ec-fd56-4136-8d9b-476a5c28c373"),
+                            Codigo = new Guid("ab384029-c921-41c5-ad44-dd06efa5bd98"),
                             Email = "lfmleitao@sf.prefeitura.sp.gov.br",
                             Nome = "Luis Monteiro",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("ab9a0ac4-38bf-4e40-8e87-9e3b11037b5a"),
+                            Codigo = new Guid("0114ca8d-f2d9-45d6-95f3-0cca5981b211"),
                             Email = "rsmiranda@sf.prefeitura.sp.gov.br",
                             Nome = "Rafael Miranda",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("458a7f19-062a-4643-9f62-4318c1518d5c"),
+                            Codigo = new Guid("fe1288c6-327a-4b36-9b54-7d801fce63af"),
                             Email = "rgsouza@sf.prefeitura.sp.gov.br",
                             Nome = "Renan Guedes",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("7aca6e61-3020-4685-827a-4d5e6639645b"),
+                            Codigo = new Guid("f5099e10-c19f-40c7-8b1f-38ddc562b1f2"),
                             Email = "tsmachado@sf.prefeitura.sp.gov.br",
                             Nome = "Thiago Maximiliano",
                             Status = 1
@@ -161,11 +161,11 @@ namespace Controle.Atividades.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("dt_criacao");
 
-                    b.Property<DateTime>("DtFechamento")
+                    b.Property<DateTime?>("DtFechamento")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("dt_fechamento");
 
-                    b.Property<DateTime>("DtModificacao")
+                    b.Property<DateTime?>("DtModificacao")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("dt_modificacao");
 
@@ -219,28 +219,28 @@ namespace Controle.Atividades.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Codigo = new Guid("59af77c0-980e-44ba-a54e-3104f21d5efe"),
+                            Codigo = new Guid("9c91bd6b-3adc-4d30-88a1-f372ba7154f2"),
                             Email = "camendes@sf.prefeitura.sp.gov.br",
                             Nome = "Calemino Mendes",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("43862231-caff-4f25-955e-3bc5da729974"),
+                            Codigo = new Guid("16c74794-4395-4661-9d37-5533d390dc43"),
                             Email = "fbrambilla@sf.prefeitura.sp.gov.br",
                             Nome = "Fernando Brambilla",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("b4010015-dc2b-473d-a486-751ceecab6d4"),
+                            Codigo = new Guid("11e41433-bbb2-437d-8db1-fe290a71e943"),
                             Email = "rpioli@sf.prefeitura.sp.gov.br",
                             Nome = "Rafael Pioli",
                             Status = 1
                         },
                         new
                         {
-                            Codigo = new Guid("bcb63412-cdd5-4455-a465-3e6f0867dce6"),
+                            Codigo = new Guid("0da8e86f-1667-49eb-bbeb-08a5ae011b83"),
                             Email = "rodrigomallmann@sf.prefeitura.sp.gov.br",
                             Nome = "Rodrigo Guerra",
                             Status = 1

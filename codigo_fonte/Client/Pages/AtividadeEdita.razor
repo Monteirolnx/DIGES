@@ -24,7 +24,7 @@ else
                                                        Style="width: 8rem;"
                                                        TValue="int?" />
                                         <RadzenButton ButtonStyle="ButtonStyle.Secondary"
-                                                      Click="@(() => AbrirRedmine(atividadeAtual.NumeroRedmine))"
+                                                      Click="@(() => JsRuntime.AbrirRedmine(atividadeAtual.NumeroRedmine))"
                                                       Icon="language"
                                                       Text="Abrir tarefa">
                                         </RadzenButton>
@@ -68,32 +68,32 @@ else
                                 <RadzenColumn Size="6" SizeMD="6">
                                     <RadzenLabel Text="Analista:" />
                                     <RadzenDropDown AllowClear="true"
-                                                    AllowFiltering
-                                                    Data="@analistasDto"
-                                                    Placeholder="Selecione"
-                                                    Style="width: 100%;"
-                                                    TextProperty="Nome"
-                                                    TValue="AnalistaDto?"
-                                                    Value="@analistaSelecionado"
-                                                    ValueChanged="OnAnalistaChanged">
-                                    </RadzenDropDown>
-                                </RadzenColumn>
-                                <RadzenColumn Size="6" SizeMD="6">
-                                    <RadzenLabel Text="Líder:" />
-                                    <RadzenDropDown AllowClear="true"
-                                                    AllowFiltering
-                                                    Data="@lideresDto"
-                                                    Placeholder="Selecione"
-                                                    Style="width: 100%;"
-                                                    TextProperty="Nome"
-                                                    TValue="LiderDto?"
-                                                    Value="@liderSelecionado"
-                                                    ValueChanged="OnLiderChanged">
-                                    </RadzenDropDown>
-                                </RadzenColumn>
-                            </RadzenRow>
-                            
-                            <RadzenColumn Size="12">
+                                                        AllowFiltering
+                                                     Data="@analistasDto"
+                                                     Placeholder="Selecione"
+                                                     Style="width: 100%;"
+                                                     TextProperty="Nome"
+                                                     TValue="AnalistaDto?"
+                                                     Value="@analistaSelecionado"
+                                                     ValueChanged="OnAnalistaChanged">
+                                     </RadzenDropDown>
+                                 </RadzenColumn>
+                                 <RadzenColumn Size="6" SizeMD="6">
+                                     <RadzenLabel Text="Líder:" />
+                                     <RadzenDropDown AllowClear="true"
+                                                        AllowFiltering
+                                                     Data="@lideresDto"
+                                                     Placeholder="Selecione"
+                                                     Style="width: 100%;"
+                                                     TextProperty="Nome"
+                                                     TValue="LiderDto?"
+                                                     Value="@liderSelecionado"
+                                                     ValueChanged="OnLiderChanged">
+                                     </RadzenDropDown>
+                                 </RadzenColumn>
+                             </RadzenRow>
+
+                             <RadzenColumn Size="12">
                                  <RadzenStack>
 
                                      <RadzenDataGrid AllowAlternatingRows="false"
@@ -120,21 +120,21 @@ else
                                                                    Width="90%">
                                                  <Template Context="observacaoDto">
                                                      @{
-                                                 {
-                                                     if (!string.IsNullOrEmpty(observacaoDto.Registro))
-                                                     {
-                                                         <div style="white-space: pre-wrap;">
-                                                             <strong>@observacaoDto.Data.ToString("d")</strong> - @observacaoDto.Registro
-                                                         </div>
-                                                     }
-                                                     else
-                                                     {
-                                                         @:Nenhuma observação
-                                                     }
-                                                 }
-                                                     }
-                                                 </Template>
-                                             </RadzenDataGridColumn>
+                                                        {
+                                                            if (!string.IsNullOrEmpty(observacaoDto.Registro))
+                                                            {
+                                                                <div style="white-space: pre-wrap;">
+                                                                    <strong>@observacaoDto.Data.ToString("d")</strong> - @observacaoDto.Registro
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                @:Nenhuma observação
+                                                            }
+                                                        }
+                                                    }
+                                                </Template>
+                                            </RadzenDataGridColumn>
 
                                             <RadzenDataGridColumn Sortable="false"
                                                                   TextAlign="TextAlign.Center"
@@ -146,13 +146,13 @@ else
                                                         <RadzenButton ButtonStyle="ButtonStyle.Primary"
                                                                       Click="@(MostrarHistorico)"
                                                                       Icon="history"
-                                                                      MouseEnter="@(args => MostrarAjuda(args, "Histórico"))"
+                                                                      MouseEnter="@(args => TooltipService.MostrarAjuda(args, "Histórico"))"
                                                                       Size="ButtonSize.Small" />
                                                     </div>
                                                 </Template>
                                             </RadzenDataGridColumn>
 
-                                         </Columns>
+                                        </Columns>
                                     </RadzenDataGrid>
                                 </RadzenStack>
                             </RadzenColumn>

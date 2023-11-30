@@ -46,16 +46,16 @@ public class AtividadeClientServico(HttpClient httpClient) : IAtividadeServico
         return resultado;
     }
 
-    public async Task<bool> Finalizar(Guid atividadedtoCodigo)
+    public async Task<bool> Finalizar(AtividadeDto atividadeDto)
     {
-        var resultado = await httpClient.PostAsJsonAsync($"{Constantes.BaseUrlAtividade}{Constantes.ExcluiAtividade}", atividadedtoCodigo);
+        var resultado = await httpClient.PostAsJsonAsync($"{Constantes.BaseUrlAtividade}{Constantes.FinalizaAtividade}", atividadeDto);
 
         return resultado.IsSuccessStatusCode;
     }
 
-    public async Task<bool> Reabrir(Guid atividadedtoCodigo)
+    public async Task<bool> Reabrir(AtividadeDto atividadeDto)
     {
-        var resultado = await httpClient.PostAsJsonAsync($"{Constantes.BaseUrlAtividade}{Constantes.ExcluiAtividade}", atividadedtoCodigo);
+        var resultado = await httpClient.PostAsJsonAsync($"{Constantes.BaseUrlAtividade}{Constantes.ReabreAtividade}", atividadeDto);
 
         return resultado.IsSuccessStatusCode;
     }

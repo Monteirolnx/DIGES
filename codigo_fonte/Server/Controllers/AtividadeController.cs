@@ -45,17 +45,17 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
     }
 
     [HttpPost(Constantes.FinalizaAtividade)]
-    public async Task<IActionResult> Finalizar(Guid codigoAtividade)
+    public async Task<IActionResult> Finalizar(AtividadeDto atividadeDto)
     {
-        var resultado = await atividadeServico.Finalizar(codigoAtividade);
+        var resultado = await atividadeServico.Finalizar(atividadeDto);
 
         return Ok(resultado);
     }
 
     [HttpPost(Constantes.ReabreAtividade)]
-    public async Task<IActionResult> Reabrir(Guid codigoAtividade)
+    public async Task<IActionResult> Reabrir(AtividadeDto atividadeDto)
     {
-        var resultado = await atividadeServico.Reabrir(codigoAtividade);
+        var resultado = await atividadeServico.Reabrir(atividadeDto);
 
         return Ok(resultado);
     }

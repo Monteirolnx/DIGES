@@ -4,7 +4,7 @@
 public partial class AtividadeEdita
 {
     [Parameter]
-    public string? CodigoAtividade { get; set; }
+    public string CodigoAtividade { get; set; } = string.Empty;
 
     #region Injects
     [Inject]
@@ -49,11 +49,21 @@ public partial class AtividadeEdita
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        VerificarAutenticacao();
+
+        await MontarMemoria(firstRender);
+    }
+
+    private void VerificarAutenticacao()
+    {
         if (!AutenticacaoServico.UsuarioEstaLogado)
         {
-            NavigationManager.NavigateTo("/login");
+            NavigationManager.NavigateTo(Constantes.PaginaLogin);
         }
+    }
 
+    private async Task MontarMemoria(bool firstRender)
+    {
         if (firstRender)
         {
             await ConsultarAtividade();
@@ -69,34 +79,36 @@ public partial class AtividadeEdita
 
     private async Task ConsultarAtividade()
     {
-        if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
+        try
         {
-            atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ??
-                             throw new InvalidOperationException();
-
-            if (atividadeAtual.Analista != null)
+            if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
             {
-                analistaSelecionado = atividadeAtual.Analista;
-            }
+                atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ??
+                                 throw new InvalidOperationException();
 
-            if (atividadeAtual.Lider != null)
-            {
-                liderSelecionado = atividadeAtual.Lider;
-            }
+                if (atividadeAtual.Analista != null)
+                {
+                    analistaSelecionado = atividadeAtual.Analista;
+                }
 
-            if (atividadeAtual.Historico != null)
-            {
-                ultimaObservacao = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
+                if (atividadeAtual.Lider != null)
+                {
+                    liderSelecionado = atividadeAtual.Lider;
+                }
+
+                if (atividadeAtual.Historico != null)
+                {
+                    ultimaObservacao = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
+                }
             }
         }
+        catch (Exception ex)
+        {
+            NotificationService.Exception(ex);
+            await JsRuntime.LogarErroConsole(ex);
+        }
     }
-
-    private async Task AbrirRedmine(int? pNumeroRedmine)
-    {
-        var url = $"https://redmine.sf.prefeitura.sp.gov.br/issues/{pNumeroRedmine}";
-        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
-    }
-
+    
     private void OnAnalistaChanged(AnalistaDto? analistaDto)
     {
         if (analistaDto != null)
@@ -149,28 +161,19 @@ public partial class AtividadeEdita
                     Registro = observacao
                 });
             }
-            
+
             atividadeDto.DtModificacao = DateTime.Now;
 
             if (await AtividadeServico.Editar(atividadeDto))
             {
-                NotificationService.Notify(new NotificationMessage
-                    { Severity = NotificationSeverity.Success, Summary = "Atividade editada.", Duration = 2000 });
-
-                NavigationManager.NavigateTo("/atividade-consulta-todas");
+                NotificationService.Sucesso("Atividade editada.");
+                NavigationManager.NavigateTo(Constantes.PaginaAtividadeConsultaTodas);
             }
         }
         catch (Exception ex)
         {
-            NotificationService.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Ocorreu um erro técnico. Entre em contato com o suporte.", Duration = 2000
-            });
-
-            await JsRuntime.InvokeVoidAsync("console.log", ex.ToString());
-
-            throw;
+            NotificationService.Exception(ex);
+            await JsRuntime.LogarErroConsole(ex);
         }
     }
 
@@ -189,12 +192,4 @@ public partial class AtividadeEdita
 
         StateHasChanged();
     }
-
-    #region Auxiliares
-    private void MostrarAjuda(ElementReference elementReference, string tooltipText, TooltipOptions? options = null)
-    {
-        var tooltipOptions = options ?? new TooltipOptions { Delay = 100, Duration = 1000 };
-        TooltipService.Open(elementReference, tooltipText, tooltipOptions);
-    }
-    #endregion
 }

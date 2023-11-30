@@ -12,7 +12,7 @@ public interface IAtividadeServico
 
     Task<AtividadeDto?> ConsultarPorCodigo(Guid codigoAtividade);
     
-    Task<bool> Finalizar(Guid atividadedtoCodigo);
+    Task<bool> Finalizar(AtividadeDto atividadeDto);
 
-    Task<bool> Reabrir(Guid atividadedtoCodigo);
+    Task<bool> Reabrir(AtividadeDto atividadeDto);
 }

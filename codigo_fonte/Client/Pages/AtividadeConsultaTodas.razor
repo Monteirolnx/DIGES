@@ -47,6 +47,7 @@ else
                                 LogicalFilterOperator="LogicalFilterOperator.And"
                                 PagerHorizontalAlign="HorizontalAlign.Left"
                                 PageSize="100"
+                                @ref="atividadeDtoGrid"
                                 ShowPagingSummary="true"
                                 Style="width: 100%;"
                                 TItem="AtividadeDto">
@@ -161,16 +162,16 @@ else
                                               Width="10%">
                             <Template Context="atividadeDto">
                                 <div style="text-align: center;">
-
-                                    <RadzenButton 
-                                        ButtonStyle="ButtonStyle.Primary" 
-                                        Click="@(() => NavedarEditaAtividade(atividadeDto))" 
-                                        Icon="history"
-                                                  MouseEnter="@(args => TooltipService.MostrarAjuda(args, "Editar"))"
-                                        Size="ButtonSize.Small"/>
-
                                     @if (atividadeDto.Status == TipoAbertaFechada.Aberta)
                                     {
+                                        
+                                        <RadzenButton 
+                                            ButtonStyle="ButtonStyle.Primary" 
+                                            Click="@(() => NavedarEditaAtividade(atividadeDto))" 
+                                            Icon="history"
+                                            MouseEnter="@(args => TooltipService.MostrarAjuda(args, "Editar"))"
+                                            Size="ButtonSize.Small"/>
+
                                         <RadzenButton
                                             ButtonStyle="ButtonStyle.Secondary"
                                             Click="@(() => FinalizarAtividade(atividadeDto))"

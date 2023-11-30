@@ -94,9 +94,9 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
         return resultado;
     }
 
-    public async Task<bool> Finalizar(Guid atividadedtoCodigo)
+    public async Task<bool> Finalizar(AtividadeDto atividadeDto)
     {
-        var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadedtoCodigo);
+        var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadeDto.Codigo);
 
         if (atividade == null)
         {
@@ -112,9 +112,9 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
         return resultado > 0;
     }
 
-    public async Task<bool> Reabrir(Guid atividadedtoCodigo)
+    public async Task<bool> Reabrir(AtividadeDto atividadeDto)
     {
-        var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadedtoCodigo);
+        var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadeDto.Codigo);
 
         if (atividade == null)
         {

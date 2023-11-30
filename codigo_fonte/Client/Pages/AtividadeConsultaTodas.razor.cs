@@ -34,6 +34,8 @@ public partial class AtividadeConsultaTodas
     #endregion
 
     #region Fields
+    private RadzenDataGrid<AtividadeDto> atividadeDtoGrid = default!;
+
     private IEnumerable<AtividadeDto>? atividadesDto;
 
     private bool carregando = true;
@@ -128,6 +130,7 @@ public partial class AtividadeConsultaTodas
 
                 atividadesDto = await AtividadeServico.ConsultarTodas();
                 StateHasChanged();
+                await atividadeDtoGrid.Reload();
             }
         }
         catch (Exception ex)
@@ -137,7 +140,7 @@ public partial class AtividadeConsultaTodas
         }
     }
 
-    private async Task FinalizarAtividade(AtividadeDto atividadedto)
+    private async Task FinalizarAtividade(AtividadeDto atividadeDto)
     {
         try
         {
@@ -146,7 +149,7 @@ public partial class AtividadeConsultaTodas
 
             if (questao == true)
             {
-                if (await AtividadeServico.Finalizar(atividadedto.Codigo))
+                if (await AtividadeServico.Finalizar(atividadeDto))
                 {
                     NotificationService.Sucesso("Atividade finalizada com sucesso!");
                 }
@@ -157,6 +160,7 @@ public partial class AtividadeConsultaTodas
 
                 atividadesDto = await AtividadeServico.ConsultarTodas();
                 StateHasChanged();
+                await atividadeDtoGrid.Reload();
             }
         }
         catch (Exception ex)
@@ -166,7 +170,7 @@ public partial class AtividadeConsultaTodas
         }
     }
 
-    private async Task ReabrirAtividade(AtividadeDto atividadedto)
+    private async Task ReabrirAtividade(AtividadeDto atividadeDto)
     {
         try
         {
@@ -175,17 +179,18 @@ public partial class AtividadeConsultaTodas
 
             if (questao == true)
             {
-                if (await AtividadeServico.Reabrir(atividadedto.Codigo))
+                if (await AtividadeServico.Reabrir(atividadeDto))
                 {
-                    NotificationService.Sucesso("Atividade finalizada com sucesso!");
+                    NotificationService.Sucesso("Atividade reaberta com sucesso!");
                 }
                 else
                 {
-                    NotificationService.Erro("Não foi possível finalizar a atividade!");
+                    NotificationService.Erro("Não foi possível reaberta a atividade!");
                 }
 
                 atividadesDto = await AtividadeServico.ConsultarTodas();
                 StateHasChanged();
+                await atividadeDtoGrid.Reload();
             }
         }
         catch (Exception ex)
