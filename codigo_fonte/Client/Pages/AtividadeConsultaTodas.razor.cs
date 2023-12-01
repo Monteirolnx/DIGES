@@ -18,8 +18,7 @@ public partial class AtividadeConsultaTodas
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; } = default!;
-
-
+    
     [Inject]
     protected IProfissionalServico ProfissionalServico { get; set; } = default!;
 
@@ -41,6 +40,8 @@ public partial class AtividadeConsultaTodas
     private bool carregando = true;
     #endregion
 
+    private string paginaSummaryFormato = "Exibindo página {0} de {1} <b>(total de {2} registros)</b>";
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         try

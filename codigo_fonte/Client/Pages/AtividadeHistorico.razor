@@ -56,7 +56,9 @@ else
                                             <RadzenTextArea @bind-Value="observacao.Registro" Rows="5" Style="width:845px; display: block" Name="Registro" />
                                             <RadzenRequiredValidator Text="Observação é obrigatória" Component="Registro" Popup="false" />
                                         </EditTemplate>
-                                        
+                                        <Template Context="observacao">
+                                            <div style="white-space: pre-wrap;">@observacao.Registro</div>
+                                        </Template>
                                     </RadzenDataGridColumn>
 
                                     <RadzenDataGridColumn Context="observacao" Filterable="false" Frozen="true" FrozenPosition="FrozenColumnPosition.Right" Sortable="false" TextAlign="TextAlign.Right" TItem="ObservacaoDto">
