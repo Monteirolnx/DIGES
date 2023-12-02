@@ -40,6 +40,11 @@ public partial class AtividadeConsultaTodas
     private bool carregando = true;
     #endregion
 
+    protected override void OnInitialized()
+    {
+        carregando = true;
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         try
