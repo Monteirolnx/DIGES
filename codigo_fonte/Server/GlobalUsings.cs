@@ -13,4 +13,5 @@ global using Controle.Atividades.Server.Components;
 global using Controle.Atividades.Server.Servicos;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Caching.Memory;
 global using Radzen;

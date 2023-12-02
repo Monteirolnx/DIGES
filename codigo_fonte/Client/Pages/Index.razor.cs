@@ -18,7 +18,7 @@ public partial class Index
 
     private IEnumerable<AtividadeDto>? atividadesDto;
     private bool carregando = true;
-    private DataItem[]? atividades;
+    private DataItem[]? dataItems;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -56,7 +56,7 @@ public partial class Index
     {
         if (atividadesDto != null)
         {
-            atividades = new DataItem[]
+            dataItems = new DataItem[]
             {
                 new()
                 {

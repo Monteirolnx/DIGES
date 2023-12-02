@@ -29,5 +29,6 @@ public static class Constantes
     public const string PaginaAtividadeEdita = "/atividade-edita/";
     public const string PaginaLogin = "/login";
 
+    public const string MemoryCacheTodasAtividades = "todasAtividades";
     #endregion
 }

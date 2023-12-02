@@ -2,12 +2,14 @@
 
 [ApiController]
 [Route(Constantes.BaseUrlAtividade)]
-public class AtividadeController(IAtividadeServico atividadeServico) : ControllerBase
+public class AtividadeController(IAtividadeServico atividadeServico, IMemoryCache memoryCache) : ControllerBase
 {
     [HttpPost(Constantes.AdicionaAtividade)]
     public async Task<IActionResult> Adicionar(AtividadeDto atividadeDto)
     {
         var resultado = await atividadeServico.Adicionar(atividadeDto);
+
+        memoryCache.Remove(Constantes.MemoryCacheTodasAtividades);
 
         return Ok(resultado);
     }
@@ -17,6 +19,8 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
     {
         var resultado = await atividadeServico.Editar(atividadeDto);
 
+        memoryCache.Remove(Constantes.MemoryCacheTodasAtividades);
+
         return Ok(resultado);
     }
 
@@ -25,13 +29,24 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
     {
         var resultado = await atividadeServico.Excluir(atividadeDto);
 
+        memoryCache.Remove(Constantes.MemoryCacheTodasAtividades);
+
         return Ok(resultado);
     }
 
     [HttpGet(Constantes.ConsultaTodasAtividades)]
     public async Task<IActionResult> ConsultarTodas()
     {
-        var resultado = await atividadeServico.ConsultarTodas();
+        if (memoryCache.TryGetValue(Constantes.MemoryCacheTodasAtividades, out var resultado))
+        {
+            return Ok(resultado);
+        }
+
+        resultado = await atividadeServico.ConsultarTodas();
+
+        var cacheEntryOptions = new MemoryCacheEntryOptions()
+            .SetSlidingExpiration(TimeSpan.FromHours(5));
+        memoryCache.Set(Constantes.MemoryCacheTodasAtividades, resultado, cacheEntryOptions);
 
         return Ok(resultado);
     }
@@ -49,6 +64,8 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
     {
         var resultado = await atividadeServico.Finalizar(atividadeDto);
 
+        memoryCache.Remove(Constantes.MemoryCacheTodasAtividades);
+
         return Ok(resultado);
     }
 
@@ -56,6 +73,8 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
     public async Task<IActionResult> Reabrir(AtividadeDto atividadeDto)
     {
         var resultado = await atividadeServico.Reabrir(atividadeDto);
+
+        memoryCache.Remove(Constantes.MemoryCacheTodasAtividades);
 
         return Ok(resultado);
     }

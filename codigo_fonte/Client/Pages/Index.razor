@@ -11,24 +11,22 @@ else
         <div class="row">
             <div class="col">
                 <RadzenChart>
-                    <RadzenLineSeries
-                        CategoryProperty="Data"
-                        Data="@atividades"
-                        RenderingOrder="1"
-                        Smooth="true"
-                        Title="@DateTime.Now.Year.ToString()"
-                        ValueProperty="Quantidade">
+                    <RadzenLineSeries CategoryProperty="Data"
+                                      Data="@dataItems"
+                                      RenderingOrder="1"
+                                      Smooth="true"
+                                      Title="@DateTime.Now.Year.ToString()"
+                                      ValueProperty="Quantidade">
                         <RadzenSeriesDataLabels Visible="true" />
-                        <RadzenMarkers MarkerType="MarkerType.Circle"/>
-                        <RadzenSeriesTrendLine
-                            LineType="LineType.Dashed"
-                            Stroke="var(--rz-danger-dark)"
-                            Visible="true"/>
+                        <RadzenMarkers MarkerType="MarkerType.Circle" />
+                        <RadzenSeriesTrendLine LineType="LineType.Dashed"
+                                               Stroke="var(--rz-danger-dark)"
+                                               Visible="true" />
                     </RadzenLineSeries>
                     <RadzenCategoryAxis Padding="20" Formatter="@FormatarMes" />
                     <RadzenValueAxis>
                         <RadzenGridLines Visible="true" />
-                        <RadzenAxisTitle Text="Atividades Criadas" />
+                        <RadzenAxisTitle Text=@($"Atividades Criadas: {(atividadesDto ?? Array.Empty<AtividadeDto>()).Count().ToString()}") />
                     </RadzenValueAxis>
                 </RadzenChart>
             </div>

@@ -104,7 +104,7 @@ public partial class AtividadeConsultaTodas
 
             if (ata != null)
             {
-                await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", HtmlUtil.CriarAta(ata));
+                await JsRuntime.InvokeVoidAsync("openNewTabWithHtml", Util.Html.CriarAta(ata));
             }
         }
         catch (Exception ex)
@@ -120,7 +120,7 @@ public partial class AtividadeConsultaTodas
         {
 
             await JsRuntime.InvokeVoidAsync("openNewTabWithHtml",
-                HtmlUtil.CriarBackup(await AtividadeServico.ConsultarTodas() ?? Array.Empty<AtividadeDto>()));
+                Util.Html.CriarBackup(await AtividadeServico.ConsultarTodas() ?? Array.Empty<AtividadeDto>()));
         }
         catch (Exception e)
         {
