@@ -1,4 +1,14 @@
-﻿namespace Controle.Atividades.Client.Utils;
+﻿using System.Diagnostics;
+using System.Globalization;
+namespace Controle.Atividades.Client.Utils;
+
+public static class Geral
+{
+    public static string RecuperarVersao()
+    {
+        return "Versão: 23.12.02-1";
+    }
+}
 
 public static class  HtmlUtil
 {
