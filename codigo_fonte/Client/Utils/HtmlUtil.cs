@@ -77,7 +77,7 @@ public static class HtmlUtil
         resultado.AppendLine("</head>");
         resultado.AppendLine("<body>");
         resultado.AppendLine("<div dir='ltr'>");
-        resultado.AppendLine($"<p>Atividades time de sustentação</p>");
+        resultado.AppendLine("<p>Atividades time de sustentação</p>");
 
         resultado.AppendLine("<table>");
         resultado.AppendLine("<tr><th>Atividade</th><th>Descrição</th><th>Sistema</th><th>Analista</th><th>Última observação</th></tr>");
@@ -89,7 +89,7 @@ public static class HtmlUtil
                 .Select(x => $"<b>{x.Data:dd/MM/yyyy}</b><br>{x.Registro}<br><br>")
                 .ToList();
 
-            var historicoFormatado = historicosOrdenados != null && historicosOrdenados.Any()
+            var historicoFormatado = historicosOrdenados != null && historicosOrdenados.Count != 0
                 ? string.Join("", historicosOrdenados)
                 : "-";
 

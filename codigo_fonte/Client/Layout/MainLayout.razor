@@ -9,7 +9,7 @@
                 <RadzenSidebarToggle Click="@SidebarToggleClick" />
             </RadzenStack>
         
-            <RadzenButton Icon="logout" Text="Logout" Style="margin-right: 10px;" Click="@Logout"/>
+            <RadzenButton Visible="AutenticacaoServico.UsuarioEstaLogado" Icon="logout" Text="Sair" Style="margin-right: 10px;" Click="@Logout" />
         </div>
     </RadzenHeader>
     
