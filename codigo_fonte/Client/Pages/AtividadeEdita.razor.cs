@@ -34,8 +34,8 @@ public partial class AtividadeEdita
 
     #region Fields
     private AtividadeDto atividadeAtual = new();
-    private AnalistaDto analistaSelecionado = default!;
-    private LiderDto liderSelecionado = default!;
+    private AnalistaDto? analistaSelecionado;
+    private LiderDto? liderSelecionado; 
 
     private IEnumerable<AnalistaDto>? analistasDto;
     private IEnumerable<LiderDto>? lideresDto;
@@ -131,20 +131,14 @@ public partial class AtividadeEdita
     
     private void OnAnalistaChanged(AnalistaDto? analistaDto)
     {
-        if (analistaDto != null)
-        {
-            analistaSelecionado = analistaDto;
-        }
+        analistaSelecionado = analistaDto ?? null;
 
         StateHasChanged();
     }
 
     private void OnLiderChanged(LiderDto? liderDto)
     {
-        if (liderDto != null)
-        {
-            liderSelecionado = liderDto;
-        }
+        liderSelecionado = liderDto ?? null;
 
         StateHasChanged();
     }
@@ -153,23 +147,25 @@ public partial class AtividadeEdita
     {
         try
         {
-            if (analistaSelecionado.Codigo != Guid.Empty)
+            if (analistaSelecionado is not null && analistaSelecionado.Codigo != Guid.Empty)
             {
                 atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
                 atividadeDto.Analista = analistaSelecionado;
             }
             else
             {
+                atividadeDto.CodigoAnalista = null;
                 atividadeDto.Analista = null;
             }
 
-            if (liderSelecionado.Codigo != Guid.Empty)
+            if (liderSelecionado is not null &&  liderSelecionado.Codigo != Guid.Empty)
             {
                 atividadeDto.CodigoLider = liderSelecionado.Codigo;
                 atividadeDto.Lider = liderSelecionado;
             }
             else
             {
+                atividadeDto.CodigoLider = null;
                 atividadeDto.Lider = null;
             }
 

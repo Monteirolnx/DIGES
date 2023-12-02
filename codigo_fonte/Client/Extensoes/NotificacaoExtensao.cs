@@ -33,7 +33,7 @@ public static class NotificacaoExtensao
     {
         notification.Notify(new NotificationMessage
         {
-            Severity = NotificationSeverity.Success,
+            Severity = NotificationSeverity.Error,
             Summary = "Exception:",
             Detail = ex.Message,
             Duration = Duracao
