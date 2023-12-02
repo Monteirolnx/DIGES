@@ -202,7 +202,7 @@ public partial class AtividadeEdita
 
     private async Task MostrarHistorico()
     {
-        await DialogService.OpenAsync<AtividadeHistorico>($"Atividade: {atividadeAtual.NumeroRedmine}",
+        await DialogService.OpenAsync<AtividadeHistorico>($"Atividade: {atividadeAtual.NumeroRedmine} - {atividadeAtual.Descricao}",
             new Dictionary<string, object> { { "codigoAtividade", atividadeAtual.Codigo.ToString() } },
             new DialogOptions { Width = "1200px", Height = "700px", Resizable = true, Draggable = true });
 

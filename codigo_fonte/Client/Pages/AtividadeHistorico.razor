@@ -13,24 +13,29 @@ else
                     <RadzenColumn Size="12">
                         <RadzenStack>
                             
-                            <RadzenDataGrid AllowAlternatingRows="false"
-                                            AllowColumnResize="false"
-                                            AllowFiltering="false"
-                                            AllowPaging="true"
-                                            AllowSorting="false"
-                                            Data="@atividadeAtual?.Historico"
-                                            EditMode="DataGridEditMode.Single"
-                                            EmptyText="Nenhum registro encontrado."
-                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                            FilterMode="FilterMode.Simple"
-                                            LogicalFilterOperator="LogicalFilterOperator.And"
-                                            PagerHorizontalAlign="HorizontalAlign.Left"
-                                            PageSize="5"
-                                            @ref="observacaoGrid"
-                                            RowUpdate="@OnEditarLinha"
-                                            ShowPagingSummary="true"
-                                            Style="max-width: 1150px; width: 100%;"
-                                            TItem="ObservacaoDto">
+                            <RadzenDataGrid 
+                                AllowAlternatingRows="true" 
+                                AllowColumnResize="false" 
+                                AllowFiltering="false" 
+                                AllowPaging="true" 
+                                AllowSorting="false" 
+                                Data="@atividadeAtual?.Historico" 
+                                EditMode="DataGridEditMode.Single" 
+                                EmptyText="Nenhum registro encontrado." 
+                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+                                FilterMode="FilterMode.Simple" 
+                                LogicalFilterOperator="LogicalFilterOperator.And" 
+                                PagerHorizontalAlign="HorizontalAlign.Left"
+                                PagerPosition="PagerPosition.Top"
+                                PageSize="5" 
+                                PageSizeOptions="new[] { 5, 10 }"
+                                PageSizeText="itens por página"
+                                PagingSummaryFormat="@("Exibindo página {0} de {1} <b>(total de {2} registros)</b>")"
+                                @ref="observacaoGrid" 
+                                RowUpdate="@OnEditarLinha" 
+                                ShowPagingSummary="true" 
+                                Style="max-width: 1150px; width: 100%;" 
+                                TItem="ObservacaoDto">
                                 <Columns>
 
                                     <RadzenDataGridColumn Filterable="false"

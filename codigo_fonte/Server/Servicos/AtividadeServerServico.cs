@@ -85,9 +85,8 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
             .Include(a => a.Analista)
             .Include(a => a.Lider)
             .Include(a => a.Historico)
-            .OrderBy(a => a.Sistema.ToUpper() == "TODOS")
+            .OrderBy(a => a.Analista!.Nome)
             .ThenBy(a => a.Sistema)
-            .ThenBy(a => a.Analista!.Nome)
             .ThenBy(a => a.NumeroRedmine)
             .ToListAsync();
 
