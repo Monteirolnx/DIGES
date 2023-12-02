@@ -4,7 +4,7 @@ public interface IAutenticacaoServico
 {
     bool UsuarioEstaLogado { get; }
 
-    void Login(string user, string password);
+    void Logar(string usuario, string password);
 
-    void Logout();
+    void Deslogar();
 }

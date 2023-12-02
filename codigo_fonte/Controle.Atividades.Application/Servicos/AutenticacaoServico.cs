@@ -4,9 +4,9 @@ public class AutenticacaoServico : IAutenticacaoServico
 {
     public bool UsuarioEstaLogado { get; private set; }
 
-    public void Login(string user, string password)
+    public void Logar(string usuario, string password)
     {
-        if (user == "a" && password == "1")
+        if (usuario == "controle" && password == "atividade1234")
         {
             UsuarioEstaLogado = true;
         }
@@ -16,7 +16,7 @@ public class AutenticacaoServico : IAutenticacaoServico
         }
     }
 
-    public void Logout()
+    public void Deslogar()
     {
         UsuarioEstaLogado = false;
     }

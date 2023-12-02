@@ -1,30 +1,17 @@
 ﻿@page "/login"
 
-@inject NavigationManager NavigationManager
-@inject IAutenticacaoServico AutenticacaoServico
-
-<h3>Login</h3>
-
-<EditForm Model="@this" OnValidSubmit="HandleLogin">
-    <InputText id="username" @bind-Value="@userName" />
-    <InputText id="password" @bind-Value="@password" type="password" />
-    <button type="submit">Login</button>
-</EditForm>
-
-@code {
-    private string userName = "a";
-    private string password = "1";
-
-    private void HandleLogin()
-    {
-        AutenticacaoServico.Login(userName, password);
-        if (AutenticacaoServico.UsuarioEstaLogado)
-        {
-            NavigationManager.NavigateTo("/atividade-consulta-todas");
-        }
-        else
-        {
-            NavigationManager.NavigateTo("/Login");
-        }
-    }
-}
+<RadzenCard class="rz-my-12 rz-mx-auto rz-p-4 rz-p-md-12" style="max-width: 600px;">
+    <RadzenTemplateForm Data=@("LoginWithDefaultValues")>
+        <RadzenLogin 
+            AllowRegister="false" 
+            AllowRememberMe="false" 
+            AllowResetPassword="false" 
+            Login=@(args => Logar(args, "Logar")) 
+            LoginText="Entrar" 
+            PasswordRequired="Senha é necessária" 
+            PasswordText="Senha:" 
+            RememberMe="true" 
+            UserRequired="Usuário é necessário" 
+            UserText="Usuário:" />
+    </RadzenTemplateForm>
+</RadzenCard>

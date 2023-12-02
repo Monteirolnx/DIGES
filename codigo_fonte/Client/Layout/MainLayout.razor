@@ -2,29 +2,37 @@
 <RadzenComponents />
 
 <RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
-    <RadzenColumn Size="5" Style="padding: 0; margin: 0;">
-        <RadzenSidebarToggle Style="background:#F6F7FA; border:none; border-color: gainsboro; margin: 0; padding: 0;" Click="@SidebarToggleClick"></RadzenSidebarToggle>
-    </RadzenColumn>
+    
+    <RadzenHeader>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                <RadzenSidebarToggle Click="@SidebarToggleClick" />
+            </RadzenStack>
+        
+            <RadzenButton Icon="logout" Text="Logout" Style="margin-right: 10px;" Click="@Logout"/>
+        </div>
+    </RadzenHeader>
+    
     <RadzenBody Expanded="@sidebarExpandido">
         <RadzenRow class="rz-mx-auto rz-px-2 rz-pt-0 rz-pb-2 rz-pb-lg-6" Style="max-width: 80vw; width: 100%;">
-         
             <RadzenColumn Size="12">
                 @Body
             </RadzenColumn>
         </RadzenRow>
     </RadzenBody>
+
     <RadzenSidebar Expanded="@sidebarExpandido" style="z-index: 2">
         <RadzenStack AlignItems="AlignItems.Center" class="rz-py-4 rz-py-lg-6" Style="padding: var(--rz-panel-menu-item-padding); border-bottom: var(--rz-panel-menu-item-border);">
             <RadzenImage Path="images/logo.png" style="width: 300; height: 168px;"></RadzenImage>
-            <RadzenText Text="Controle de Atividades" TextStyle="TextStyle.Subtitle1" class="rz-mb-0" style="color: var(--rz-sidebar-color);" />
-            <RadzenText Text="v23.11.28-1" TextStyle="TextStyle.Caption" style="color: var(--rz-text-disabled-color);" TagName="TagName.P" TextAlign="TextAlign.Center" />
+            <RadzenText Text="Controle de Atividades" TextStyle="TextStyle.Subtitle1" class="rz-mb-0" style="color: var(--rz-sidebar-color);"/>
+            <RadzenText Text="v23.11.28-1" TextStyle="TextStyle.Caption" style="color: var(--rz-text-disabled-color);" TagName="TagName.P" TextAlign="TextAlign.Center"/>
         </RadzenStack>
         <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="Home" Path="" />
-            <RadzenPanelMenuItem Text="Atividades" Path="/atividade-consulta-todas" />
+            <RadzenPanelMenuItem Text="Home" Path=""/>
+            <RadzenPanelMenuItem Text="Atividades" Path="/atividade-consulta-todas"/>
         </RadzenPanelMenu>
         <RadzenFieldset Text="Área de transferência">
-            <RadzenTextArea Rows="13"  class="w-100" />
-            </RadzenFieldset>
+            <RadzenTextArea Rows="13" class="w-100"/>
+        </RadzenFieldset>
     </RadzenSidebar>
 </RadzenLayout>
