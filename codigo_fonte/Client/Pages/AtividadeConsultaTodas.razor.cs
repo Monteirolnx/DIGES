@@ -18,7 +18,7 @@ public partial class AtividadeConsultaTodas
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; } = default!;
-    
+
     [Inject]
     protected IProfissionalServico ProfissionalServico { get; set; } = default!;
 
@@ -106,6 +106,21 @@ public partial class AtividadeConsultaTodas
         {
             NotificationService.Exception(ex);
             await JsRuntime.LogarErroConsole(ex);
+        }
+    }
+
+    private async Task GerarBackup()
+    {
+        try
+        {
+
+            await JsRuntime.InvokeVoidAsync("openNewTabWithHtml",
+                HtmlUtil.CriarBackup(await AtividadeServico.ConsultarTodas() ?? Array.Empty<AtividadeDto>()));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 

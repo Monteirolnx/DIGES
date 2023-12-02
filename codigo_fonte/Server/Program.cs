@@ -1,5 +1,3 @@
-using Radzen.Blazor;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
