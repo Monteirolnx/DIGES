@@ -1,9 +1,11 @@
 ﻿namespace Controle.Atividades.Server.Servicos;
 
-public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtividadeServico
+public class AtividadeServerServico(Contexto contexto, IMapper mapper, IMemoryCache memoryCache) : IAtividadeServico
 {
     public async Task<bool> Adicionar(AtividadeDto atividadeDto)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var atividadeExistente = mapper.Map<Atividade>(atividadeDto);
 
         atividadeExistente.Criar();
@@ -35,6 +37,8 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
 
     public async Task<bool> Editar(AtividadeDto atividadeDto)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var atividadeExistente = await contexto.Atividades.FirstOrDefaultAsync(o => o.Codigo == atividadeDto.Codigo);
 
         if (atividadeExistente == null)
@@ -55,6 +59,8 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
 
     public async Task<bool> Excluir(AtividadeDto atividadeDto)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var atividadeExistente = await contexto.Atividades.Include(a => a.Historico)
             .FirstOrDefaultAsync(a => a.Codigo == atividadeDto.Codigo);
 
@@ -80,6 +86,11 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
 
     public async Task<IEnumerable<AtividadeDto>?> ConsultarTodas()
     {
+        if (memoryCache.TryGetValue(Constantes.MemoryCacheServerTodasAtividades, out IEnumerable<AtividadeDto>? resultado))
+        {
+            return resultado;
+        }
+
         var atividades = await contexto.Atividades
             .AsNoTracking()
             .Include(a => a.Analista)
@@ -90,13 +101,19 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
             .ThenBy(a => a.NumeroRedmine)
             .ToListAsync();
 
-        var resultado = mapper.Map<IEnumerable<AtividadeDto>>(atividades);
+        resultado = mapper.Map<IEnumerable<AtividadeDto>>(atividades);
 
-        return resultado;
+        var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(5));
+        var consultarTodas = resultado.ToList();
+        memoryCache.Set(Constantes.MemoryCacheServerTodasAtividades, consultarTodas, cacheEntryOptions);
+
+        return consultarTodas;
     }
 
     public async Task<AtividadeDto?> ConsultarPorCodigo(Guid codigoAtividade)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var atividades = await contexto.Atividades
             .AsNoTracking()
             .Where(a => a.Codigo == codigoAtividade)
@@ -112,6 +129,8 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
 
     public async Task<bool> Finalizar(AtividadeDto atividadeDto)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadeDto.Codigo);
 
         if (atividade == null)
@@ -130,6 +149,8 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper) : IAtivid
 
     public async Task<bool> Reabrir(AtividadeDto atividadeDto)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var atividade = await contexto.Atividades.FirstOrDefaultAsync(a => a.Codigo == atividadeDto.Codigo);
 
         if (atividade == null)

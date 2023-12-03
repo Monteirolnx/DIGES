@@ -1,9 +1,11 @@
 ﻿namespace Controle.Atividades.Server.Servicos;
 
-public class ObservacaoServerServico(Contexto contexto, IMapper mapper) : IObservacaoServico
+public class ObservacaoServerServico(Contexto contexto, IMapper mapper, IMemoryCache memoryCache) : IObservacaoServico
 {
     public async Task<bool> Editar(ObservacaoDto observacaoDto)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var observacaoExistente = await contexto.Historico.FirstOrDefaultAsync(o => o.Codigo == observacaoDto.Codigo);
 
         if (observacaoExistente == null)
@@ -22,6 +24,8 @@ public class ObservacaoServerServico(Contexto contexto, IMapper mapper) : IObser
 
     public async Task<bool> Excluir(ObservacaoDto observacaoDto)
     {
+        memoryCache.Remove(Constantes.MemoryCacheServerTodasAtividades);
+
         var observacaoExistente = await contexto.Historico.FirstOrDefaultAsync(o => o.Codigo == observacaoDto.Codigo);
 
         if (observacaoExistente == null)
@@ -35,5 +39,4 @@ public class ObservacaoServerServico(Contexto contexto, IMapper mapper) : IObser
 
         return resultado > 0;
     }
-
 }

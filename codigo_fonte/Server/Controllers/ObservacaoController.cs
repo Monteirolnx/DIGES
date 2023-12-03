@@ -2,17 +2,14 @@
 
 [ApiController]
 [Route(Constantes.BaseUrlObservacao)]
-public class ObservacaoController(IObservacaoServico observacaoServico, IMemoryCache memoryCache) : ControllerBase
+public class ObservacaoController(IObservacaoServico observacaoServico) : ControllerBase
 {
 
     [HttpPost(Constantes.EditaObservacao)]
     public async Task<IActionResult> Editar(ObservacaoDto observacaoDto)
     {
         var resultado = await observacaoServico.Editar(observacaoDto);
-
-
-        memoryCache.Remove(Constantes.MemoryCacheTodasAtividades);
-
+        
         return Ok(resultado);
     }
 
@@ -21,8 +18,6 @@ public class ObservacaoController(IObservacaoServico observacaoServico, IMemoryC
     {
         var resultado = await observacaoServico.Excluir(observacaoDto);
         
-        memoryCache.Remove(Constantes.MemoryCacheTodasAtividades);
-
         return Ok(resultado);
     }
 }
