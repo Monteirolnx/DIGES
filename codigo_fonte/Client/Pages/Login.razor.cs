@@ -11,7 +11,7 @@ public partial class Login
     protected NavigationManager NavigationManager { get; set; } = default!;
     #endregion
 
-    private Task Logar(LoginArgs args, string loginWithDefaultValues)
+    private Task Logar(LoginArgs args)
     {
         AutenticacaoServico.Logar(args.Username, args.Password);
         NavigationManager.NavigateTo(AutenticacaoServico.UsuarioEstaLogado ? "/atividade-consulta-todas" : "/Logar");

@@ -48,19 +48,16 @@ public partial class AtividadeEdita
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        VerificarAutenticacao();
-
-        await MontarMemoria(firstRender);
-    }
-
-    private void VerificarAutenticacao()
-    {
         if (!AutenticacaoServico.UsuarioEstaLogado)
         {
             NavigationManager.NavigateTo(Constantes.PaginaLogin);
         }
+        else
+        {
+            await MontarMemoria(firstRender);
+        }
     }
-
+    
     private async Task MontarMemoria(bool firstRender)
     {
         if (firstRender)

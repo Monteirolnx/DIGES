@@ -30,5 +30,6 @@ public static class Constantes
     public const string PaginaLogin = "/login";
 
     public const string MemoryCacheServerTodasAtividades = "todasAtividadesServer";
+    public const string MemoryCacheClientTodasAtividades = "todasAtividadesClient";
     #endregion
 }

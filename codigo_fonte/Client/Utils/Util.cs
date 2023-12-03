@@ -6,7 +6,7 @@ public static class Util
     {
         public static string RecuperarVersao()
         {
-            return "Versão: 23.12.02-3";
+            return "Versão: 23.12.02-4";
         }
     }
 

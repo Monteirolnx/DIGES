@@ -1,6 +1,7 @@
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddRadzenComponents();
+builder.Services.AddBlazoredSessionStorage();
 
 builder.Services.AddScoped<IAutenticacaoServico, AutenticacaoServico>();
 

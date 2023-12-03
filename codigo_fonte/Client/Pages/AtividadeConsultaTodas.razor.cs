@@ -49,9 +49,15 @@ public partial class AtividadeConsultaTodas
     {
         try
         {
-            VerificarAutenticacao();
-
-            await MontarMemoria(firstRender);
+            if (!AutenticacaoServico.UsuarioEstaLogado)
+            {
+                NavigationManager.NavigateTo(Constantes.PaginaLogin);
+            }
+            else
+            {
+                await MontarMemoria(firstRender);
+            }
+            
         }
         catch (Exception ex)
         {
@@ -59,15 +65,7 @@ public partial class AtividadeConsultaTodas
             await JsRuntime.LogarErroConsole(ex);
         }
     }
-
-    private void VerificarAutenticacao()
-    {
-        if (!AutenticacaoServico.UsuarioEstaLogado)
-        {
-            NavigationManager.NavigateTo(Constantes.PaginaLogin);
-        }
-    }
-
+    
     private async Task MontarMemoria(bool firstRender)
     {
         try
