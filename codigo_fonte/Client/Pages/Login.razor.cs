@@ -11,11 +11,29 @@ public partial class Login
     protected NavigationManager NavigationManager { get; set; } = default!;
     #endregion
 
+    private bool carregandoPagina;
+
     private Task Logar(LoginArgs args)
     {
-        AutenticacaoServico.Logar(args.Username, args.Password);
-        NavigationManager.NavigateTo(AutenticacaoServico.UsuarioEstaLogado ? "/atividade-consulta-todas" : "/Logar");
+        try
+        {
+            carregandoPagina = true;
+            AutenticacaoServico.Logar(args.Username, args.Password);
+            NavigationManager.NavigateTo(AutenticacaoServico.UsuarioEstaLogado
+                ? "/atividade-consulta-todas"
+                : "/Logar");
 
-        return Task.CompletedTask;
+            return Task.CompletedTask;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            carregandoPagina = false;
+        }
+        
     }
 }

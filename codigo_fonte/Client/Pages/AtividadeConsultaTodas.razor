@@ -1,6 +1,6 @@
 ﻿@page "/atividade-consulta-todas"
 
-@if (carregando)
+@if (carregandoPagina)
 {
     <p><em>Carregando...</em></p>
 }
@@ -40,10 +40,12 @@ else
                                 AllowFiltering="true"
                                 AllowPaging="true"
                                 AllowSorting="true"
+                                AllowVirtualization="true"
                                 Data="@atividadesDto"
                                 EmptyText="Nenhum registro encontrado."
                                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                 FilterMode="FilterMode.Simple"
+                                IsLoading="@carregandoDados"
                                 LogicalFilterOperator="LogicalFilterOperator.And"
                                 PagerHorizontalAlign="HorizontalAlign.Left"
                                 PagerPosition="PagerPosition.TopAndBottom"

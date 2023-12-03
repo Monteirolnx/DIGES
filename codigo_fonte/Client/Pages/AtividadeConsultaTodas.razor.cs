@@ -37,12 +37,13 @@ public partial class AtividadeConsultaTodas
 
     private IEnumerable<AtividadeDto>? atividadesDto;
 
-    private bool carregando = true;
+    private bool carregandoDados;
+    private bool carregandoPagina = true;
     #endregion
 
     protected override void OnInitialized()
     {
-        carregando = true;
+        carregandoPagina = true;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -72,13 +73,18 @@ public partial class AtividadeConsultaTodas
         {
             if (firstRender)
             {
+                carregandoDados = true;
                 atividadesDto = await AtividadeServico.ConsultarTodas();
-                carregando = false;
+                
+                carregandoPagina = false;
+                carregandoDados = false;
                 StateHasChanged();
             }
         }
         catch (Exception ex)
         {
+            carregandoPagina = false;
+            carregandoDados = false;
             NotificationService.Exception(ex);
             await JsRuntime.LogarErroConsole(ex);
         }
@@ -116,7 +122,6 @@ public partial class AtividadeConsultaTodas
     {
         try
         {
-
             await JsRuntime.InvokeVoidAsync("openNewTabWithHtml",
                 Util.Html.CriarBackup(await AtividadeServico.ConsultarTodas() ?? Array.Empty<AtividadeDto>()));
         }
@@ -216,4 +221,5 @@ public partial class AtividadeConsultaTodas
             await JsRuntime.LogarErroConsole(ex);
         }
     }
+
 }
