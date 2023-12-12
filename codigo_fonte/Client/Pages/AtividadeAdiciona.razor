@@ -26,10 +26,28 @@ else
                                             Style="width: 8rem;" 
                                             TValue="int?" />
                                         <RadzenButton ButtonStyle="ButtonStyle.Secondary"
-                                            Click="@(() => JsRuntime.AbrirRedmine(atividadeNova.NumeroRedmine))"
-                                            Icon="language"
-                                            Text="Abrir tarefa">
+                                                      Click="@(() => JsRuntime.AbrirRedmine(atividadeNova.NumeroRedmine))"
+                                                      Icon="language"
+                                                      Text="Abrir tarefa">
                                         </RadzenButton>
+                                    </RadzenStack>
+                                </RadzenColumn>
+                            </RadzenRow>
+                            
+                            <RadzenRow AlignItems="AlignItems.Center">
+                                <RadzenColumn Size="12" SizeMD="3">
+                                    <RadzenLabel Text="Descrição:"/>
+                                    <RadzenRequiredValidator
+                                        Component="Descricao"
+                                        Popup=true Style="position: absolute"
+                                        Text="Descrição é obrigatória" />
+                                </RadzenColumn>
+                                <RadzenColumn Size="12" SizeMD="9">
+                                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
+                                        <RadzenTextBox 
+                                            @bind-Value=@atividadeNova.Descricao
+                                            Name="Descricao"
+                                            Style="width: 100%;" />
                                     </RadzenStack>
                                 </RadzenColumn>
                             </RadzenRow>
@@ -51,25 +69,7 @@ else
                                     </RadzenStack>
                                 </RadzenColumn>
                             </RadzenRow>
-                            
-                            <RadzenRow AlignItems="AlignItems.Center">
-                                <RadzenColumn Size="12" SizeMD="3">
-                                    <RadzenLabel Text="Descrição:"/>
-                                    <RadzenRequiredValidator
-                                        Component="Descricao"
-                                        Popup=true Style="position: absolute"
-                                        Text="Descrição é obrigatória" />
-                                </RadzenColumn>
-                                <RadzenColumn Size="12" SizeMD="9">
-                                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
-                                        <RadzenTextBox 
-                                            @bind-Value=@atividadeNova.Descricao
-                                                       Name="Descricao"
-                                            Style="width: 100%;" />
-                                    </RadzenStack>
-                                </RadzenColumn>
-                            </RadzenRow>
-                            
+                                              
                             <RadzenRow AlignItems="AlignItems.Center">
                                 <RadzenColumn Size="6" SizeMD="6">
                                     <RadzenLabel Text="Analista:"/>

@@ -31,23 +31,7 @@ else
                                     </RadzenStack>
                                 </RadzenColumn>
                             </RadzenRow>
-
-                            <RadzenRow AlignItems="AlignItems.Center">
-                                <RadzenColumn Size="12" SizeMD="3">
-                                    <RadzenLabel Text="Sistema:" />
-                                    <RadzenRequiredValidator Component="Sistema"
-                                                             Popup=true Style="position: absolute"
-                                                             Text="Sistema é obrigatório" />
-                                </RadzenColumn>
-                                <RadzenColumn Size="12" SizeMD="3">
-                                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
-                                        <RadzenTextBox @bind-Value=@atividadeAtual.Sistema
-                                                       Name="Sistema"
-                                                       Style="width: 100%;" />
-                                    </RadzenStack>
-                                </RadzenColumn>
-                            </RadzenRow>
-
+                            
                             <RadzenRow AlignItems="AlignItems.Center">
                                 <RadzenColumn Size="12" SizeMD="3">
                                     <RadzenLabel Text="Descrição:" />
@@ -64,6 +48,22 @@ else
                                 </RadzenColumn>
                             </RadzenRow>
 
+                            <RadzenRow AlignItems="AlignItems.Center">
+                                <RadzenColumn Size="12" SizeMD="3">
+                                    <RadzenLabel Text="Sistema:" />
+                                    <RadzenRequiredValidator Component="Sistema"
+                                                             Popup=true Style="position: absolute"
+                                                             Text="Sistema é obrigatório" />
+                                </RadzenColumn>
+                                <RadzenColumn Size="12" SizeMD="3">
+                                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" Gap="0.5rem">
+                                        <RadzenTextBox @bind-Value=@atividadeAtual.Sistema
+                                                       Name="Sistema"
+                                                       Style="width: 100%;" />
+                                    </RadzenStack>
+                                </RadzenColumn>
+                            </RadzenRow>
+                            
                             <RadzenRow AlignItems="AlignItems.Center">
                                 <RadzenColumn Size="6" SizeMD="6">
                                     <RadzenLabel Text="Analista:" />
