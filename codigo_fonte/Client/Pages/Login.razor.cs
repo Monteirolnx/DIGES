@@ -11,13 +11,13 @@ public partial class Login
     protected NavigationManager NavigationManager { get; set; } = default!;
     #endregion
 
-    private bool carregandoPagina;
+    private bool _carregandoPagina;
 
     private Task Logar(LoginArgs args)
     {
         try
         {
-            carregandoPagina = true;
+            _carregandoPagina = true;
             AutenticacaoServico.Logar(args.Username, args.Password);
             NavigationManager.NavigateTo(AutenticacaoServico.UsuarioEstaLogado
                 ? "/atividade-consulta-todas"
@@ -32,7 +32,7 @@ public partial class Login
         }
         finally
         {
-            carregandoPagina = false;
+            _carregandoPagina = false;
         }
         
     }

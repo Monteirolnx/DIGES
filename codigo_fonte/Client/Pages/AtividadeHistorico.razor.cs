@@ -20,12 +20,12 @@ public partial class AtividadeHistorico
     #endregion
 
     #region Fields
-    private AtividadeDto? atividadeAtual;
+    private AtividadeDto? _atividadeAtual;
 
-    private bool carregando = true;
+    private bool _carregando = true;
     #endregion
 
-    private RadzenDataGrid<ObservacaoDto> observacaoGrid = default!;
+    private RadzenDataGrid<ObservacaoDto> _observacaoGrid = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,9 +38,9 @@ public partial class AtividadeHistorico
         {
             await ConsultaAtividade();
 
-            carregando = false;
+            _carregando = false;
             StateHasChanged();
-            await observacaoGrid.LastPage();
+            await _observacaoGrid.LastPage();
         }
     }
 
@@ -48,10 +48,10 @@ public partial class AtividadeHistorico
     {
         if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
         {
-            atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade);
-            if (atividadeAtual?.Historico != null)
+            _atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade);
+            if (_atividadeAtual?.Historico != null)
             {
-                atividadeAtual.Historico = atividadeAtual.Historico
+                _atividadeAtual.Historico = _atividadeAtual.Historico
                     .OrderBy(h => h.Data)
                     .ToList();
             }
@@ -60,7 +60,7 @@ public partial class AtividadeHistorico
     
     private async Task EditarLinha(ObservacaoDto observacaoDto)
     {
-        await observacaoGrid.EditRow(observacaoDto);
+        await _observacaoGrid.EditRow(observacaoDto);
     }
 
     private async Task OnEditarLinha(ObservacaoDto observacaoDto)
@@ -82,7 +82,7 @@ public partial class AtividadeHistorico
 
     private async Task SalvarLinha(ObservacaoDto observacaoDto)
     {
-        await observacaoGrid.UpdateRow(observacaoDto);
+        await _observacaoGrid.UpdateRow(observacaoDto);
     }
 
     private async Task DeletarLinha(ObservacaoDto observacaoDto)
@@ -97,8 +97,8 @@ public partial class AtividadeHistorico
                 await ConsultaAtividade();
                 
                 StateHasChanged();
-                await observacaoGrid.Reload();
-                await observacaoGrid.LastPage();
+                await _observacaoGrid.Reload();
+                await _observacaoGrid.LastPage();
             }
         }
         catch (Exception ex)
@@ -117,6 +117,6 @@ public partial class AtividadeHistorico
 
     private void CancelarEdicao(ObservacaoDto observacaoDto)
     {
-        observacaoGrid.CancelEditRow(observacaoDto);
+        _observacaoGrid.CancelEditRow(observacaoDto);
     }
 }

@@ -10,11 +10,11 @@ public partial class MainLayout
     protected NavigationManager NavigationManager { get; set; } = default!;
     #endregion
 
-    private bool sidebarExpandido = true;
+    private bool _sidebarExpandido = true;
 
     private void SidebarToggleClick()
     {
-        sidebarExpandido = !sidebarExpandido;
+        _sidebarExpandido = !_sidebarExpandido;
     }
 
     private void Logout()

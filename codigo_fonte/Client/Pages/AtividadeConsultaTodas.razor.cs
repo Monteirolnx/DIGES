@@ -33,17 +33,17 @@ public partial class AtividadeConsultaTodas
     #endregion
 
     #region Fields
-    private RadzenDataGrid<AtividadeDto> atividadeDtoGrid = default!;
+    private RadzenDataGrid<AtividadeDto> _atividadeDtoGrid = default!;
 
-    private IEnumerable<AtividadeDto>? atividadesDto;
+    private IEnumerable<AtividadeDto>? _atividadesDto;
 
-    private bool carregandoDados;
-    private bool carregandoPagina = true;
+    private bool _carregandoDados;
+    private bool _carregandoPagina = true;
     #endregion
 
     protected override void OnInitialized()
     {
-        carregandoPagina = true;
+        _carregandoPagina = true;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -73,18 +73,18 @@ public partial class AtividadeConsultaTodas
         {
             if (firstRender)
             {
-                carregandoDados = true;
-                atividadesDto = await AtividadeServico.ConsultarTodas();
+                _carregandoDados = true;
+                _atividadesDto = await AtividadeServico.ConsultarTodas();
                 
-                carregandoPagina = false;
-                carregandoDados = false;
+                _carregandoPagina = false;
+                _carregandoDados = false;
                 StateHasChanged();
             }
         }
         catch (Exception ex)
         {
-            carregandoPagina = false;
-            carregandoDados = false;
+            _carregandoPagina = false;
+            _carregandoDados = false;
             NotificationService.Exception(ex);
             await JsRuntime.LogarErroConsole(ex);
         }
@@ -150,9 +150,9 @@ public partial class AtividadeConsultaTodas
                     NotificationService.Erro("Não foi possível excluir a atividade!");
                 }
 
-                atividadesDto = await AtividadeServico.ConsultarTodas();
+                _atividadesDto = await AtividadeServico.ConsultarTodas();
                 StateHasChanged();
-                await atividadeDtoGrid.Reload();
+                await _atividadeDtoGrid.Reload();
             }
         }
         catch (Exception ex)
@@ -180,9 +180,9 @@ public partial class AtividadeConsultaTodas
                     NotificationService.Erro("Não foi possível finalizar a atividade!");
                 }
 
-                atividadesDto = await AtividadeServico.ConsultarTodas();
+                _atividadesDto = await AtividadeServico.ConsultarTodas();
                 StateHasChanged();
-                await atividadeDtoGrid.Reload();
+                await _atividadeDtoGrid.Reload();
             }
         }
         catch (Exception ex)
@@ -210,9 +210,9 @@ public partial class AtividadeConsultaTodas
                     NotificationService.Erro("Não foi possível reaberta a atividade!");
                 }
 
-                atividadesDto = await AtividadeServico.ConsultarTodas();
+                _atividadesDto = await AtividadeServico.ConsultarTodas();
                 StateHasChanged();
-                await atividadeDtoGrid.Reload();
+                await _atividadeDtoGrid.Reload();
             }
         }
         catch (Exception ex)

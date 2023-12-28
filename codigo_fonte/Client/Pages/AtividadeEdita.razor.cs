@@ -33,17 +33,17 @@ public partial class AtividadeEdita
     #endregion
 
     #region Fields
-    private AtividadeDto atividadeAtual = new();
-    private AnalistaDto? analistaSelecionado;
-    private LiderDto? liderSelecionado; 
+    private AtividadeDto _atividadeAtual = new();
+    private AnalistaDto? _analistaSelecionado;
+    private LiderDto? _liderSelecionado; 
 
-    private IEnumerable<AnalistaDto>? analistasDto;
-    private IEnumerable<LiderDto>? lideresDto;
-    private IEnumerable<ObservacaoDto>? ultimaObservacao;
+    private IEnumerable<AnalistaDto>? _analistasDto;
+    private IEnumerable<LiderDto>? _lideresDto;
+    private IEnumerable<ObservacaoDto>? _ultimaObservacao;
 
-    private bool carregando = true;
+    private bool _carregando = true;
 
-    private string? observacao = string.Empty;
+    private string? _observacao = string.Empty;
     #endregion
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -68,7 +68,7 @@ public partial class AtividadeEdita
 
             await ConsultaTodosLideres();
 
-            carregando = false;
+            _carregando = false;
 
             StateHasChanged();
         }
@@ -79,7 +79,7 @@ public partial class AtividadeEdita
         var consultaTodosLideres = await ProfissionalServico.ConsultaTodosLideres();
         if (consultaTodosLideres != null)
         {
-            lideresDto =
+            _lideresDto =
                 consultaTodosLideres.Where(x => x.Status == TipoAtivoInativo.Ativo);
         }
     }
@@ -89,7 +89,7 @@ public partial class AtividadeEdita
         var consultaTodosAnalistas = await ProfissionalServico.ConsultaTodosAnalistas();
         if (consultaTodosAnalistas != null)
         {
-            analistasDto =
+            _analistasDto =
                 consultaTodosAnalistas.Where(x => x.Status == TipoAtivoInativo.Ativo);
         }
     }
@@ -100,22 +100,22 @@ public partial class AtividadeEdita
         {
             if (Guid.TryParse(CodigoAtividade, out var codigoAtividade))
             {
-                atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ??
+                _atividadeAtual = await AtividadeServico.ConsultarPorCodigo(codigoAtividade) ??
                                  throw new InvalidOperationException();
 
-                if (atividadeAtual.Analista != null)
+                if (_atividadeAtual.Analista != null)
                 {
-                    analistaSelecionado = atividadeAtual.Analista;
+                    _analistaSelecionado = _atividadeAtual.Analista;
                 }
 
-                if (atividadeAtual.Lider != null)
+                if (_atividadeAtual.Lider != null)
                 {
-                    liderSelecionado = atividadeAtual.Lider;
+                    _liderSelecionado = _atividadeAtual.Lider;
                 }
 
-                if (atividadeAtual.Historico != null)
+                if (_atividadeAtual.Historico != null)
                 {
-                    ultimaObservacao = atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
+                    _ultimaObservacao = _atividadeAtual.Historico.OrderByDescending(h => h.Data).Take(1).ToList();
                 }
             }
         }
@@ -128,14 +128,14 @@ public partial class AtividadeEdita
     
     private void OnAnalistaChanged(AnalistaDto? analistaDto)
     {
-        analistaSelecionado = analistaDto ?? null;
+        _analistaSelecionado = analistaDto ?? null;
 
         StateHasChanged();
     }
 
     private void OnLiderChanged(LiderDto? liderDto)
     {
-        liderSelecionado = liderDto ?? null;
+        _liderSelecionado = liderDto ?? null;
 
         StateHasChanged();
     }
@@ -144,10 +144,10 @@ public partial class AtividadeEdita
     {
         try
         {
-            if (analistaSelecionado is not null && analistaSelecionado.Codigo != Guid.Empty)
+            if (_analistaSelecionado is not null && _analistaSelecionado.Codigo != Guid.Empty)
             {
-                atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
-                atividadeDto.Analista = analistaSelecionado;
+                atividadeDto.CodigoAnalista = _analistaSelecionado.Codigo;
+                atividadeDto.Analista = _analistaSelecionado;
             }
             else
             {
@@ -155,10 +155,10 @@ public partial class AtividadeEdita
                 atividadeDto.Analista = null;
             }
 
-            if (liderSelecionado is not null &&  liderSelecionado.Codigo != Guid.Empty)
+            if (_liderSelecionado is not null &&  _liderSelecionado.Codigo != Guid.Empty)
             {
-                atividadeDto.CodigoLider = liderSelecionado.Codigo;
-                atividadeDto.Lider = liderSelecionado;
+                atividadeDto.CodigoLider = _liderSelecionado.Codigo;
+                atividadeDto.Lider = _liderSelecionado;
             }
             else
             {
@@ -166,12 +166,12 @@ public partial class AtividadeEdita
                 atividadeDto.Lider = null;
             }
 
-            if (!string.IsNullOrEmpty(observacao))
+            if (!string.IsNullOrEmpty(_observacao))
             {
                 atividadeDto.Historico?.Add(new ObservacaoDto
                 {
                     Data = DateTime.Now,
-                    Registro = observacao
+                    Registro = _observacao
                 });
             }
 
@@ -195,8 +195,8 @@ public partial class AtividadeEdita
 
     private async Task MostrarHistorico()
     {
-        await DialogService.OpenAsync<AtividadeHistorico>($"Atividade: {atividadeAtual.NumeroRedmine} - {atividadeAtual.Descricao}",
-            new Dictionary<string, object> { { "codigoAtividade", atividadeAtual.Codigo.ToString() } },
+        await DialogService.OpenAsync<AtividadeHistorico>($"Atividade: {_atividadeAtual.NumeroRedmine} - {_atividadeAtual.Descricao}",
+            new Dictionary<string, object> { { "codigoAtividade", _atividadeAtual.Codigo.ToString() } },
             new DialogOptions { Width = "1200px", Height = "700px", Resizable = true, Draggable = true });
 
         await ConsultarAtividade();

@@ -1,6 +1,6 @@
 ﻿@page "/atividade-consulta-todas"
 
-@if (carregandoPagina)
+@if (_carregandoPagina)
 {
     <p><em>Carregando...</em></p>
 }
@@ -41,11 +41,11 @@ else
                                 AllowPaging="true"
                                 AllowSorting="true"
                                 AllowVirtualization="true"
-                                Data="@atividadesDto"
+                                Data="@_atividadesDto"
                                 EmptyText="Nenhum registro encontrado."
                                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                 FilterMode="FilterMode.Simple"
-                                IsLoading="@carregandoDados"
+                                IsLoading="@_carregandoDados"
                                 LogicalFilterOperator="LogicalFilterOperator.And"
                                 PagerHorizontalAlign="HorizontalAlign.Left"
                                 PagerPosition="PagerPosition.TopAndBottom"
@@ -53,7 +53,7 @@ else
                                 PageSizeOptions="new[] { 20, 30, 40 }"
                                 PageSizeText="itens por página"
                                 PagingSummaryFormat="@("Exibindo página {0} de {1} <b>(total de {2} registros)</b>")"
-                                @ref="atividadeDtoGrid"
+                                @ref="_atividadeDtoGrid"
                                 ShowPagingSummary="true"
                                 Style="width: 100%;"
                                 TItem="AtividadeDto">

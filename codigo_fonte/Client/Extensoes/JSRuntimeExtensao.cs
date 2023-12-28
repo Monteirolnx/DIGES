@@ -1,6 +1,6 @@
 ﻿namespace Controle.Atividades.Client.Extensoes;
 
-public static class JSRuntimeExtensao
+public static class JsRuntimeExtensao
 {
     public static async Task AbrirRedmine(this IJSRuntime jsRuntime, int? numeroRedmine)
     {

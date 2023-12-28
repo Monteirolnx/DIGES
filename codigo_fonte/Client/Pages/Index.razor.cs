@@ -16,9 +16,9 @@ public partial class Index
     protected NotificationService NotificationService { get; set; } = default!;
     #endregion
 
-    private IEnumerable<AtividadeDto>? atividadesDto;
-    private bool carregando = true;
-    private DataItem[]? dataItems;
+    private IEnumerable<AtividadeDto>? _atividadesDto;
+    private bool _carregando = true;
+    private DataItem[]? _dataItems;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -39,9 +39,9 @@ public partial class Index
         {
             if (firstRender)
             {
-                atividadesDto = await AtividadeServico.ConsultarTodas();
+                _atividadesDto = await AtividadeServico.ConsultarTodas();
                 InicializarDados();
-                carregando = false;
+                _carregando = false;
                 StateHasChanged();
             }
         }
@@ -54,71 +54,71 @@ public partial class Index
 
     private void InicializarDados()
     {
-        if (atividadesDto != null)
+        if (_atividadesDto != null)
         {
-            dataItems = new DataItem[]
-            {
-                new()
+            _dataItems =
+            [
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-01-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 1 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 1 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-02-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 2 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 2 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-03-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 3 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 3 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-04-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 4 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 4 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-05-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 5 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 5 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-06-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 6 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 6 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-07-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 7 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 7 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-08-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 8 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 8 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-09-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 9 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 9 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-10-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 10 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 10 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-11-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 11 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 11 && x.DtCriacao.Year == DateTime.Now.Year)
                 },
-                new()
+                new DataItem
                 {
                     Data = ($"{DateTime.Now.Year}-12-01"),
-                    Quantidade = atividadesDto.Count(x => x.DtCriacao.Month == 12 && x.DtCriacao.Year == DateTime.Now.Year)
+                    Quantidade = _atividadesDto.Count(x => x.DtCriacao.Month == 12 && x.DtCriacao.Year == DateTime.Now.Year)
                 }
-            };
+            ];
         }
     }
 

@@ -1,7 +1,7 @@
 @page "/"
 @attribute [StreamRendering]
 
-@if (carregando)
+@if (_carregando)
 {
     <p><em>Carregando...</em></p>
 }
@@ -12,7 +12,7 @@ else
             <div class="col">
                 <RadzenChart>
                     <RadzenLineSeries CategoryProperty="Data"
-                                      Data="@dataItems"
+                                      Data="@_dataItems"
                                       RenderingOrder="1"
                                       Smooth="true"
                                       Title="@DateTime.Now.Year.ToString()"
@@ -26,7 +26,7 @@ else
                     <RadzenCategoryAxis Padding="20" Formatter="@FormatarMes" />
                     <RadzenValueAxis>
                         <RadzenGridLines Visible="true" />
-                        <RadzenAxisTitle Text=@($"Atividades Criadas: {(atividadesDto ?? Array.Empty<AtividadeDto>()).Count().ToString()}") />
+                        <RadzenAxisTitle Text=@($"Atividades Criadas: {(_atividadesDto ?? Array.Empty<AtividadeDto>()).Count().ToString()}") />
                     </RadzenValueAxis>
                 </RadzenChart>
             </div>

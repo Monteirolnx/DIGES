@@ -24,16 +24,16 @@ public partial class AtividadeAdiciona
     #endregion
 
     #region Fields
-    private readonly AtividadeDto atividadeNova = new();
+    private readonly AtividadeDto _atividadeNova = new();
 
-    private IEnumerable<AnalistaDto>? analistasDto;
-    private IEnumerable<LiderDto>? lideresDto;
+    private IEnumerable<AnalistaDto>? _analistasDto;
+    private IEnumerable<LiderDto>? _lideresDto;
 
-    private AnalistaDto? analistaSelecionado;
-    private LiderDto? liderSelecionado;
+    private AnalistaDto? _analistaSelecionado;
+    private LiderDto? _liderSelecionado;
 
-    private bool carregando = true;
-    private string observacao = string.Empty;
+    private bool _carregando = true;
+    private string _observacao = string.Empty;
     #endregion
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -66,7 +66,7 @@ public partial class AtividadeAdiciona
                 
                 await ConsultaTodosLideres();
 
-                carregando = false;
+                _carregando = false;
 
                 StateHasChanged();
             }
@@ -83,7 +83,7 @@ public partial class AtividadeAdiciona
         var consultaTodosLideres = await ProfissionalServico.ConsultaTodosLideres();
         if (consultaTodosLideres != null)
         {
-            lideresDto =
+            _lideresDto =
                 consultaTodosLideres.Where(x => x.Status == TipoAtivoInativo.Ativo);
         }
     }
@@ -93,7 +93,7 @@ public partial class AtividadeAdiciona
         var consultaTodosAnalistas = await ProfissionalServico.ConsultaTodosAnalistas();
         if (consultaTodosAnalistas != null)
         {
-            analistasDto =
+            _analistasDto =
                 consultaTodosAnalistas.Where(x => x.Status == TipoAtivoInativo.Ativo);
         }
     }
@@ -119,10 +119,10 @@ public partial class AtividadeAdiciona
 
     private void DefinirAnalista(AtividadeDto atividadeDto)
     {
-        if (analistaSelecionado != null && analistaSelecionado.Codigo != Guid.Empty)
+        if (_analistaSelecionado != null && _analistaSelecionado.Codigo != Guid.Empty)
         {
-            atividadeDto.CodigoAnalista = analistaSelecionado.Codigo;
-            atividadeDto.Analista = analistaSelecionado;
+            atividadeDto.CodigoAnalista = _analistaSelecionado.Codigo;
+            atividadeDto.Analista = _analistaSelecionado;
         }
         else
         {
@@ -132,10 +132,10 @@ public partial class AtividadeAdiciona
 
     private void DefinirLider(AtividadeDto atividadeDto)
     {
-        if (liderSelecionado != null && liderSelecionado.Codigo != Guid.Empty)
+        if (_liderSelecionado != null && _liderSelecionado.Codigo != Guid.Empty)
         {
-            atividadeDto.CodigoLider = liderSelecionado.Codigo;
-            atividadeDto.Lider = liderSelecionado;
+            atividadeDto.CodigoLider = _liderSelecionado.Codigo;
+            atividadeDto.Lider = _liderSelecionado;
         }
         else
         {
@@ -145,14 +145,14 @@ public partial class AtividadeAdiciona
 
     private void DefinirObservacao(AtividadeDto atividadeDto)
     {
-        if (!string.IsNullOrEmpty(observacao))
+        if (!string.IsNullOrEmpty(_observacao))
         {
             atividadeDto.Historico = new List<ObservacaoDto>
             {
                 new()
                 {
                     Data = DateTime.Now,
-                    Registro = observacao
+                    Registro = _observacao
                 }
             };
         }
@@ -173,14 +173,14 @@ public partial class AtividadeAdiciona
 
     private void OnAnalistaChanged(AnalistaDto? analistaDto)
     {
-        analistaSelecionado = analistaDto;
+        _analistaSelecionado = analistaDto;
 
         StateHasChanged();
     }
 
     private void OnLiderChanged(LiderDto? liderDto)
     {
-        liderSelecionado = liderDto;
+        _liderSelecionado = liderDto;
 
         StateHasChanged();
     }
