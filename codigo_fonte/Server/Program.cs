@@ -21,6 +21,11 @@ builder.Services.AddRadzenComponents();
 builder.Services.AddHttpClient();
 builder.Services.AddMemoryCache();
 
+builder.Configuration.AddUserSecrets<Program>();
+
+var username = builder.Configuration["Credentials:Username"];
+var password = builder.Configuration["Credentials:Password"];
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
