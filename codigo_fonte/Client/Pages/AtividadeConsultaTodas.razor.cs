@@ -36,6 +36,8 @@ public partial class AtividadeConsultaTodas
     private RadzenDataGrid<AtividadeDto> _atividadeDtoGrid = default!;
 
     private IEnumerable<AtividadeDto>? _atividadesDto;
+    private DateTime _dataInicio;
+    private DateTime _dataFim;
 
     private bool _carregandoDados;
     private bool _carregandoPagina = true;
@@ -44,6 +46,8 @@ public partial class AtividadeConsultaTodas
     protected override void OnInitialized()
     {
         _carregandoPagina = true;
+        _dataInicio = DateTime.Today;
+        _dataFim = DateTime.Today.AddDays(1);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -222,4 +226,28 @@ public partial class AtividadeConsultaTodas
         }
     }
 
+    private async Task FiltrarAtividades()
+    {
+        try
+        {
+            _carregandoDados = true;
+            _atividadesDto = await AtividadeServico.ConsultarPorData(_dataInicio, _dataFim);
+
+            _carregandoPagina = false;
+            _carregandoDados = false;
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            _carregandoPagina = false;
+            _carregandoDados = false;
+            NotificationService.Exception(ex);
+            await JsRuntime.LogarErroConsole(ex);
+        }
+    }
+
+    private async Task Limpar()
+    {
+        await MontarMemoria(firstRender: true);
+    }
 }

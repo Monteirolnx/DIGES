@@ -10,6 +10,7 @@ public static class Constantes
     public const string AdicionaAtividade = "v1/adiciona";
     public const string ConsultaTodasAtividades = "v1/consulta-todas";
     public const string ConsultaPorCodigoAtividade = "v1/consulta-codigo/";
+    public const string ConsultaPorData = "v1/consulta-por-data/";
     public const string EditaAtividade = "v1/edita";
     public const string ExcluiAtividade = "v1/exclui";
     public const string FinalizaAtividade = "v1/finaliza";

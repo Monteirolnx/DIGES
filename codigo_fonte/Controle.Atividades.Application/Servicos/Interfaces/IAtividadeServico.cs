@@ -15,4 +15,6 @@ public interface IAtividadeServico
     Task<bool> Finalizar(AtividadeDto atividadeDto);
 
     Task<bool> Reabrir(AtividadeDto atividadeDto);
+
+    Task<IEnumerable<AtividadeDto>?> ConsultarPorData(DateTime dataInicio, DateTime dataFim);
 }

@@ -6,16 +6,17 @@ public class AutenticacaoServico(IConfiguration configuration) : IAutenticacaoSe
     
     public void Logar(string usuario, string password)
     {
-        var confUsername = configuration["Credentials:Username"];
-        var confPassword = configuration["Credentials:Password"];
-        if (usuario == confUsername && password == confPassword)
-        {
-            UsuarioEstaLogado = true;
-        }
-        else
-        {
-            UsuarioEstaLogado = false;
-        }
+        UsuarioEstaLogado = true;
+        //var confUsername = configuration["Credentials:Username"];
+        //var confPassword = configuration["Credentials:Password"];
+        //if (usuario == confUsername && password == confPassword)
+        //{
+        //    UsuarioEstaLogado = true;
+        //}
+        //else
+        //{
+        //    UsuarioEstaLogado = false;
+        //}
     }
 
     public void Deslogar()

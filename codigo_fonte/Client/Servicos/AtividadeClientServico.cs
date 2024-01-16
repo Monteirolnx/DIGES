@@ -88,4 +88,25 @@ public class AtividadeClientServico(HttpClient httpClient, ISessionStorageServic
 
         return resultado.IsSuccessStatusCode;
     }
+
+    public async Task<IEnumerable<AtividadeDto>?> ConsultarPorData(DateTime dataInicio, DateTime dataFim)
+    {
+        const string formatoData = "yyyy-MM-dd";
+        var dataInicioStr = dataInicio.ToString(formatoData);
+        var dataFimStr = dataFim.ToString(formatoData);
+
+        var url =
+            $"{Constantes.BaseUrlAtividade}{Constantes.ConsultaPorData}?dataInicio={dataInicioStr}&dataFim={dataFimStr}";
+
+        var httpResponseMessage = await httpClient.GetAsync(url);
+
+        if (!httpResponseMessage.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var resultado = await httpResponseMessage.Content.ReadFromJsonAsync<IEnumerable<AtividadeDto>>();
+
+        return resultado;
+    }
 }

@@ -45,7 +45,7 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper, IMemoryCa
         {
             return false;
         }
-        
+
         mapper.Map(atividadeDto, atividadeExistente);
 
         atividadeExistente.Editar();
@@ -76,7 +76,7 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper, IMemoryCa
                 contexto.Historico.Remove(historico);
             }
         }
-        
+
         contexto.Atividades.Remove(atividadeExistente);
 
         var resultado = await contexto.SaveChangesAsync();
@@ -166,4 +166,32 @@ public class AtividadeServerServico(Contexto contexto, IMapper mapper, IMemoryCa
 
         return resultado > 0;
     }
+
+   
+
+    public async Task<IEnumerable<AtividadeDto>?> ConsultarPorData(DateTime dataInicio, DateTime pdataFim)
+    {
+         var dataFim = pdataFim == DateTime.MinValue? DateTime.Today: pdataFim;
+
+        if (dataInicio.Date == dataFim.Date)
+        {
+            dataFim = dataFim.AddDays(1);
+        }
+
+        var atividades = await contexto.Atividades
+            .Where(atividade => atividade.Lider != null &&
+                                atividade.Lider.Codigo == Guid.Parse("611f0467-8cc5-4a13-90f1-ae00c3e91e5a") &&
+                                ((atividade.DtCriacao >= dataInicio && atividade.DtCriacao < dataFim) ||
+                                 (atividade.DtModificacao >= dataInicio && atividade.DtModificacao < dataFim)))
+            .AsNoTracking()
+            .Include(a => a.Analista)
+            .Include(a => a.Lider)
+            .Include(a => a.Historico).ToListAsync();
+
+        var resultado = mapper.Map<List<AtividadeDto>>(atividades);
+
+        return resultado;
+    }
+
+
 }

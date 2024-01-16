@@ -29,53 +29,78 @@ else
                                       ButtonStyle="ButtonStyle.Info" />
                     </div>
                 </div>
-            </RadzenStack>
-        </RadzenColumn>
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        <RadzenLabel Text="Data início:" Component="RadzenDatePickerBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+                        <RadzenDatePicker @bind-Value=@_dataInicio Name="RadzenDatePickerBindValue" ShowTime="false" />
+                     </div>
 
-        <RadzenColumn Size="12">
-            <RadzenStack>
+                    <div>
+                         <RadzenLabel Text="Data fim:" Component="RadzenDatePickerBindValue" Style="margin-left: 8px; vertical-align: middle;" />
+                         <RadzenDatePicker @bind-Value=@_dataFim Name="RadzenDatePickerBindValue" ShowTime="false" ShowCalendarWeek />
 
-                <RadzenDataGrid AllowAlternatingRows="true"
-                                AllowColumnResize="false"
-                                AllowFiltering="true"
-                                AllowPaging="true"
-                                AllowSorting="true"
-                                AllowVirtualization="true"
-                                Data="@_atividadesDto"
-                                EmptyText="Nenhum registro encontrado."
-                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                FilterMode="FilterMode.Simple"
-                                IsLoading="@_carregandoDados"
-                                LogicalFilterOperator="LogicalFilterOperator.And"
-                                PagerHorizontalAlign="HorizontalAlign.Left"
-                                PagerPosition="PagerPosition.TopAndBottom"
-                                PageSize="20"
-                                PageSizeOptions="new[] { 20, 30, 40 }"
-                                PageSizeText="itens por página"
-                                PagingSummaryFormat="@("Exibindo página {0} de {1} <b>(total de {2} registros)</b>")"
-                                @ref="_atividadeDtoGrid"
-                                ShowPagingSummary="true"
-                                Style="width: 100%;"
-                                TItem="AtividadeDto">
-                    <Columns>
+                     </div>
+                    <div>
+                        <RadzenButton Click="@FiltrarAtividades"
+                                      Icon="filter_alt"
+                                      Style="margin-left: 8px; vertical-align: middle;"
+                                      Text="Filtrar"
+                                      ButtonStyle="ButtonStyle.Primary" />
 
-                        <RadzenDataGridColumn Visible="false"
-                                              Property="Codigo"
-                                              TItem="AtividadeDto"
-                                              Title="Codigo"
-                                              Width="10%">
-                        </RadzenDataGridColumn>
+                        <RadzenButton Click="@Limpar"
+                                      Icon="clear_all"
+                                      Style="margin-left: 8px; vertical-align: middle;"
+                                      Text="Limpar"
+                                      ButtonStyle="ButtonStyle.Secondary"/>
+                    </div>
+                 </div>
+             </RadzenStack>
+         </RadzenColumn>
 
-                        <RadzenDataGridColumn Filterable="true"
-                                              Frozen="true"
-                                              Property="NumeroRedmine"
-                                              TextAlign="TextAlign.Center"
-                                              TItem="AtividadeDto"
-                                              Title="Redmine"
-                                              Width="10%">
-                            <Template Context="atividadeDto">
-                                <div style="text-align: center;">
-                                    <div style="font-weight: bold;">@atividadeDto.NumeroRedmine</div>
+         <RadzenColumn Size="12">
+             <RadzenStack>
+
+                 <RadzenDataGrid AllowAlternatingRows="true"
+                                 AllowColumnResize="false"
+                                 AllowFiltering="true"
+                                 AllowPaging="true"
+                                 AllowSorting="true"
+                                 AllowVirtualization="true"
+                                 Data="@_atividadesDto"
+                                 EmptyText="Nenhum registro encontrado."
+                                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                 FilterMode="FilterMode.Simple"
+                                 IsLoading="@_carregandoDados"
+                                 LogicalFilterOperator="LogicalFilterOperator.And"
+                                 PagerHorizontalAlign="HorizontalAlign.Left"
+                                 PagerPosition="PagerPosition.TopAndBottom"
+                                 PageSize="20"
+                                 PageSizeOptions="new[] { 20, 30, 40 }"
+                                 PageSizeText="itens por página"
+                                 PagingSummaryFormat="@("Exibindo página {0} de {1} <b>(total de {2} registros)</b>")"
+                                 @ref="_atividadeDtoGrid"
+                                 ShowPagingSummary="true"
+                                 Style="width: 100%;"
+                                 TItem="AtividadeDto">
+                     <Columns>
+
+                         <RadzenDataGridColumn Visible="false"
+                                               Property="Codigo"
+                                               TItem="AtividadeDto"
+                                               Title="Codigo"
+                                               Width="10%">
+                         </RadzenDataGridColumn>
+
+                         <RadzenDataGridColumn Filterable="true"
+                                               Frozen="true"
+                                               Property="NumeroRedmine"
+                                               TextAlign="TextAlign.Center"
+                                               TItem="AtividadeDto"
+                                               Title="Redmine"
+                                               Width="10%">
+                             <Template Context="atividadeDto">
+                                 <div style="text-align: center;">
+                                     <div style="font-weight: bold;">@atividadeDto.NumeroRedmine</div>
                                     @if (@atividadeDto.NumeroRedmine is not null)
                                     {
                                         <RadzenButton ButtonStyle="ButtonStyle.Secondary"

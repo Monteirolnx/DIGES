@@ -36,7 +36,7 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
         return Ok(resultado);
     }
 
-    [HttpGet(Constantes.ConsultaPorCodigoAtividade + "{codigoAtividade}")]
+    [HttpGet(Constantes.ConsultaPorCodigoAtividade + "{codigoAtividade:guid}")]
     public async Task<IActionResult> ConsultarPorCodigo(Guid codigoAtividade)
     {
         var resultado = await atividadeServico.ConsultarPorCodigo(codigoAtividade);
@@ -57,6 +57,14 @@ public class AtividadeController(IAtividadeServico atividadeServico) : Controlle
     {
         var resultado = await atividadeServico.Reabrir(atividadeDto);
         
+        return Ok(resultado);
+    }
+
+    [HttpGet(Constantes.ConsultaPorData)]
+    public async Task<IActionResult> ConsultarPorData([FromQuery] DateTime dataInicio, DateTime dataFim)
+    {
+        var resultado = await atividadeServico.ConsultarPorData(dataInicio, dataFim);
+
         return Ok(resultado);
     }
 }
